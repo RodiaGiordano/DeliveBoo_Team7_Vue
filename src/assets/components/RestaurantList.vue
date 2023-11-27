@@ -7,29 +7,31 @@ import RestaurantCard from "./RestaurantCard.vue";
 export default {
   data() {
     return {
-      restaurants: [],
+      // restaurants: [],
     };
   },
-  methods: {
-    fetchRestaurants(endpoint) {
-      axios.get(endpoint).then((response) => {
-        this.restaurants = response.data;
-      });
-    },
-  },
-  mounted() {
-    this.fetchRestaurants(store.baseUri + "restaurant");
-  },
+  // methods: {
+  //   fetchRestaurants(endpoint) {
+  //     axios.get(endpoint).then((response) => {
+  //       this.restaurants = response.data;
+  //     });
+  //   },
+  // },
+  // mounted() {
+  //   this.fetchRestaurants(store.baseUri + "restaurant");
+  // },
 
   components: {
     RestaurantCard,
   },
+  props: { restaurants: Array },
 };
 </script>
 
 <template>
   <ul>
     <li v-for="restaurant in restaurants">
+      <!-- {{ console.log(restaurant) }} -->
       <RestaurantCard :restaurant="restaurant"></RestaurantCard>
     </li>
   </ul>

@@ -9,10 +9,13 @@ export default {
 </script>
 
 <template>
+  {{ console.log(restaurant) }}
   <div class="card mb-3">
     <img :src="restaurant.image" class="card-img-top" />
     <div class="card-body">
-      <h5 class="card-title">{{ restaurant.restaurant_name }}</h5>
+      <h5 class="card-title">
+        {{ restaurant.restaurants[0].restaurant_name }}
+      </h5>
       <p>{{ restaurant.address }}</p>
       <p class="card-text">
         {{ restaurant.description }}

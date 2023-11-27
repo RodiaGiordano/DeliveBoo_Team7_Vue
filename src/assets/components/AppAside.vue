@@ -6,6 +6,7 @@ export default {
   data() {
     return {
       restaurantList: [],
+      baseUri: store.baseUri,
     };
   },
   mounted() {
@@ -15,7 +16,7 @@ export default {
   methods: {
     fetchTypes(endpoint) {
       axios.get(endpoint).then((response) => {
-        this.types = response.data;
+        this.restaurantList = response.data;
       });
     },
     // filterType(typesId) {
@@ -30,6 +31,8 @@ export default {
     //   console.log(typeEl);
     // },
   },
+
+  emits: ["fetchType"],
 };
 </script>
 
@@ -49,23 +52,27 @@ export default {
   </div>
   <div>
     <div class="form-check">
-      <div v-for="typeEl in types">
-        <!-- <input
-          @change="filterType(typeEl.id)"
-          class="form-check-input"
-          type="checkbox"
-          :value="typeEl.id"
-          id="flexCheckDefault"
-        /> -->
+      <div v-for="restaurantEl in restaurantList">
         <input
-          @change="filterType(typeEl.id)"
+          @change="
+            $emit('fetchType', {
+              url: baseUri + 'type/' + restaurantEl.id,
+            })
+          "
           class="form-check-input"
           type="checkbox"
-          :value="typeEl.id"
+          :value="restaurantEl.id"
           id="flexCheckDefault"
         />
+        <!-- <input
+          @change="filterType(restaurantEl.id)"
+          class="form-check-input"
+          type="checkbox"
+          :value="restaurantEl.id"
+          id="flexCheckDefault"
+        /> -->
         <label class="form-check-label" for="flexCheckDefault">
-          {{ typeEl.name }}
+          {{ restaurantEl.name }}
         </label>
       </div>
     </div>
