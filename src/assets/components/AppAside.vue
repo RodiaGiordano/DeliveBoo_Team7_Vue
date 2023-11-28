@@ -42,7 +42,6 @@ export default {
   <div>
     <div class="form-check">
       <div v-for="restaurantEl in restaurantList">
-        <!-- {{ console.log(restaurantEl.id) }} -->
         <input
           @change="$emit('checked', restaurantEl.id)"
           class="form-check-input"
