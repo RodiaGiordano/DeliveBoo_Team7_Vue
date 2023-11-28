@@ -8,7 +8,7 @@ export default {
   data() {
     return {
       restaurants: [],
-      checkFilter: [1, 2],
+      checkFilter: [],
     };
   },
   methods: {
@@ -24,13 +24,13 @@ export default {
       if (!this.checkFilter.includes(filter)) {
         this.checkFilter.push(filter);
 
-        // console.log("checkbox id: " + filter + " aggiunto");
-        // console.log("chiamata effettuata con parametri: " + this.checkFilter);
+        console.log("checkbox id: " + filter + " aggiunto");
+        console.log("chiamata effettuata con parametri: " + this.checkFilter);
       } else {
         const checkRemove = this.checkFilter.indexOf(filter);
         this.checkFilter.splice(checkRemove, 1);
 
-        // console.error("checkbox id: " + filter + " rimosso");
+        console.error("checkbox id: " + filter + " rimosso");
       }
       this.fetchRestaurants();
       // console.log(this.checkFilter);
