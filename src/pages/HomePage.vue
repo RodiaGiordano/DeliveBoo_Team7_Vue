@@ -12,28 +12,7 @@ export default {
     };
   },
   methods: {
-    urlFactory(element) {
-      this.elementsId.push(element.id);
-      // console.log(this.elementsId);
-      console.log(this.elementsId);
-      // this.elementsId.forEach((element) => {
-      //   console.log(element);
-      // });
-      const params = [];
-      this.elementsId.forEach((param) => {
-        params.push(param);
-      });
-      console.log(params);
-      //  = this.elementsId;
-      // console.log(params[0]);
-      this.fetchRestaurants({ params });
-    },
-
     fetchRestaurants(endpoint = store.baseUri + "restaurant") {
-      // if (endpoint.url) {
-      //   endpoint = endpoint.url + endpoint.param;
-      // }
-      console.log(endpoint);
       axios.get(endpoint).then((response) => {
         this.restaurants = response.data;
       });

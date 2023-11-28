@@ -6,20 +6,8 @@ import RestaurantCard from "./RestaurantCard.vue";
 
 export default {
   data() {
-    return {
-      // restaurants: [],
-    };
+    return {};
   },
-  // methods: {
-  //   fetchRestaurants(endpoint) {
-  //     axios.get(endpoint).then((response) => {
-  //       this.restaurants = response.data;
-  //     });
-  //   },
-  // },
-  // mounted() {
-  //   this.fetchRestaurants(store.baseUri + "restaurant");
-  // },
 
   components: {
     RestaurantCard,
