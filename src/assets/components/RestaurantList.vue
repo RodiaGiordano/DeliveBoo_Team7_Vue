@@ -30,9 +30,8 @@ export default {
 
 <template>
   <ul>
-    <li v-for="restaurant in restaurants">
-      <!-- {{ console.log(restaurant) }} -->
-      <RestaurantCard :restaurant="restaurant"></RestaurantCard>
+    <li v-for="element in restaurants">
+      <RestaurantCard :element="element"></RestaurantCard>
     </li>
   </ul>
 </template>

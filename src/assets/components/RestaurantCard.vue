@@ -4,23 +4,23 @@ export default {
     return {};
   },
 
-  props: { restaurant: Object },
+  props: { element: Object },
 };
 </script>
 
 <template>
-  {{ console.log(restaurant) }}
+  <!-- {{ console.log(element) }} -->
   <div class="card mb-3">
-    <img :src="restaurant.image" class="card-img-top" />
+    <img :src="element.image" class="card-img-top" />
     <div class="card-body">
       <h5 class="card-title">
-        {{ restaurant.restaurants[0].restaurant_name }}
+        {{ element.restaurant_name }}
       </h5>
-      <p>{{ restaurant.address }}</p>
+      <p>{{ element.address }}</p>
       <p class="card-text">
-        {{ restaurant.description }}
+        {{ element.description }}
       </p>
-      <p v-for="typeEl in restaurant.types" class="card-text">
+      <p v-for="typeEl in element.types" class="card-text">
         <small class="text-body-secondary">{{ typeEl.name }}</small>
       </p>
     </div>

@@ -32,7 +32,7 @@ export default {
     // },
   },
 
-  emits: ["fetchType"],
+  emits: ["urlFactory"],
 };
 </script>
 
@@ -54,11 +54,7 @@ export default {
     <div class="form-check">
       <div v-for="restaurantEl in restaurantList">
         <input
-          @change="
-            $emit('fetchType', {
-              url: baseUri + 'type/' + restaurantEl.id,
-            })
-          "
+          @change="$emit('urlFactory', restaurantEl)"
           class="form-check-input"
           type="checkbox"
           :value="restaurantEl.id"
