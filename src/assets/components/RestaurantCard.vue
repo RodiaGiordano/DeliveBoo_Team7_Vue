@@ -9,7 +9,6 @@ export default {
 </script>
 
 <template>
-  <!-- {{ console.log(element) }} -->
   <div class="card mb-3">
     <img :src="element.image" class="card-img-top" />
     <div class="card-body">
