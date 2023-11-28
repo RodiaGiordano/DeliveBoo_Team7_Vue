@@ -1,7 +1,25 @@
 <script>
+import { store } from "../data/store";
+import axios from "axios";
+
 export default {
   data() {
-    return {};
+    return {
+      menu: [],
+    };
+  },
+
+  methods: {
+    fetchMenu(endpoint) {
+      axios.get(endpoint).then((response) => {
+        this.menu = response.data;
+        console.log(this.menu);
+      });
+    },
+  },
+
+  mounted() {
+    //this.fetchMenu(store.baseUri + "menu");
   },
 
   props: { element: Object },
