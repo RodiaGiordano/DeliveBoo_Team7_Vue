@@ -34,7 +34,7 @@ export default {
     <div class="row">
       <div class="col-3">
         <div class="debug">
-          <AppAside @urlFactory="urlFactory"></AppAside>
+          <AppAside></AppAside>
         </div>
       </div>
       <div class="col-9">
