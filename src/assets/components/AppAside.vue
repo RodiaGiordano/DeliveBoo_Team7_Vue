@@ -19,20 +19,9 @@ export default {
         this.restaurantList = response.data;
       });
     },
-    // filterType(typesId) {
-    //   axios.get(store.baseUri + "type/" + typesId).then((response) => {
-    //     this.restaurantList = response.data.restaurants;
-    //     this.$router.push('/nuova-pagina')
-    //   });
-    // },
-
-    // prova(id, typeEl) {
-    //   console.log(id);
-    //   console.log(typeEl);
-    // },
   },
 
-  emits: ["urlFactory"],
+  emits: ["checked"],
 };
 </script>
 
@@ -53,20 +42,15 @@ export default {
   <div>
     <div class="form-check">
       <div v-for="restaurantEl in restaurantList">
+        <!-- {{ console.log(restaurantEl.id) }} -->
         <input
-          @change="$emit('urlFactory', restaurantEl)"
+          @change="$emit('checked', restaurantEl.id)"
           class="form-check-input"
           type="checkbox"
           :value="restaurantEl.id"
-          id="flexCheckDefault"
+          :id="'check-' + restaurantEl.id"
         />
-        <!-- <input
-          @change="filterType(restaurantEl.id)"
-          class="form-check-input"
-          type="checkbox"
-          :value="restaurantEl.id"
-          id="flexCheckDefault"
-        /> -->
+
         <label class="form-check-label" for="flexCheckDefault">
           {{ restaurantEl.name }}
         </label>

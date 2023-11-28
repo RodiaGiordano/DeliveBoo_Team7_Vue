@@ -8,16 +8,43 @@ export default {
   data() {
     return {
       restaurants: [],
-      elementsId: [],
+      checkFilter: [1, 2],
     };
   },
   methods: {
-    fetchRestaurants(endpoint = store.baseUri + "restaurant") {
-      axios.get(endpoint).then((response) => {
-        this.restaurants = response.data;
-      });
+    fetchRestaurants(endpoint = store.baseUri + "restaurant/") {
+      axios
+        .get(endpoint, { params: { Id: this.checkFilter } })
+        .then((response) => {
+          this.restaurants = response.data;
+        });
+    },
+
+    filterRestaurants(filter) {
+      if (!this.checkFilter.includes(filter)) {
+        this.checkFilter.push(filter);
+
+        // console.log("checkbox id: " + filter + " aggiunto");
+        // console.log("chiamata effettuata con parametri: " + this.checkFilter);
+      } else {
+        const checkRemove = this.checkFilter.indexOf(filter);
+        this.checkFilter.splice(checkRemove, 1);
+
+        // console.error("checkbox id: " + filter + " rimosso");
+      }
+      this.fetchRestaurants();
+      // console.log(this.checkFilter);
     },
   },
+
+  // computed: {
+  //   prova() {
+  //     this.elementsId = [1, 2];
+
+  //     return elementsId;
+  //   },
+  // },
+
   mounted() {
     this.fetchRestaurants();
   },
@@ -34,7 +61,7 @@ export default {
     <div class="row">
       <div class="col-3">
         <div class="debug">
-          <AppAside></AppAside>
+          <AppAside @checked="filterRestaurants"></AppAside>
         </div>
       </div>
       <div class="col-9">
