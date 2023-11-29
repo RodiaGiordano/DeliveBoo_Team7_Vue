@@ -14,6 +14,9 @@ export default {
 };
 </script>
 
-<template></template>
+<template>
+  TEST
+  <h1>TESTTTT</h1>
+</template>
 
 <style lang="scss" scoped></style>
