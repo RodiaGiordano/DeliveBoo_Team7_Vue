@@ -1,6 +1,6 @@
 <script>
-import { store } from "../data/store";
-import axios from "axios";
+// import { store } from "../data/store";
+// import axios from "axios";
 
 import RestaurantCard from "./RestaurantCard.vue";
 

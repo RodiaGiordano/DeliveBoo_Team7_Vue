@@ -1,6 +1,5 @@
 <script>
-import { store } from "../data/store";
-import axios from "axios";
+import ButtonEmit from "../partials/ButtonEmit.vue";
 
 export default {
   data() {
@@ -9,17 +8,10 @@ export default {
     };
   },
 
-  methods: {
-    fetchMenu(endpoint) {
-      axios.get(endpoint).then((response) => {
-        this.menu = response.data;
-        console.log(this.menu);
-      });
-    },
-  },
+  methods: {},
 
-  mounted() {
-    //this.fetchMenu(store.baseUri + "menu");
+  components: {
+    ButtonEmit,
   },
 
   props: { element: Object },
@@ -40,6 +32,7 @@ export default {
       <p v-for="typeEl in element.types" class="card-text">
         <small class="text-body-secondary">{{ typeEl.name }}</small>
       </p>
+      <ButtonEmit :elementId="element.id"></ButtonEmit>
     </div>
   </div>
 </template>

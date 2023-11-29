@@ -1,5 +1,17 @@
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+      title: "Hello world",
+    };
+  },
 
-<template></template>
+  props: { dish: Object },
+};
+</script>
+
+<template>
+  {{ console.log(dish) }}
+</template>
 
 <style lang="scss" scoped></style>

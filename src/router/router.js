@@ -2,7 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 
 // import delle Page
 import HomePage from "../pages/HomePage.vue";
-import Menu from "../assets/components/Dishes/Menu.vue";
+import MenuPage from "../pages/MenuPage.vue";
+
+// import Menu from "../assets/components/Dishes/Menu.vue";
 
 const router = createRouter({
   //Aggiugno history
@@ -16,11 +18,16 @@ const router = createRouter({
       component: HomePage,
     },
     {
-      path: "/restaurant/:id",
-      name: "restaurant",
-      component: Menu,
-      props: true,
+      path: "/show/:id",
+      name: "menupage",
+      component: MenuPage,
     },
+    // {
+    //   path: "/restaurant/:id",
+    //   name: "restaurant",
+    //   component: Menu,
+    //   props: true,
+    // },
   ],
 });
 
