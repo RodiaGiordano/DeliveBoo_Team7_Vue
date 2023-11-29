@@ -52,6 +52,8 @@ export default {
 </script>
 
 <template>
+  <Navbar></Navbar>
+
   <div class="container">
     <div class="row">
       <div class="col-3">
