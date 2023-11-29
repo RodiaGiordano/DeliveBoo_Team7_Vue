@@ -1,4 +1,6 @@
 <script>
+import DishCard from "../assets/components/Dishes/DishCard.vue";
+
 export default {
   data() {
     return {
@@ -30,12 +32,31 @@ export default {
       ],
     };
   },
+
   methods: {
-    addItem(dish) {
-      if (dish) {
-        this.orderedDish.push(dish);
+    addItem(dish, amount) {
+      //test for now - delete later
+      amount = 1;
+
+      let dishExists = this.fakeMenu.find((dish) => dish.id == dish.id);
+
+      if (dish && dishExists) {
+        for (i = 1; i <= amount; i++) {
+          this.orderedDish.push(dish);
+          console.log(this.orderedDish);
+          this.totalPrice += dish.price;
+        }
+      }
+    },
+
+    removeItem(dish) {
+      let dishExists = this.orderedDish.find((dish) => dish.id == dish.id);
+
+      if (dish && dishExists) {
+        const index = this.orderedDish.indexOf(dish);
+        this.orderedDish.splice(index, 1);
         console.log(this.orderedDish);
-        this.totalPrice += dish.price;
+        this.totalPrice -= dish.price;
       }
     },
   },
@@ -51,9 +72,13 @@ export default {
         <div class="dish-menu" v-for="dish in fakeMenu">
           {{ dish.name }}
           <br />
-          {{ dish.price }}
+          {{ dish.price }}&euro;
           <br />
-          <button type="button" class="btn btn-primary" @click="addItem(dish)">
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click="addItem(dish, amount)"
+          >
             Aggiungi al carrello
           </button>
         </div>
@@ -66,11 +91,15 @@ export default {
       <div class="cart-item" v-for="item in orderedDish">
         {{ item.name }}
         <br />
-        {{ item.price }}
+        {{ item.price }}&euro;
+        <br />
+        <button type="button" class="btn btn-danger" @click="removeItem(item)">
+          Rimuovi dal carrello
+        </button>
       </div>
     </div>
 
-    <h3><b>TOTALE: </b> {{ this.totalPrice }}&euro;</h3>
+    <h3><b>TOTALE: </b> {{ this.totalPrice.toFixed(2) }}&euro;</h3>
   </div>
 </template>
 
