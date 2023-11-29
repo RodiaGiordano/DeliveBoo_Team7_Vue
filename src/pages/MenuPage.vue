@@ -22,7 +22,7 @@ export default {
   },
 
   mounted() {
-    this.fetchRestaurant();
+    this.fetchRestaurantDetail();
   },
 
   components: {
