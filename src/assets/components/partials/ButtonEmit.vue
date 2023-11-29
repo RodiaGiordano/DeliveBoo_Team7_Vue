@@ -11,7 +11,6 @@ export default {
 </script>
 
 <template>
-  {{ console.log(elementId) }}
   <router-link
     :to="{ name: 'menupage', params: { id: elementId } }"
     class="btn btn-primary"
