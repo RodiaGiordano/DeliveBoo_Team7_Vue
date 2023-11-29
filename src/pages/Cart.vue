@@ -34,26 +34,31 @@ export default {
   },
 
   methods: {
+    //Add dish and save it in local storage
     addItem(dish, amount) {
-      //test for now - delete later
+
       amount = 1;
 
-      let dishExists = this.fakeMenu.find((dish) => dish.id == dish.id);
+      let dishInArray = dish.id;
+      let dishExists = this.fakeMenu.map((dish) => dish.id == dishInArray);
 
       if (dish && dishExists) {
         for (let i = 1; i <= amount; i++) {
           this.orderedDish.push(dish);
           this.totalPrice += dish.price;
-
-          //local storage logic
-          localStorage.setItem(dish.id, dish.id);
-          console.log(localStorage.getItem(dish.id));
         }
+
+        //save in local storage
+        this.saveOrderedDishIdsToLocalStorage();
+          
       }
     },
 
+    //Remove dish
     removeItem(dish) {
-      let dishExists = this.orderedDish.find((dish) => dish.id == dish.id);
+
+      let dishInArray = dish.id;
+      let dishExists = this.orderedDish.find((dish) => dish.id == dishInArray);
 
       if (dish && dishExists) {
         const index = this.orderedDish.indexOf(dish);
@@ -61,26 +66,58 @@ export default {
         console.log(this.orderedDish);
         this.totalPrice -= dish.price;
       }
+
+      //remove from local Storage
+      // this.saveOrderedDishToLocalStorage();
     },
 
-    findItem(item, key) {
-      console.log(item, key);
-      return item.id === key;
+    //Svuota carrello 
+    emptyCart() {
+      this.orderedDish = [];
+      this.totalPrice = 0;
     },
+
+
+// STORAGE LOGIC
+
+    //SAVE dish id array as string in local storage
+    saveOrderedDishIdsToLocalStorage() {
+    const dishIds = this.orderedDish.map((dish) => {
+      return dish.id
+    });
+    
+    const dishIdsString = JSON.stringify(dishIds);
+
+    localStorage.setItem('orderedDishIds', dishIdsString);
+    },
+
+    //RETRIVE what is saved in local storage : parse dish id string to array
+    parseToArrayFromLocalStorage() {
+      const dishIdsString = localStorage.getItem('orderedDishIds');
+
+      if (dishIdsString) {
+        const dishIdsArray = JSON.parse(dishIdsString);
+
+        // Controls
+        dishIdsArray.forEach((dishId) => {
+          const dish = this.fakeMenu.find((dish) => {
+            return dish.id === dishId
+            });
+
+          if (dish) {
+            this.orderedDish.push(dish);
+            this.totalPrice += dish.price;
+          }
+        });  
+      }
+    },
+
+
+
   },
 
   mounted() {
-    for (let key in localStorage) {
-      let dishExists = this.fakeMenu.find(this.findItem);
-
-      console.log(dishExists);
-      //console.log(key + ": " + localStorage.getItem(key));
-      let newItem = {
-        name: "test",
-        id: 1,
-        qty: 1,
-      };
-    }
+  this.parseToArrayFromLocalStorage();
   },
 };
 </script>
@@ -119,6 +156,9 @@ export default {
           Rimuovi dal carrello
         </button>
       </div>
+      <button class="btn btn-danger" @click="emptyCart()">
+        Svuota carrello
+      </button>
     </div>
 
     <h3><b>TOTALE: </b> {{ this.totalPrice.toFixed(2) }}&euro;</h3>
