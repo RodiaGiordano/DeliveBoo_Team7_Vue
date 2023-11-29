@@ -1,21 +1,19 @@
 <script>
-// import MyComponent from "./components/MyComponent.vue";
+import DishCard from "../dishes/MenuList.vue";
 
 export default {
   data() {
-    return {
-      title: "funziono",
-    };
+    return {};
   },
+  // components: { DishCard },
 
-  // components: {
-  //   MyComponent,
-  // },
+  props: { restaurant: Object, dishes: Array },
 };
 </script>
 
 <template>
-  <h1>{{ title }}</h1>
+  {{ console.log(restaurant) }}
+  {{ console.log(dishes) }}
 </template>
 
 <style lang="scss" scoped></style>
