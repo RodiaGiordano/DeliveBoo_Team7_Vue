@@ -1,5 +1,5 @@
 <script>
-import RestaurantList from "../assets/components/RestaurantList.vue";
+import RestaurantList from "../assets/components/Restaurants/RestaurantList.vue";
 import AppAside from "../assets/components/AppAside.vue";
 import { store } from "../assets/data/store";
 import axios from "axios";
