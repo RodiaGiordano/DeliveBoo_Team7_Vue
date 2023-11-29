@@ -5,21 +5,24 @@ import axios from "axios";
 
 export default {
   data() {
-    return {};
+    return {
+      restaurant: {},
+      dishes: [],
+    };
   },
   methods: {
-    fetchRestaurants(
+    fetchRestaurantDetail(
       endpoint = store.baseUri + "restaurant/" + this.$route.params.id
     ) {
-      console.log(endpoint);
       axios.get(endpoint).then((response) => {
-        this.restaurants = response.data;
+        this.restaurant = response.data.restaurant;
+        this.dishes = response.data.dishes;
       });
     },
   },
 
   mounted() {
-    this.fetchRestaurants();
+    this.fetchRestaurant();
   },
 
   components: {
