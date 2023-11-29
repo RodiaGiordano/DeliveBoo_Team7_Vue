@@ -41,10 +41,13 @@ export default {
       let dishExists = this.fakeMenu.find((dish) => dish.id == dish.id);
 
       if (dish && dishExists) {
-        for (i = 1; i <= amount; i++) {
+        for (let i = 1; i <= amount; i++) {
           this.orderedDish.push(dish);
-          console.log(this.orderedDish);
           this.totalPrice += dish.price;
+
+          //local storage logic
+          localStorage.setItem(dish.id, dish.id);
+          console.log(localStorage.getItem(dish.id));
         }
       }
     },
@@ -59,6 +62,25 @@ export default {
         this.totalPrice -= dish.price;
       }
     },
+
+    findItem(item, key) {
+      console.log(item, key);
+      return item.id === key;
+    },
+  },
+
+  mounted() {
+    for (let key in localStorage) {
+      let dishExists = this.fakeMenu.find(this.findItem);
+
+      console.log(dishExists);
+      //console.log(key + ": " + localStorage.getItem(key));
+      let newItem = {
+        name: "test",
+        id: 1,
+        qty: 1,
+      };
+    }
   },
 };
 </script>
