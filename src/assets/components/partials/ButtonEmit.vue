@@ -16,7 +16,9 @@ export default {
     :to="{ name: 'menupage', params: { id: elementId } }"
     class="btn btn-primary"
   >
-    <font-awesome-icon :icon="['fas', 'utensils']" size="lg" /> Menù
+    <font-awesome-icon :icon="['fas', 'utensils']" size="lg" />
+    Ordina da questo ristorante
+    <font-awesome-icon :icon="['fas', 'utensils']" size="lg" />
   </router-link>
 </template>
 

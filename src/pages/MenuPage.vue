@@ -32,7 +32,7 @@ export default {
 </script>
 
 <template>
-  <MenuList></MenuList>
+  <MenuList :restaurant="restaurant" :dishes="dishes"></MenuList>
 </template>
 
 <style lang="scss" scoped></style>
