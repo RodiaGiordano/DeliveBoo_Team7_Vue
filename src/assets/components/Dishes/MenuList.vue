@@ -1,40 +1,21 @@
 <script>
-import { store } from "../../data/store";
-import axios from "axios";
+// import MyComponent from "./components/MyComponent.vue";
 
 export default {
   data() {
-    return {};
+    return {
+      title: "funziono",
+    };
   },
 
-  props: ["id"],
-
-  methods: {
-    fetchMenu(endpoint) {
-      axios.get(endpoint).then((response) => {
-        this.menu = response.data;
-        console.log(this.menu);
-      });
-    },
-  },
-
-  mounted() {
-    this.fetchMenu(store.baseUri + "menu/" + this.id);
-    console.log(this.id);
-  },
+  // components: {
+  //   MyComponent,
+  // },
 };
 </script>
 
 <template>
-  <div class="card" style="width: 18rem">
-    {{ id }}
-    <img src="..." class="card-img-top" alt="..." />
-    <div class="card-body">
-      <h5 class="card-title">title</h5>
-      <p class="card-text"></p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
-  </div>
+  <h1>{{ title }}</h1>
 </template>
 
 <style lang="scss" scoped></style>

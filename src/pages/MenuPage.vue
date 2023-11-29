@@ -1,22 +1,35 @@
 <script>
-// import RestaurantList from "../assets/components/RestaurantList.vue";
+import MenuList from "../assets/components/Dishes/MenuList.vue";
+import { store } from "../assets/data/store";
+import axios from "axios";
 
 export default {
   data() {
-    return {
-      title: "Hello world",
-    };
+    return {};
+  },
+  methods: {
+    fetchRestaurants(
+      endpoint = store.baseUri + "restaurant/" + this.$route.params.id
+    ) {
+      console.log(endpoint);
+      axios.get(endpoint).then((response) => {
+        this.restaurants = response.data;
+      });
+    },
+  },
+
+  mounted() {
+    this.fetchRestaurants();
   },
 
   components: {
-    // RestaurantList,
+    MenuList,
   },
 };
 </script>
 
 <template>
-  ciao
-  <!-- <RestaurantList></RestaurantList> -->
+  <MenuList></MenuList>
 </template>
 
 <style lang="scss" scoped></style>

@@ -32,7 +32,7 @@ export default {
       <p v-for="typeEl in element.types" class="card-text">
         <small class="text-body-secondary">{{ typeEl.name }}</small>
       </p>
-      <ButtonEmit></ButtonEmit>
+      <ButtonEmit :elementId="element.id"></ButtonEmit>
     </div>
   </div>
 </template>

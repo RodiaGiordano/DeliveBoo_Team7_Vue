@@ -18,7 +18,7 @@ const router = createRouter({
       component: HomePage,
     },
     {
-      path: "/show",
+      path: "/show/:id",
       name: "menupage",
       component: MenuPage,
     },

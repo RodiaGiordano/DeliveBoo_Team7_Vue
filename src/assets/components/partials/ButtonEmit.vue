@@ -5,11 +5,17 @@ export default {
   data() {
     return {};
   },
+
+  props: { elementId: Number },
 };
 </script>
 
 <template>
-  <router-link to="#" class="btn btn-primary">
+  {{ console.log(elementId) }}
+  <router-link
+    :to="{ name: 'menupage', params: { id: elementId } }"
+    class="btn btn-primary"
+  >
     <font-awesome-icon :icon="['fas', 'utensils']" size="lg" /> Menù
   </router-link>
 </template>
