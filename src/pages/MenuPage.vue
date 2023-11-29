@@ -1,7 +1,7 @@
 <script>
-import MenuList from "../assets/components/Dishes/MenuList.vue";
 import { store } from "../assets/data/store";
 import axios from "axios";
+import MenuList from "../assets/components/Dishes/MenuList.vue";
 
 export default {
   data() {
@@ -9,6 +9,9 @@ export default {
       restaurant: {},
       dishes: [],
     };
+  },
+  components: {
+    MenuList,
   },
   methods: {
     fetchRestaurantDetail(
@@ -23,10 +26,6 @@ export default {
 
   mounted() {
     this.fetchRestaurantDetail();
-  },
-
-  components: {
-    MenuList,
   },
 };
 </script>

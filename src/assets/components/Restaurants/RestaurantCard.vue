@@ -3,9 +3,7 @@ import ButtonEmit from "../partials/ButtonEmit.vue";
 
 export default {
   data() {
-    return {
-      menu: [],
-    };
+    return {};
   },
 
   methods: {},

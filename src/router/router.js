@@ -4,8 +4,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../pages/HomePage.vue";
 import MenuPage from "../pages/MenuPage.vue";
 
-// import Menu from "../assets/components/Dishes/Menu.vue";
-
 const router = createRouter({
   //Aggiugno history
   history: createWebHistory(),
@@ -22,12 +20,6 @@ const router = createRouter({
       name: "menupage",
       component: MenuPage,
     },
-    // {
-    //   path: "/restaurant/:id",
-    //   name: "restaurant",
-    //   component: Menu,
-    //   props: true,
-    // },
   ],
 });
 
