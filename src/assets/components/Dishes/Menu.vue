@@ -5,7 +5,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      menu: []
+      menu: [],
     };
   },
 
@@ -15,29 +15,31 @@ export default {
     fetchMenu(endpoint) {
       axios.get(endpoint).then((response) => {
         this.menu = response.data;
-        console.log(this.menu);
       });
     },
   },
 
   mounted() {
     this.fetchMenu(store.baseUri + "restaurant/" + this.id + "/menu");
-    console.log(this.id);
+
   },
 };
 </script>
 
 <template>
-
+  
   <div class="menu-item"
   v-for="dish in menu">
-       <img :src="dish.image" :alt="dish.name">
-       <div class="details">
-           <h2>{{ dish.name }}</h2>
-           <p>{{ dish.price}} €</p>
-           <p>{{ dish.description }}</p>
-       </div>
-   </div>
+  <router-link :to="{ name: 'dish', params: { id: dish.id } }">
+
+    <img :src="dish.image" :alt="dish.name">
+    <div class="details">
+      <h2>{{ dish.name }}</h2>
+      <p>{{ dish.price}} €</p>
+      <p>{{ dish.description }}</p>
+    </div>
+  </router-link>
+  </div>
 </template>
 
 <style lang="scss" scoped>
