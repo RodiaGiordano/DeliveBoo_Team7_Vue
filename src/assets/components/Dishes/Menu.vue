@@ -4,7 +4,9 @@ import axios from "axios";
 
 export default {
   data() {
-    return {};
+    return {
+      menu: []
+    };
   },
 
   props: ["id"],
@@ -19,22 +21,46 @@ export default {
   },
 
   mounted() {
-    this.fetchMenu(store.baseUri + "menu/" + this.id);
+    this.fetchMenu(store.baseUri + "restaurant/" + this.id + "/menu");
     console.log(this.id);
   },
 };
 </script>
 
 <template>
-  <div class="card" style="width: 18rem">
-    {{ id }}
-    <img src="..." class="card-img-top" alt="..." />
-    <div class="card-body">
-      <h5 class="card-title">title</h5>
-      <p class="card-text"></p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
-  </div>
+
+  <div class="menu-item"
+  v-for="dish in menu">
+       <img :src="dish.image" :alt="dish.name">
+       <div class="details">
+           <h2>{{ dish.name }}</h2>
+           <p>{{ dish.price}} €</p>
+           <p>{{ dish.description }}</p>
+       </div>
+   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+ .menu-item {
+           display: flex;
+           align-items: center;
+           border: 1px solid #ccc;
+           padding: 10px;
+           margin: 10px;
+  img {
+      width: 100px;
+      height: 100px;
+      margin-right: 10px;
+  }
+  .details {
+        display: flex;
+        flex-direction: column;
+    h2 {
+        margin: 0;
+    }
+    p {
+        margin: 0;
+    }
+      }
+    }
+</style>
