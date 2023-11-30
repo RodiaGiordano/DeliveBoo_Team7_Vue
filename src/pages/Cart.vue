@@ -25,7 +25,7 @@ export default {
         }
       }
 
-      console.log(this.cartStorage);
+      this.saveInLocal();
     },
 
     //Remove dish
@@ -36,11 +36,11 @@ export default {
       if (dish && dishExists) {
         const index = this.cartStorage.indexOf(dish);
         this.cartStorage.splice(index, 1);
-        this.totalPrice -= dish.price;
+        this.totalPrice -= parseFloat(dish.price);
       }
 
       //remove from local Storage
-      //this.saveOrderedDishToLocalStorage();
+      this.saveInLocal();
     },
 
     //Svuota carrello
@@ -53,8 +53,13 @@ export default {
     // STORAGE LOGIC
 
     //SAVE dish id array as string in local storage
-    saveOrderedDishIdsToLocalStorage() {
-      const dishIds = this.orderedDish.map((dish) => {
+    saveInLocal() {
+      if (this.cartStorage.length === 0) {
+        localStorage.removeItem("orderedDishIds");
+        return;
+      }
+
+      const dishIds = this.cartStorage.map((dish) => {
         return dish.id;
       });
 
@@ -64,7 +69,7 @@ export default {
     },
 
     //RETRIVE what is saved in local storage : parse dish id string to array
-    parseToArrayFromLocalStorage() {
+    fetchFromLocal() {
       const dishIdsString = localStorage.getItem("orderedDishIds");
 
       if (dishIdsString) {
@@ -86,7 +91,6 @@ export default {
   },
 
   mounted() {
-    //this.parseToArrayFromLocalStorage();
     const dishIds = this.cartStorage.map((dish) => {
       console.log(this.totalPrice);
       this.totalPrice += parseFloat(dish.price);
