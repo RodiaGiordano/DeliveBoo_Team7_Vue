@@ -14,7 +14,7 @@ export default {
 
 <template>
   <Navbar></Navbar>
-  <div class="container mt-5">
+  <div class=" mt-5">
     <router-view></router-view>
   </div>
 </template>
