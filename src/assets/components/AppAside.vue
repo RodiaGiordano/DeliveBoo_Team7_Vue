@@ -7,7 +7,7 @@ export default {
     return {
       typeList: [],
       baseUri: store.baseUri,
-      // inputSearch: "",
+      inputSearch: "",
     };
   },
   mounted() {
@@ -22,13 +22,15 @@ export default {
     },
   },
 
-  // computed: {
-  //   provaEl() {
-  //     return this.userInput;
-  //   },
-  // },
-  // props: { userInput: String },
-  emits: ["checked", "userSearch"],
+  computed: {
+    provaEl() {
+      if (this.provaCheck) {
+        this.inputSearch = "";
+      }
+    },
+  },
+  props: { provaCheck: Boolean },
+  emits: ["checked"],
 };
 </script>
 
@@ -39,10 +41,12 @@ export default {
     </button>
 
     <input
+      id="serach_bar"
       type="text"
       class="form-control"
       placeholder="Cerca"
-      @input="$emit('userSearch', this.userInput)"
+      @input="$emit('checked', inputSearch)"
+      v-model="inputSearch"
       aria-label="Example text with button addon"
       aria-describedby="button-addon1"
     />
@@ -58,7 +62,7 @@ export default {
           :id="'check-' + typeEl.id"
         />
 
-        <label class="form-check-label" for="flexCheckDefault">
+        <label class="form-check-label" :for="'check-' + typeEl.id">
           {{ typeEl.name }}
         </label>
       </div>
