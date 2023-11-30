@@ -16,25 +16,23 @@ export default {
       restaurants: [],
       checkFilter: [],
       userInput: "",
-      // params: {
-      //   id: this.checkFilter,
-      // },
     };
   },
   computed: {
     prova() {
       let params;
-      // console.log(this.userInput);
-      if (this.userInput) {
-        const prova = this.userInput.replace(/\s/g, "").split("");
-        params = { params: { id: this.userInput } };
-        console.log(prova);
+      if (typeof this.userInput === "string" && this.userInput) {
+        // console.log(this.userInput);
+        console.log("ciao");
+        this.userInput = this.userInput.replace(/\s/g, "").toLowerCase();
+        params = { params: { filter: this.userInput } };
+        // console.log(params);
       }
 
       if (this.checkFilter.length > 0) {
-        params = { params: { id: this.checkFilter } };
-        // console.log(params);
+        params = { params: { filter: this.checkFilter } };
       }
+
       return params;
     },
   },
@@ -42,13 +40,17 @@ export default {
   methods: {
     fetchRestaurants(endpoint = store.baseUri + "restaurant/") {
       axios.get(endpoint, this.prova).then((response) => {
-        // console.log(response.config);
+        // console.log(response);
         this.restaurants = response.data;
       });
     },
 
     filterRestaurants(filter) {
+      // this.userInput = filter;
+
       if (typeof filter === "number") {
+        // this.userInput = "";
+        // console.log(this.userInput);
         if (!this.checkFilter.includes(filter)) {
           this.checkFilter.push(filter);
         } else {
@@ -58,8 +60,8 @@ export default {
       }
 
       if (typeof filter === "string") {
+        // this.userInput = filter;
         let index = 0;
-
         if (this.checkFilter.length > 0) {
           while (this.checkFilter.length > 0 && index < 30) {
             index++; //di protezione in fase di test, scongiura il loop
@@ -70,10 +72,9 @@ export default {
             this.checkFilter.shift();
           }
         }
-
         this.userInput = filter;
       }
-
+      this.prova;
       this.fetchRestaurants();
     },
   },
@@ -94,7 +95,10 @@ export default {
     <div class="row">
       <div class="col-3">
         <div class="debug">
-          <AppAside @checked="filterRestaurants"></AppAside>
+          <AppAside
+            @checked="filterRestaurants"
+            :userInput="userInput"
+          ></AppAside>
         </div>
       </div>
       <div class="col-9">

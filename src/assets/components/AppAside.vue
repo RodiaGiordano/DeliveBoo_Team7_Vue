@@ -7,7 +7,8 @@ export default {
     return {
       typeList: [],
       baseUri: store.baseUri,
-      inputSearch: "",
+      // inputSearch: "",
+      prova: this.userInput,
     };
   },
   mounted() {
@@ -21,7 +22,7 @@ export default {
       });
     },
   },
-
+  props: { userInput: String },
   emits: ["checked"],
 };
 </script>
@@ -36,8 +37,8 @@ export default {
       type="text"
       class="form-control"
       placeholder="Cerca"
-      @input="$emit('checked', inputSearch)"
-      v-model="inputSearch"
+      @input="$emit('checked', prova)"
+      v-model="prova"
       aria-label="Example text with button addon"
       aria-describedby="button-addon1"
     />
