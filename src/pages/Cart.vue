@@ -1,14 +1,26 @@
 <script>
 import { store } from ".././assets/data/store";
+import axios from "axios";
 export default {
   data() {
     return {
       totalPrice: 0,
       cartStorage: store.cartStorage,
+      axiosDishes: [],
     };
   },
 
   methods: {
+    fetchRestaurantDetail(
+      endpoint = store.baseUri + "restaurant/" + this.$route.params.id
+    ) {
+      axios.get(endpoint).then((response) => {
+        this.axiosDishes = response.data.dishes;
+        console.log(this.axiosDishes);
+      });
+    },
+
+
     //Add dish and save it in local storage
     setAmount(dish, mode) {
       let dishInArray = dish.id;
@@ -74,43 +86,33 @@ export default {
       if (dishIdsString) {
         const dishIdsArray = JSON.parse(dishIdsString);
 
-        // Controls
-        dishIdsArray.forEach((dishId) => {
-          const dish = this.cartStorage.find((dish) => {
-            return dish.id === dishId;
-          });
 
-          if (dish) {
-            this.cartStorage.push(dish);
-            this.totalPrice += parseFloat(dish.price);
-          }
-        });
       }
+
     },
   },
 
   mounted() {
-    this.fetchFromLocal();
-    // const dishIds = this.cartStorage.map((dish) => {
-    //   console.log(this.totalPrice);
-    //   this.totalPrice += parseFloat(dish.price);
-    //   console.log(this.totalPrice);
-    //   return dish.id;
-    // });
-    // const dishIdsString = JSON.stringify(dishIds);
-    // localStorage.setItem("orderedDishIds", dishIdsString);
+    if(this.cartStorage.length > 0) {
+      return
+    } else  {
+      this.fetchFromLocal(); 
+    }
 
-    console.log(this.cartStorage);
+    const dishIds = this.cartStorage.map((dish) => {
+      this.totalPrice += parseFloat(dish.price);
+      return dish.id;
+    });
+    
+
   },
 };
 </script>
 
 <template>
   <div class="row">
-    <!-- MENU FINTO \\ CANCELLA DOPO TEST -->
     <div class="col-6">
       <h2>Carrello</h2>
-      <!-- {{ console.log(this.$route.params.dishId) }} -->
       <ul>
         <div class="dish-menu" v-for="dish in cartStorage">
           {{ dish.name }}

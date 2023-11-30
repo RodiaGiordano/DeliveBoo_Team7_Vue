@@ -12,11 +12,17 @@ export default {
     addToStorages(dish) {
       //adds to cartStorage
       this.cartStorage.push(dish);
+      
+      if(localStorage.getItem("restaurantId") == "") {
+        localStorage.setItem("restaurantId", dish.restaurant_id)
+      }
 
       //adds to localStorage
       const dishIds = this.cartStorage.map((dish) => {
         return dish.id;
       });
+      console.log(dish)
+
 
       const dishIdsString = JSON.stringify(dishIds);
       localStorage.setItem("orderedDishIds", dishIdsString);

@@ -20,6 +20,7 @@ export default {
       axios.get(endpoint).then((response) => {
         this.restaurant = response.data.restaurant;
         this.dishes = response.data.dishes;
+        
       });
     },
   },
