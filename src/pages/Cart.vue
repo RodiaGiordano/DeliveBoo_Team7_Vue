@@ -36,7 +36,6 @@ export default {
   methods: {
     //Add dish and save it in local storage
     addItem(dish, amount) {
-
       amount = 1;
 
       let dishInArray = dish.id;
@@ -50,13 +49,11 @@ export default {
 
         //save in local storage
         this.saveOrderedDishIdsToLocalStorage();
-          
       }
     },
 
     //Remove dish
     removeItem(dish) {
-
       let dishInArray = dish.id;
       let dishExists = this.orderedDish.find((dish) => dish.id == dishInArray);
 
@@ -68,32 +65,38 @@ export default {
       }
 
       //remove from local Storage
-      // this.saveOrderedDishToLocalStorage();
+      this.saveOrderedDishIdsToLocalStorage();
     },
 
-    //Svuota carrello 
+    //Svuota carrello
     emptyCart() {
       this.orderedDish = [];
       this.totalPrice = 0;
+      localStorage.removeItem("orderedDishIds");
     },
 
-
-// STORAGE LOGIC
+    // STORAGE LOGIC
 
     //SAVE dish id array as string in local storage
     saveOrderedDishIdsToLocalStorage() {
-    const dishIds = this.orderedDish.map((dish) => {
-      return dish.id
-    });
-    
-    const dishIdsString = JSON.stringify(dishIds);
+      if (this.orderedDish.length === 0) {
+        console.log("RIMOSSO TEST");
+        localStorage.removeItem("orderedDishIds");
+        return;
+      }
 
-    localStorage.setItem('orderedDishIds', dishIdsString);
+      const dishIds = this.orderedDish.map((dish) => {
+        return dish.id;
+      });
+
+      const dishIdsString = JSON.stringify(dishIds);
+
+      localStorage.setItem("orderedDishIds", dishIdsString);
     },
 
     //RETRIVE what is saved in local storage : parse dish id string to array
     parseToArrayFromLocalStorage() {
-      const dishIdsString = localStorage.getItem('orderedDishIds');
+      const dishIdsString = localStorage.getItem("orderedDishIds");
 
       if (dishIdsString) {
         const dishIdsArray = JSON.parse(dishIdsString);
@@ -101,23 +104,20 @@ export default {
         // Controls
         dishIdsArray.forEach((dishId) => {
           const dish = this.fakeMenu.find((dish) => {
-            return dish.id === dishId
-            });
+            return dish.id === dishId;
+          });
 
           if (dish) {
             this.orderedDish.push(dish);
             this.totalPrice += dish.price;
           }
-        });  
+        });
       }
     },
-
-
-
   },
 
   mounted() {
-  this.parseToArrayFromLocalStorage();
+    this.parseToArrayFromLocalStorage();
   },
 };
 </script>
