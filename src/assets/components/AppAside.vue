@@ -21,10 +21,9 @@ export default {
       });
     },
   },
-
-  computed: {
-    checkBoxTrue() {
-      if (this.boxChecked) {
+  watch: {
+    boxChecked: function (newVal) {
+      if (newVal) {
         this.inputSearch = "";
       }
     },
