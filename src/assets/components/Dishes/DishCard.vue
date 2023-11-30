@@ -12,11 +12,9 @@ export default {
     addToStorages(dish) {
       //adds to cartStorage
       this.cartStorage.push(dish);
-      // console.log(store.cartStorage);
 
       //adds to localStorage
       const dishIds = this.cartStorage.map((dish) => {
-        console.log(dish.id);
         return dish.id;
       });
 

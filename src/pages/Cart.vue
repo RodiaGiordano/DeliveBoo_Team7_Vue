@@ -51,7 +51,6 @@ export default {
     },
 
     // STORAGE LOGIC
-
     //SAVE dish id array as string in local storage
     saveInLocal() {
       if (this.cartStorage.length === 0) {
@@ -82,8 +81,8 @@ export default {
           });
 
           if (dish) {
-            this.orderedDish.push(dish);
-            this.totalPrice += dish.price;
+            this.cartStorage.push(dish);
+            this.totalPrice += parseFloat(dish.price);
           }
         });
       }
@@ -91,15 +90,15 @@ export default {
   },
 
   mounted() {
-    const dishIds = this.cartStorage.map((dish) => {
-      console.log(this.totalPrice);
-      this.totalPrice += parseFloat(dish.price);
-      console.log(this.totalPrice);
-      return dish.id;
-    });
-
-    const dishIdsString = JSON.stringify(dishIds);
-    localStorage.setItem("orderedDishIds", dishIdsString);
+    this.fetchFromLocal();
+    // const dishIds = this.cartStorage.map((dish) => {
+    //   console.log(this.totalPrice);
+    //   this.totalPrice += parseFloat(dish.price);
+    //   console.log(this.totalPrice);
+    //   return dish.id;
+    // });
+    // const dishIdsString = JSON.stringify(dishIds);
+    // localStorage.setItem("orderedDishIds", dishIdsString);
 
     console.log(this.cartStorage);
   },
