@@ -22,13 +22,13 @@ export default {
     },
   },
 
-  computed: {
-    provaEl() {
-      return this.userInput;
-    },
-  },
-  props: { userInput: String },
-  emits: ["checked"],
+  // computed: {
+  //   provaEl() {
+  //     return this.userInput;
+  //   },
+  // },
+  // props: { userInput: String },
+  emits: ["checked", "userSearch"],
 };
 </script>
 
@@ -42,8 +42,7 @@ export default {
       type="text"
       class="form-control"
       placeholder="Cerca"
-      @input="$emit('checked', this.userInput)"
-      :value="this.userInput"
+      @input="$emit('userSearch', this.userInput)"
       aria-label="Example text with button addon"
       aria-describedby="button-addon1"
     />

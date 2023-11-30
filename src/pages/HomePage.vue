@@ -40,23 +40,17 @@ export default {
   methods: {
     fetchRestaurants(endpoint = store.baseUri + "restaurant/") {
       axios.get(endpoint, this.prova).then((response) => {
-        // console.log(response);
+        console.log("chiamata");
         this.restaurants = response.data;
       });
     },
 
-    filterRestaurants(filter) {
-      // this.userInput = filter;
-
-      if (typeof filter === "number") {
-        // this.userInput = "";
-        // console.log(this.userInput);
-        if (!this.checkFilter.includes(filter)) {
-          this.checkFilter.push(filter);
-        } else {
-          const checkRemove = this.checkFilter.indexOf(filter);
-          this.checkFilter.splice(checkRemove, 1);
-        }
+    filterRestaurantsChecked(filter) {
+      if (!this.checkFilter.includes(filter)) {
+        this.checkFilter.push(filter);
+      } else {
+        const checkRemove = this.checkFilter.indexOf(filter);
+        this.checkFilter.splice(checkRemove, 1);
       }
 
       if (typeof filter === "string") {
@@ -75,6 +69,23 @@ export default {
         this.userInput = filter;
       }
       this.prova;
+      this.fetchRestaurants();
+    },
+
+    filterRestaurantsWord(filter) {
+      let index = 0; // debug
+      if (this.checkFilter.length > 0) {
+        while (this.checkFilter.length > 0 && index < 30) {
+          index++; //di protezione in fase di test, scongiura il loop
+
+          const checkId = this.checkFilter[0];
+          const checkRemove = document.getElementById("check-" + checkId);
+          checkRemove.checked = false;
+          this.checkFilter.shift();
+        }
+      }
+      this.userInput = filter;
+
       this.fetchRestaurants();
     },
   },
@@ -96,8 +107,8 @@ export default {
       <div class="col-3">
         <div class="debug">
           <AppAside
-            @checked="filterRestaurants"
-            :userInput="userInput"
+            @checked="filterRestaurantsChecked"
+            @userSearch="filterRestaurantsWord"
           ></AppAside>
         </div>
       </div>
