@@ -1,5 +1,4 @@
 <script>
-import DishCard from "../assets/components/Dishes/DishCard.vue";
 
 export default {
   data() {

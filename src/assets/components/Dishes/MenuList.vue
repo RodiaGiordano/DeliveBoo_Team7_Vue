@@ -12,38 +12,6 @@ export default {
 </script>
 
 <template>
-  <!-- <div class="prova d-flex">
-    <div class="card mb-3 w-50">
-      <img :src="restaurant.image" class="card-img-top" />
-      <div class="card-body">
-        <h5 class="card-title">
-          {{ restaurant.restaurant_name }}
-        </h5>
-        <p>{{ restaurant.address }}</p>
-        <p class="card-text">
-          {{ restaurant.description }}
-        </p>
-        <p v-for="typeEl in restaurant.types" class="card-text">
-          <small class="text-body-secondary">{{ typeEl.name }}</small>
-        </p>
-      </div>
-    </div>
-    <div>
-      <ul>
-        <li v-for="dish in dishes">
-          {{ dish.name }}
-        </li>
-      </ul>
-    </div>
-  </div>
-  <ul>
-    <li v-for="dish in dishes">
-      <DishCard :dish="dish"></DishCard>
-    </li>
-  </ul> -->
-
-  <!-- Restaurant -->
-
   <!-- jumbotron -->
 <div class="menulist">
   <div class="restaurant-jumbotron">
@@ -75,7 +43,7 @@ export default {
           
             <li v-for="dish in dishes" :key="dish.id">
                 <DishCard :dish="dish"></DishCard>
-                <button class="add-to-cart btn btn-danger"><font-awesome-icon icon ="fa-solid fa-cart-plus"></font-awesome-icon ></button>
+                
                 
             </li>
         </ul>
@@ -114,7 +82,7 @@ export default {
   }
 }
 .dishes {
-  margin: 4rem 1rem;
+  margin: 4rem 0 1rem;
 
   h3 {
     margin: 2rem 0;
@@ -123,17 +91,6 @@ export default {
     list-style: none;
     padding: 0;
     margin: 0;
-    
-    li {
-      display: flex;
-      flex-direction: row;
-      padding-right: 2rem;
-      
-      .add-to-cart {
-        align-self: center;
-        // margin-top: 2rem;
-      }
-    }
   }
 }
 
