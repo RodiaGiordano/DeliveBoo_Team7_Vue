@@ -9,21 +9,39 @@ export default {
 </script>
 
 <template>
-  <div class="card mb-3">
-    <img :src="dish.image" class="card-img-top" />
-    <div class="card-body">
-      <h5 class="card-title">
-        {{ dish.restaurant_name }}
-      </h5>
-      <p>{{ dish.address }}</p>
-      <p class="card-text">
-        {{ dish.description }}
-      </p>
-      <!-- <p v-for="typeEl in dish.course" class="card-text">
-        <small class="text-body-secondary">{{ typeEl.name }}</small>
-      </p> -->
-    </div>
-  </div>
+
+    <div class=" dish-card row d-flex">
+        <div class="dish-image col-4 ">
+            <img :src="dish.image" class="card-img" />
+        </div>
+        <div class="dish-body col-8">
+            <h5 class="card-title">{{ dish.name }}</h5>
+            <p class="card-text">{{ dish.description }}</p>
+            <p>{{ dish.price }} €</p>
+            <p v-for="typeEl in dish.courses" class="card-text">
+                <small class="text-body-secondary">{{ typeEl.name }}</small>
+            </p>
+        </div>
+</div>
+
+
+
+
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+.dish-card {
+  display: flex;
+  width: 100%;
+  margin: 1rem;
+
+  .dish-img {
+    width: 100%;
+  }
+}
+
+
+
+
+</style>
