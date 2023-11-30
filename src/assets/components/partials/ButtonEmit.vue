@@ -11,9 +11,11 @@ export default {
 </script>
 
 <template>
-  {{ console.log(elementId) }}
   <router-link
-    :to="{ name: 'menupage', params: { id: elementId } }"
+    :to="{
+      name: 'menupage',
+      params: { id: elementId },
+    }"
     class="btn btn-primary"
   >
     <font-awesome-icon :icon="['fas', 'utensils']" size="lg" />

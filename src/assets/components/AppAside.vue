@@ -5,8 +5,9 @@ import axios from "axios";
 export default {
   data() {
     return {
-      restaurantList: [],
+      typeList: [],
       baseUri: store.baseUri,
+      inputSearch: "",
     };
   },
   mounted() {
@@ -16,11 +17,19 @@ export default {
   methods: {
     fetchTypes(endpoint) {
       axios.get(endpoint).then((response) => {
-        this.restaurantList = response.data;
+        this.typeList = response.data;
       });
     },
   },
 
+  computed: {
+    checkBoxTrue() {
+      if (this.boxChecked) {
+        this.inputSearch = "";
+      }
+    },
+  },
+  props: { boxChecked: Boolean },
   emits: ["checked"],
 };
 </script>
@@ -32,26 +41,29 @@ export default {
     </button>
 
     <input
+      id="serach_bar"
       type="text"
       class="form-control"
-      placeholder=""
+      placeholder="Cerca"
+      @input="$emit('checked', inputSearch)"
+      v-model="inputSearch"
       aria-label="Example text with button addon"
       aria-describedby="button-addon1"
     />
   </div>
   <div>
     <div class="form-check">
-      <div v-for="restaurantEl in restaurantList">
+      <div v-for="typeEl in typeList">
         <input
-          @change="$emit('checked', restaurantEl.id)"
+          @change="$emit('checked', typeEl.id)"
           class="form-check-input"
           type="checkbox"
-          :value="restaurantEl.id"
-          :id="'check-' + restaurantEl.id"
+          :value="typeEl.id"
+          :id="'check-' + typeEl.id"
         />
 
-        <label class="form-check-label" for="flexCheckDefault">
-          {{ restaurantEl.name }}
+        <label class="form-check-label" :for="'check-' + typeEl.id">
+          {{ typeEl.name }}
         </label>
       </div>
     </div>
