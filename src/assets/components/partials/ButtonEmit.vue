@@ -12,7 +12,10 @@ export default {
 
 <template>
   <router-link
-    :to="{ name: 'menupage', params: { id: elementId } }"
+    :to="{
+      name: 'menupage',
+      params: { id: elementId },
+    }"
     class="btn btn-primary"
   >
     <font-awesome-icon :icon="['fas', 'utensils']" size="lg" />

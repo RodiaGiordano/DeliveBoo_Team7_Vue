@@ -8,7 +8,6 @@ export default {
       typeList: [],
       baseUri: store.baseUri,
       // inputSearch: "",
-      prova: this.userInput,
     };
   },
   mounted() {
@@ -20,6 +19,12 @@ export default {
       axios.get(endpoint).then((response) => {
         this.typeList = response.data;
       });
+    },
+  },
+
+  computed: {
+    provaEl() {
+      return this.userInput;
     },
   },
   props: { userInput: String },
@@ -37,8 +42,8 @@ export default {
       type="text"
       class="form-control"
       placeholder="Cerca"
-      @input="$emit('checked', prova)"
-      v-model="prova"
+      @input="$emit('checked', this.userInput)"
+      :value="this.userInput"
       aria-label="Example text with button addon"
       aria-describedby="button-addon1"
     />
