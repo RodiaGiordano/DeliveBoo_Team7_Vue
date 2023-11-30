@@ -1,9 +1,8 @@
 <script>
-import {store} from '.././assets/data/store';
+import { store } from ".././assets/data/store";
 export default {
   data() {
     return {
-      orderedDish: [],
       totalPrice: 0,
       cartStorage: store.cartStorage,
     };
@@ -11,65 +10,62 @@ export default {
 
   methods: {
     //Add dish and save it in local storage
-    addItem(dish, amount) {
-
-      amount = 1;
-
+    setAmount(dish, mode) {
       let dishInArray = dish.id;
       let dishExists = this.cartStorage.map((dish) => dish.id == dishInArray);
 
       if (dish && dishExists) {
-        for (let i = 1; i <= amount; i++) {
-          this.orderedDish.push(dish);
-          this.totalPrice += dish.price;
+        if (mode === "inc") {
+          this.cartStorage.push(dish);
+          this.totalPrice += parseFloat(dish.price);
+        } else if (mode === "dec") {
+          const index = this.cartStorage.indexOf(dish);
+          this.cartStorage.splice(index, 1);
+          this.totalPrice -= parseFloat(dish.price);
         }
-
-        //save in local storage
-        this.saveOrderedDishIdsToLocalStorage();
-          
       }
+
+      console.log(this.cartStorage);
     },
 
     //Remove dish
     removeItem(dish) {
-
       let dishInArray = dish.id;
-      let dishExists = this.orderedDish.find((dish) => dish.id == dishInArray);
+      let dishExists = this.cartStorage.find((dish) => dish.id == dishInArray);
 
       if (dish && dishExists) {
-        const index = this.orderedDish.indexOf(dish);
-        this.orderedDish.splice(index, 1);
-        console.log(this.orderedDish);
+        const index = this.cartStorage.indexOf(dish);
+        this.cartStorage.splice(index, 1);
         this.totalPrice -= dish.price;
       }
 
       //remove from local Storage
-      this.saveOrderedDishToLocalStorage();
+      //this.saveOrderedDishToLocalStorage();
     },
 
-    //Svuota carrello 
+    //Svuota carrello
     emptyCart() {
-      this.orderedDish = [];
+      this.cartStorage = [];
       this.totalPrice = 0;
+      localStorage.removeItem("orderedDishIds");
     },
 
-
-// STORAGE LOGIC
+    // STORAGE LOGIC
 
     //SAVE dish id array as string in local storage
     saveOrderedDishIdsToLocalStorage() {
-    const dishIds = this.orderedDish.map((dish) => {
-      return dish.id
-    });
-    
-    const dishIdsString = JSON.stringify(dishIds);
+      const dishIds = this.orderedDish.map((dish) => {
+        return dish.id;
+      });
 
-    localStorage.setItem('orderedDishIds', dishIdsString);
+      const dishIdsString = JSON.stringify(dishIds);
+
+      localStorage.setItem("orderedDishIds", dishIdsString);
     },
 
     //RETRIVE what is saved in local storage : parse dish id string to array
     parseToArrayFromLocalStorage() {
-      const dishIdsString = localStorage.getItem('orderedDishIds');
+      const dishIdsString = localStorage.getItem("orderedDishIds");
 
       if (dishIdsString) {
         const dishIdsArray = JSON.parse(dishIdsString);
@@ -77,27 +73,32 @@ export default {
         // Controls
         dishIdsArray.forEach((dishId) => {
           const dish = this.cartStorage.find((dish) => {
-            return dish.id === dishId
-            });
+            return dish.id === dishId;
+          });
 
           if (dish) {
             this.orderedDish.push(dish);
             this.totalPrice += dish.price;
           }
-        });  
+        });
       }
     },
-
-
-
   },
 
   mounted() {
-  this.parseToArrayFromLocalStorage();
-  console.log(this.cartStorage)
-  },
+    //this.parseToArrayFromLocalStorage();
+    const dishIds = this.cartStorage.map((dish) => {
+      console.log(this.totalPrice);
+      this.totalPrice += parseFloat(dish.price);
+      console.log(this.totalPrice);
+      return dish.id;
+    });
 
- 
+    const dishIdsString = JSON.stringify(dishIds);
+    localStorage.setItem("orderedDishIds", dishIdsString);
+
+    console.log(this.cartStorage);
+  },
 };
 </script>
 
@@ -113,35 +114,39 @@ export default {
           <br />
           {{ dish.price }}&euro;
           <br />
+
+          <!-- aumenta qty -->
           <button
             type="button"
             class="btn btn-primary"
-            @click="addItem(dish, amount)"
+            @click="setAmount(dish, 'inc')"
           >
-            Aggiungi al carrello
+            +
+          </button>
+
+          <!-- riduci qty -->
+          <button
+            type="button"
+            class="btn btn-danger"
+            @click="setAmount(dish, 'dec')"
+          >
+            -
+          </button>
+
+          <!-- rimuovi piatto -->
+          <button
+            type="button"
+            class="btn btn-danger"
+            @click="removeItem(dish)"
+          >
+            Rimuovi
           </button>
         </div>
       </ul>
     </div>
 
-    <!-- CARRELLO -->
-    <div class="col-6">
-      <h2>Carrello</h2>
-      <div class="cart-item" v-for="item in orderedDish">
-        {{ item.name }}
-        <br />
-        {{ item.price }}&euro;
-        <br />
-        <button type="button" class="btn btn-danger" @click="removeItem(item)">
-          Rimuovi dal carrello
-        </button>
-      </div>
-      <button class="btn btn-danger" @click="emptyCart()">
-        Svuota carrello
-      </button>
-    </div>
-
     <h3><b>TOTALE: </b> {{ this.totalPrice.toFixed(2) }}&euro;</h3>
+    <button class="btn btn-danger" @click="emptyCart()">Svuota carrello</button>
   </div>
 </template>
 
