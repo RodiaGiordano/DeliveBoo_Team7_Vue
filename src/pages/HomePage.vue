@@ -16,11 +16,11 @@ export default {
       restaurants: [],
       checkFilter: [],
       userInput: "",
-      provaCheck: false,
+      boxChecked: false,
     };
   },
   computed: {
-    prova() {
+    paramsFactory() {
       let params;
       if (typeof this.userInput === "string" && this.userInput) {
         this.userInput = this.userInput.replace(/\s/g, "").toLowerCase();
@@ -37,14 +37,14 @@ export default {
 
   methods: {
     fetchRestaurants(endpoint = store.baseUri + "restaurant/") {
-      axios.get(endpoint, this.prova).then((response) => {
+      axios.get(endpoint, this.paramsFactory).then((response) => {
         this.restaurants = response.data;
       });
     },
 
     filterRestaurants(filter) {
       if (typeof filter === "number") {
-        this.provaCheck = true;
+        this.boxChecked = true;
 
         if (!this.checkFilter.includes(filter)) {
           this.checkFilter.push(filter);
@@ -55,12 +55,10 @@ export default {
       }
 
       if (typeof filter === "string") {
-        this.provaCheck = false;
-        let index = 0;
-        if (this.checkFilter.length > 0) {
-          while (this.checkFilter.length > 0 && index < 30) {
-            index++; //di protezione in fase di test, scongiura il loop
+        this.boxChecked = false;
 
+        if (this.checkFilter.length > 0) {
+          while (this.checkFilter.length > 0) {
             const checkId = this.checkFilter[0];
             const checkRemove = document.getElementById("check-" + checkId);
             checkRemove.checked = false;
@@ -69,7 +67,7 @@ export default {
         }
         this.userInput = filter;
       }
-      this.prova;
+      this.paramsFactory;
       this.fetchRestaurants();
     },
   },
@@ -92,7 +90,7 @@ export default {
         <div class="debug">
           <AppAside
             @checked="filterRestaurants"
-            :provaCheck="provaCheck"
+            :boxChecked="boxChecked"
           ></AppAside>
         </div>
       </div>

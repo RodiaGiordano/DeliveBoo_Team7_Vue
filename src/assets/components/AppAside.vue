@@ -23,13 +23,13 @@ export default {
   },
 
   computed: {
-    provaEl() {
-      if (this.provaCheck) {
+    checkBoxTrue() {
+      if (this.boxChecked) {
         this.inputSearch = "";
       }
     },
   },
-  props: { provaCheck: Boolean },
+  props: { boxChecked: Boolean },
   emits: ["checked"],
 };
 </script>
