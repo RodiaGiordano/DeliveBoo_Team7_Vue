@@ -1,34 +1,11 @@
 <script>
-
+import {store} from '.././assets/data/store';
 export default {
   data() {
     return {
       orderedDish: [],
       totalPrice: 0,
-
-      //fake menu - cancellare dopo test!!!!!!!
-      fakeMenu: [
-        {
-          name: "Pasta alla carbonara",
-          price: 12.5,
-          id: 1,
-        },
-        {
-          name: "Pasta al forno",
-          price: 19.5,
-          id: 2,
-        },
-        {
-          name: "Cotoletta",
-          price: 9.1,
-          id: 3,
-        },
-        {
-          name: "Pasta al pomodoro",
-          price: 5,
-          id: 4,
-        },
-      ],
+      cartStorage: store.cartStorage,
     };
   },
 
@@ -39,7 +16,7 @@ export default {
       amount = 1;
 
       let dishInArray = dish.id;
-      let dishExists = this.fakeMenu.map((dish) => dish.id == dishInArray);
+      let dishExists = this.cartStorage.map((dish) => dish.id == dishInArray);
 
       if (dish && dishExists) {
         for (let i = 1; i <= amount; i++) {
@@ -67,7 +44,7 @@ export default {
       }
 
       //remove from local Storage
-      // this.saveOrderedDishToLocalStorage();
+      this.saveOrderedDishToLocalStorage();
     },
 
     //Svuota carrello 
@@ -99,7 +76,7 @@ export default {
 
         // Controls
         dishIdsArray.forEach((dishId) => {
-          const dish = this.fakeMenu.find((dish) => {
+          const dish = this.cartStorage.find((dish) => {
             return dish.id === dishId
             });
 
@@ -117,7 +94,10 @@ export default {
 
   mounted() {
   this.parseToArrayFromLocalStorage();
+  console.log(this.cartStorage)
   },
+
+ 
 };
 </script>
 
@@ -125,9 +105,10 @@ export default {
   <div class="row">
     <!-- MENU FINTO \\ CANCELLA DOPO TEST -->
     <div class="col-6">
-      <h2>Menu Risto a cazzo</h2>
+      <h2>Carrello</h2>
+      <!-- {{ console.log(this.$route.params.dishId) }} -->
       <ul>
-        <div class="dish-menu" v-for="dish in fakeMenu">
+        <div class="dish-menu" v-for="dish in cartStorage">
           {{ dish.name }}
           <br />
           {{ dish.price }}&euro;

@@ -1,11 +1,19 @@
 <script>
+import {store} from '../../data/store';
+
 export default {
   data() {
-    return {};
+    return {
+
+    };
   },
 
   methods: {
-   
+   addToCartDb(dish, amount) {
+      store.cartStorage.push(dish);
+      // console.log(store.cartStorage);
+      
+   }
   },
 
   props: { dish: Object },
@@ -26,11 +34,18 @@ export default {
                 <small class="text-body-secondary">{{ typeEl.name }}</small>
             </p>
         </div>
+
+
         <div class="div col-1">
-          <button 
-          class="add-to-cart btn btn-danger">
-          <font-awesome-icon icon ="fa-solid fa-cart-plus"></font-awesome-icon ></button>
+            <button  @click="addToCartDb(dish)">
+              <router-link :to="{name:'cart'}"  class="add-to-cart btn btn-danger">
+                <font-awesome-icon icon ="fa-solid fa-cart-plus"></font-awesome-icon >
+              </router-link>
+
+            </button>
         </div>
+
+
 </div>
 
 
