@@ -71,6 +71,8 @@ export default {
       this.paramsFactory;
       this.fetchRestaurants();
     },
+
+    resetInput(click) {},
   },
 
   mounted() {
@@ -89,7 +91,7 @@ export default {
     <div class="row">
       <div class="col-3">
         <div class="debug">
-          <AppAside @checked="filterRestaurants" :boxChecked="boxChecked"></AppAside>
+          <AppAside @checked="filterRestaurants" @advancedSerach="resetInput" :boxChecked="boxChecked"></AppAside>
         </div>
       </div>
       <div class="col-9">

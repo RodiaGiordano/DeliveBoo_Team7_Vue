@@ -2,8 +2,6 @@
 import { store } from '../data/store';
 import axios from 'axios';
 
-import Filter from '../components/partials/Filter.vue';
-
 export default {
   data() {
     return {
@@ -22,9 +20,10 @@ export default {
         this.typeList = response.data;
       });
     },
-    checked(idEl) {
-      this.$emit('checked', idEl);
-    },
+
+    // submitForm() {
+    //   ;
+    // },
   },
   watch: {
     boxChecked: function (newVal) {
@@ -33,38 +32,60 @@ export default {
       }
     },
   },
-
-  components: { Filter },
-
   props: { boxChecked: Boolean },
-  emits: ['checked'],
+  emits: ['checked', 'advancedSerach'],
 };
 </script>
 
 <template>
   <div class="input-group mb-3">
     <div class="btn-group">
-      <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Nome ristorante</a></li>
-        <li><a class="dropdown-item" href="#">Menu item</a></li>
+      <button @click="$emit('advancedSerach', true)" class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
 
-        <li><a class="dropdown-item" href="#">Menu item</a></li>
-      </ul>
+      <div class="advanced_serach">
+        <ul class="dropdown-menu">
+          <li class="dropdown-item">
+            <input id="serach_bar" type="text" class="form-control" placeholder="Cerca" @input="$emit('checked', inputSearch)" v-model="inputSearch" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+          </li>
+          <li class="dropdown-item d-flex flex-column">
+            <label for="customRange1" class="form-label">Fascia di prezzo</label>
+            <input type="range" class="form-range" id="customRange1" />
+          </li>
+
+          <div v-for="typeEl in typeList">
+            <li class="dropdown-item">
+              <input @change="$emit('checked', typeEl.id)" class="form-check-input" type="checkbox" :value="typeEl.id" :id="'check-' + typeEl.id" />
+
+              <label class="form-check-label" :for="'check-' + typeEl.id">
+                {{ typeEl.name }}
+              </label>
+            </li>
+          </div>
+          <li class="dropdown-item">
+            <button type="submit">cerca</button>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <input id="serach_bar" type="text" class="form-control" placeholder="Cerca" @input="$emit('checked', inputSearch)" v-model="inputSearch" aria-label="Example text with button addon" aria-describedby="button-addon1" />
   </div>
-  <Filter :elements="typeList" @checked="checked"></Filter>
-  <!-- <div class="form-check">
-    <div v-for="typeEl in typeList">
-      <input @change="$emit('checked', typeEl.id)" class="form-check-input" type="checkbox" :value="typeEl.id" :id="'check-' + typeEl.id" />
 
-      <label class="form-check-label" :for="'check-' + typeEl.id">
-        {{ typeEl.name }}
-      </label>
+  <div>
+    <div class="form-check">
+      <div v-for="typeEl in typeList">
+        <input @change="$emit('checked', typeEl.id)" class="form-check-input" type="checkbox" :value="typeEl.id" :id="'check-' + typeEl.id" />
+
+        <label class="form-check-label" :for="'check-' + typeEl.id">
+          {{ typeEl.name }}
+        </label>
+      </div>
     </div>
-  </div> -->
+  </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.advanced_serach label {
+  margin-left: 10px;
+}
+</style>
