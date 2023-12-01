@@ -38,8 +38,6 @@ export default {
   methods: {
     fetchRestaurants(endpoint = store.baseUri + 'restaurant/') {
       axios.get(endpoint, this.paramsFactory).then((response) => {
-        console.log('chiamata');
-        console.log(response.config);
         this.restaurants = response.data;
       });
     },
