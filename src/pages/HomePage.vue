@@ -5,25 +5,25 @@ l'input della barra di ricerca diventa un array in cui non è mai possibile aver
 inoltre è possibile cancellare anche lettere alternate o aggiungerne e l'array rispetterà l'ordine-->
 
 <script>
-import { store } from "../assets/data/store";
-import axios from "axios";
-import AppAside from "../assets/components/AppAside.vue";
-import RestaurantList from "../assets/components/Restaurants/restaurantlist.vue";
+import { store } from '../assets/data/store';
+import axios from 'axios';
+import AppAside from '../assets/components/AppAside.vue';
+import RestaurantList from '../assets/components/Restaurants/restaurantlist.vue';
 
 export default {
   data() {
     return {
       restaurants: [],
       checkFilter: [],
-      userInput: "",
+      userInput: '',
       boxChecked: false,
     };
   },
   computed: {
     paramsFactory() {
       let params;
-      if (typeof this.userInput === "string" && this.userInput) {
-        this.userInput = this.userInput.replace(/\s/g, "").toLowerCase();
+      if (typeof this.userInput === 'string' && this.userInput) {
+        this.userInput = this.userInput.replace(/\s/g, '').toLowerCase();
         params = { params: { filter: this.userInput } };
       }
 
@@ -36,15 +36,18 @@ export default {
   },
 
   methods: {
-    fetchRestaurants(endpoint = store.baseUri + "restaurant/") {
+    fetchRestaurants(endpoint = store.baseUri + 'restaurant/') {
       axios.get(endpoint, this.paramsFactory).then((response) => {
+        console.log('chiamata');
+        console.log(response.config);
         this.restaurants = response.data;
       });
     },
 
     filterRestaurants(filter) {
-      if (typeof filter === "number") {
+      if (typeof filter === 'number') {
         this.boxChecked = true;
+        this.userInput = '';
 
         if (!this.checkFilter.includes(filter)) {
           this.checkFilter.push(filter);
@@ -54,13 +57,13 @@ export default {
         }
       }
 
-      if (typeof filter === "string") {
+      if (typeof filter === 'string') {
         this.boxChecked = false;
 
         if (this.checkFilter.length > 0) {
           while (this.checkFilter.length > 0) {
             const checkId = this.checkFilter[0];
-            const checkRemove = document.getElementById("check-" + checkId);
+            const checkRemove = document.getElementById('check-' + checkId);
             checkRemove.checked = false;
             this.checkFilter.shift();
           }
@@ -88,10 +91,7 @@ export default {
     <div class="row">
       <div class="col-3">
         <div class="debug">
-          <AppAside
-            @checked="filterRestaurants"
-            :boxChecked="boxChecked"
-          ></AppAside>
+          <AppAside @checked="filterRestaurants" :boxChecked="boxChecked"></AppAside>
         </div>
       </div>
       <div class="col-9">

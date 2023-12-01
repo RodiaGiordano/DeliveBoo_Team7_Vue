@@ -1,17 +1,17 @@
 <script>
-import { store } from "../data/store";
-import axios from "axios";
+import { store } from '../data/store';
+import axios from 'axios';
 
 export default {
   data() {
     return {
       typeList: [],
       baseUri: store.baseUri,
-      inputSearch: "",
+      inputSearch: '',
     };
   },
   mounted() {
-    this.fetchTypes(store.baseUri + "type");
+    this.fetchTypes(store.baseUri + 'type');
   },
 
   methods: {
@@ -24,12 +24,12 @@ export default {
   watch: {
     boxChecked: function (newVal) {
       if (newVal) {
-        this.inputSearch = "";
+        this.inputSearch = '';
       }
     },
   },
   props: { boxChecked: Boolean },
-  emits: ["checked"],
+  emits: ['checked'],
 };
 </script>
 
@@ -39,27 +39,12 @@ export default {
       <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
     </button>
 
-    <input
-      id="serach_bar"
-      type="text"
-      class="form-control"
-      placeholder="Cerca"
-      @input="$emit('checked', inputSearch)"
-      v-model="inputSearch"
-      aria-label="Example text with button addon"
-      aria-describedby="button-addon1"
-    />
+    <input id="serach_bar" type="text" class="form-control" placeholder="Cerca" @input="$emit('checked', inputSearch)" v-model="inputSearch" aria-label="Example text with button addon" aria-describedby="button-addon1" />
   </div>
   <div>
     <div class="form-check">
       <div v-for="typeEl in typeList">
-        <input
-          @change="$emit('checked', typeEl.id)"
-          class="form-check-input"
-          type="checkbox"
-          :value="typeEl.id"
-          :id="'check-' + typeEl.id"
-        />
+        <input @change="$emit('checked', typeEl.id)" class="form-check-input" type="checkbox" :value="typeEl.id" :id="'check-' + typeEl.id" />
 
         <label class="form-check-label" :for="'check-' + typeEl.id">
           {{ typeEl.name }}
