@@ -21,25 +21,21 @@ export default {
   },
   computed: {
     paramsFactory() {
-      let params;
       if (typeof this.userInput === 'string' && this.userInput) {
         this.userInput = this.userInput.replace(/\s/g, '').toLowerCase();
-        params = { params: { filter: this.userInput } };
+        return { params: this.userInput };
       }
 
       if (this.checkFilter.length > 0) {
-        params = { params: { filter: this.checkFilter } };
+        return { params: this.checkFilter };
       }
-
-      return params;
     },
   },
 
   methods: {
     fetchRestaurants(endpoint = store.baseUri + 'restaurant/') {
-      axios.get(endpoint, this.paramsFactory).then((response) => {
-        console.log('chiamata');
-        console.log(response.config);
+      axios.get(endpoint, { params: this.paramsFactory }).then((response) => {
+        console.log(this.paramsFactory);
         this.restaurants = response.data;
       });
     },
@@ -53,6 +49,7 @@ export default {
           this.checkFilter.push(filter);
         } else {
           const checkRemove = this.checkFilter.indexOf(filter);
+
           this.checkFilter.splice(checkRemove, 1);
         }
       }
@@ -77,6 +74,7 @@ export default {
 
   mounted() {
     this.fetchRestaurants();
+    this.prova();
   },
 
   components: {
