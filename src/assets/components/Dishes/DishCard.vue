@@ -1,5 +1,5 @@
 <script>
-import { store } from "../../data/store";
+import { store } from '../../data/store';
 
 export default {
   data() {
@@ -10,22 +10,30 @@ export default {
 
   methods: {
     addToStorages(dish) {
+      const restaurantId = localStorage.getItem('restaurantId');
+      console.log(restaurantId);
+
+      //check if restaurantIdd exists and if it's different from dish's restaurant_id; if yes, don't add item to cart.
+      if ((restaurantId !== null || restaurantId !== '') && restaurantId !== dish.restaurant_id) {
+        console.log(restaurantId !== null || restaurantId !== '', dish.restaurant_id, restaurantId !== dish.restaurant_id);
+        return "restaurant id is different; you can't order from two different restaurants at once stupid bitch";
+      }
+
+      //if restaurantId is currently null or empty, assign dish's restaurantId as value
+      if (restaurantId == '' || restaurantId === null) {
+        localStorage.setItem('restaurantId', dish.restaurant_id);
+      }
+
       //adds to cartStorage
       this.cartStorage.push(dish);
-      
-      if(localStorage.getItem("restaurantId") == "") {
-        localStorage.setItem("restaurantId", dish.restaurant_id)
-      }
 
       //adds to localStorage
       const dishIds = this.cartStorage.map((dish) => {
         return dish.id;
       });
-      console.log(dish)
-
 
       const dishIdsString = JSON.stringify(dishIds);
-      localStorage.setItem("orderedDishIds", dishIdsString);
+      localStorage.setItem('orderedDishIds', dishIdsString);
     },
   },
 

@@ -20,7 +20,6 @@ export default {
       });
     },
 
-
     //Add dish and save it in local storage
     setAmount(dish, mode) {
       let dishInArray = dish.id;
@@ -85,26 +84,21 @@ export default {
 
       if (dishIdsString) {
         const dishIdsArray = JSON.parse(dishIdsString);
-
-
       }
-
     },
   },
 
   mounted() {
-    if(this.cartStorage.length > 0) {
-      return
-    } else  {
-      this.fetchFromLocal(); 
+    if (this.cartStorage.length > 0) {
+      return;
+    } else {
+      this.fetchFromLocal();
     }
 
     const dishIds = this.cartStorage.map((dish) => {
       this.totalPrice += parseFloat(dish.price);
       return dish.id;
     });
-    
-
   },
 };
 </script>
