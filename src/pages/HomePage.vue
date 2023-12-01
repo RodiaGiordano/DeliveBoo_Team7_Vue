@@ -74,7 +74,6 @@ export default {
 
   mounted() {
     this.fetchRestaurants();
-    this.prova();
   },
 
   components: {
