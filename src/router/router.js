@@ -1,9 +1,10 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router';
 
 // import delle Page
-import HomePage from "../pages/HomePage.vue";
-import MenuPage from "../pages/MenuPage.vue";
-import Cart from "../pages/Cart.vue";
+import HomePage from '../pages/HomePage.vue';
+import MenuPage from '../pages/MenuPage.vue';
+import Cart from '../pages/Cart.vue';
+import TestPage from '../pages/TestPage.vue';
 
 const router = createRouter({
   //Aggiugno history
@@ -12,20 +13,26 @@ const router = createRouter({
   //Aggiungo Rotte
   routes: [
     {
-      path: "/",
-      name: "homepage",
+      path: '/',
+      name: 'homepage',
       component: HomePage,
     },
     {
-      path: "/show/:id",
-      name: "menupage",
+      path: '/show/:id',
+      name: 'menupage',
       component: MenuPage,
     },
 
     {
-      path: "/cart",
-      name: "cart",
+      path: '/cart',
+      name: 'cart',
       component: Cart,
+    },
+    // braintree test
+    {
+      path: '/test/',
+      name: 'test',
+      component: TestPage,
     },
   ],
 });
