@@ -1,5 +1,5 @@
 <script>
-import MenuPage from "../../../pages/MenuPage.vue";
+import MenuPage from '../../../pages/MenuPage.vue';
 
 export default {
   data() {
@@ -16,7 +16,7 @@ export default {
       name: 'menupage',
       params: { id: elementId },
     }"
-    class="btn btn-primary"
+    class="btn"
   >
     <font-awesome-icon :icon="['fas', 'utensils']" size="lg" />
     Ordina da questo ristorante
@@ -24,4 +24,11 @@ export default {
   </router-link>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@use '../../scss/partials/variables' as *;
+
+.btn {
+  background-color: $bg2-color;
+  color: $secondary-font-color;
+}
+</style>

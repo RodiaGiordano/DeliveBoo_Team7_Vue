@@ -1,0 +1,15 @@
+@use './partials/variables' as *;
+
+body > div {
+  background-color: $bg-color;
+  color: $main-font-color;
+
+  a {
+    text-decoration: none;
+    color: $secondary-color;
+  }
+
+  img {
+    width: 100%;
+  }
+}

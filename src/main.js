@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import "./assets/scss/style.scss";
+import "./assets/scss/general.scss";
 
 //import router
 import { router } from "./router/router.js";
@@ -10,9 +10,10 @@ import "bootstrap/dist/css/bootstrap.css";
 //import fontawsome
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faMagnifyingGlass, faUtensils, faMapPin, faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faUtensils, faMapPin, faCartPlus, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
-library.add(faMagnifyingGlass, faUtensils, faMapPin, faCartPlus);
+library.add(faMagnifyingGlass, faUtensils, faMapPin, faCartPlus, faCartShopping, faHeart);
 import App from "./App.vue";
 
 const app = createApp(App);

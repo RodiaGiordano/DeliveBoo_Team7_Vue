@@ -1,5 +1,5 @@
 <script>
-import Navbar from "../src/assets/components/partials/Navbar.vue";
+import Navbar from '../src/assets/components/partials/Navbar.vue';
 
 export default {
   data() {
@@ -14,9 +14,7 @@ export default {
 
 <template>
   <Navbar></Navbar>
-  <div class=" mt-5">
-    <router-view></router-view>
-  </div>
+  <router-view></router-view>
 </template>
 
 <style lang="scss" scoped></style>
