@@ -18,7 +18,7 @@ export default {
 
 <template>
   <div class="restaurant-list wrapper">
-    <ul>
+    <ul ref="restaurantList">
       <li v-for="element in restaurants">
         <RestaurantCard :element="element"></RestaurantCard>
       </li>
@@ -27,11 +27,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.restaurant-list {
-  padding: 2rem 1.5rem 1rem 0;
-
-  ul {
-    list-style-type: none;
-  }
+ul {
+  list-style-type: none;
 }
 </style>

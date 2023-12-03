@@ -18,8 +18,8 @@ export default {
     }"
     class="btn"
   >
-    <font-awesome-icon :icon="['fas', 'utensils']" size="lg" />
-    Ordina da questo ristorante
+    <!-- <font-awesome-icon :icon="['fas', 'utensils']" size="lg" /> -->
+    Ordina
     <font-awesome-icon :icon="['fas', 'utensils']" size="lg" />
   </router-link>
 </template>
@@ -28,7 +28,7 @@ export default {
 @use '../../scss/partials/variables' as *;
 
 .btn {
-  background-color: $bg2-color;
+  background-color: $primary-color;
   color: $secondary-font-color;
 }
 </style>
