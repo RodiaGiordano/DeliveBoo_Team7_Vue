@@ -17,7 +17,17 @@ export default {
       return formData.name !== '' && formData.lastName !== '' && formData.tel.match(/^\d+$/) && formData.tel !== '' && formData.address !== '';
     },
 
+    sendOrder() {
+      console.log(this.validatedForm);
+
+      axios.post(store.baseUri + 'order/send', this.validatedForm).then((response) => {
+        console.log(response);
+      });
+    },
+
     tokenCall() {
+      const self = this;
+
       axios
         .get(store.baseUri + 'order/generate')
         .then((response) => {
@@ -34,13 +44,7 @@ export default {
               button.addEventListener('click', function () {
                 instance.requestPaymentMethod((err, payload) => {
                   axios.post(store.baseUri + 'order/make/payment', { payment_method_nonce: payload.nonce, id: 4 }).then((response) => {
-                    console.log(response.data);
-
-                    if (response.data.succes) {
-                      axios.post(store.baseUri + 'order/send', { formData: this.dataForm }).then((response) => {
-                        console.log(response);
-                      });
-                    }
+                    if (response.data.succes) self.sendOrder();
                   });
                 });
               });
@@ -67,6 +71,7 @@ export default {
       if (this.isValid(formData)) {
         axios.post(store.baseUri + 'order', formData).then((response) => {
           this.validatedForm = response.data;
+
           this.dataForm = false;
           this.paymentForm = true;
 
