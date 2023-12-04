@@ -10,10 +10,10 @@ import "bootstrap/dist/css/bootstrap.css";
 //import fontawsome
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faMagnifyingGlass, faUtensils, faMapPin, faCartPlus, faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faMagnifyingGlass, faUtensils, faMapPin, faPlus, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faClock } from "@fortawesome/free-regular-svg-icons";
 
-library.add(faMagnifyingGlass, faUtensils, faMapPin, faCartPlus, faCartShopping, faHeart);
+library.add(faMagnifyingGlass, faUtensils, faMapPin, faPlus, faCartShopping, faHeart, faClock);
 import App from "./App.vue";
 
 const app = createApp(App);

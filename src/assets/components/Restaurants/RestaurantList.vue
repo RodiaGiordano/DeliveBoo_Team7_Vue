@@ -6,25 +6,9 @@ import RestaurantCard from './RestaurantCard.vue';
 
 export default {
   data() {
-    return {
-      restaurants: [],
-      scrollAmount: 300,
-    };
+    return {};
   },
-  methods: {
-    scrollLeft() {
-      this.$refs.restaurantList.scrollBy({
-        left: -this.scrollAmount,
-        behavior: 'smooth',
-      });
-    },
-    scrollRight() {
-      this.$refs.restaurantList.scrollBy({
-        left: this.scrollAmount,
-        behavior: 'smooth',
-      });
-    },
-  },
+  methods: {},
 
   components: {
     RestaurantCard,
@@ -35,11 +19,12 @@ export default {
 
 <template>
   <div class="restaurant-list wrapper">
-    <ul ref="restaurantList">
-      <li v-for="element in restaurants">
+    <h1>I più popolari</h1>
+    <div ref="restaurantList">
+      <div v-for="element in restaurants">
         <RestaurantCard :element="element"></RestaurantCard>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </template>
 
