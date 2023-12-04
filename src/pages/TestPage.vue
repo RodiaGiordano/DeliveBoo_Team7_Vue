@@ -5,108 +5,85 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      restaurants: [],
       loading: false,
     };
   },
 
   methods: {
-    // raggruppamentoAnthemProva() {
-    //   // prova(endpoint = store.baseUri + 'restaurant/1') {
-    //   //   axios.get(endpoint).then((response) => {
-    //   //     this.restaurants.id = response.data.dishes[0].id;
-    //   //     // console.log(this.restaurants.id);
-    //   //   });
-    //   // },
-    //   // tokenCall(endpoint = store.baseUri + 'order/generate') {
-    //   //   axios
-    //   //     .get(endpoint)
-    //   //     .then((response) => {
-    //   //       // this.restaurants.token = response.data.token;
-    //   //       this.paymant.token = response.data.token;
-    //   //       this.paymant.id = this.id;
-    //   //       console.log(this.paymant);
-    //   //       const button = document.querySelector('#submit-button');
-    //   //       this.initBraintree(this.paymant, button);
-    //   //     })
-    //   //     .finally(() => {
-    //   //       this.loading = false;
-    //   //     });
-    //   // },
-    //   // sendPayment() {
-    //   //   axios
-    //   //     .post(store.baseUri + 'order/make/payment')
-    //   //     .then((response) => {
-    //   //       console.log(response);
-    //   //     })
-    //   //     .catch((error) => {
-    //   //       console.error('Errore nella richiesta:', error);
-    //   //     });
-    //   // },
-    //   // initBraintree(paymant, button) {
-    //   //   braintree.dropin.create(
-    //   //     {
-    //   //       authorization: paymant.token,
-    //   //       selector: '#dropin-container',
-    //   //     },
-    //   //     (err, instance) => {
-    //   //       // console.log(instance);
-    //   //       button.addEventListener('click', function () {
-    //   //         instance.requestPaymentMethod(function (err, payload) {
-    //   //           // submit payload.nonce to your server
-    //   //           // console.log(payload.nonce);
-    //   //         });
-    //   //       });
-    //   //     },
-    //   //   );
-    //   // },
-    // },
-
     tokenCall() {
-      axios.get(store.baseUri + 'order/generate').then((response) => {
-        const tokenn = response.data.token;
-
-        braintree.dropin.create(
-          {
-            authorization: tokenn,
-            container: '#dropin-container',
-          },
-          (error, dropinInstance) => {
-            if (error) {
-              console.error('errore nella creazione:', error);
-            }
-          },
-        );
-      });
-    },
-
-    sendPayment() {
       axios
-        .post(store.baseUri + 'order/make/payment', { payment_method_nonce: 'fake-valid-nonce', id: 3 })
+        .get(store.baseUri + 'order/generate')
         .then((response) => {
-          console.log(response.config);
+          const token = response.data.token;
+
+          const button = document.querySelector('#submit-button');
+
+          braintree.dropin.create(
+            {
+              authorization: token,
+              selector: '#dropin-container',
+            },
+            function (error, instance) {
+              button.addEventListener('click', function () {
+                instance.requestPaymentMethod((err, payload) => {
+                  axios.post(store.baseUri + 'order/make/payment', { payment_method_nonce: payload.nonce, id: 4 }).then((response) => {
+                    console.log(response);
+                  });
+                });
+              });
+              if (error) {
+                console.error('errore nella creazione:', error);
+              }
+            },
+          );
         })
-        .catch((error) => {
-          console.error(error.response);
+        .finally(() => {
+          this.loading = false;
         });
     },
   },
 
   mounted() {
     this.tokenCall();
-    // this.prova();
   },
 };
 </script>
 
 <template>
-  <div v-if="loading" class="d-flex align-items-center">
-    <strong role="status">Loading...</strong>
-    <div class="spinner-border ms-auto" aria-hidden="true"></div>
-  </div>
+  <div class="container">
+    <div v-if="loading" class="d-flex align-items-center">
+      <strong role="status">Loading...</strong>
+      <div class="spinner-border ms-auto" aria-hidden="true"></div>
+    </div>
 
-  <div id="dropin-container"></div>
-  <button @click="sendPayment()" id="submit-button" class="">Purchase</button>
+    <form class="row g-3" id="ciao">
+      <div class="col-md-6">
+        <label for="inputName" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="inputname" required />
+      </div>
+      <div class="col-md-6">
+        <label for="inputLastName" class="form-label">Cognome</label>
+        <input type="text" class="form-control" id="inputLastName" required />
+      </div>
+      <div class="col-6">
+        <label for="inputTell" class="form-label">Telefono</label>
+        <input type="text" class="form-control" id="inputTell" pattern="[0-9]{9,15}" title="porco dio" required />
+      </div>
+      <div class="col-6">
+        <label for="inputAddress" class="form-label">Indirizzo</label>
+        <input type="text" class="form-control" id="inputAddress" required />
+      </div>
+      <div class="col-md-6">
+        <label for="inputNote" class="form-label">Example textarea</label>
+        <textarea class="form-control" id="inputNote" rows="3"></textarea>
+      </div>
+    </form>
+
+    <div class="payment mt-2">
+      <div id="dropin-container"></div>
+      <button form="ciao" id="submit-button" class="button button--small button--green">Purchase</button>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -121,8 +98,8 @@ export default {
   border-style: solid;
   border-width: 1px;
   border-radius: 3px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  // -webkit-appearance: none;
+  // -moz-appearance: none;
   display: inline-block;
 }
 
