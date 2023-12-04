@@ -1,5 +1,5 @@
 <script>
-import DishCard from "./DishCard.vue";
+import DishCard from './DishCard.vue';
 
 export default {
   data() {
@@ -13,86 +13,71 @@ export default {
 
 <template>
   <!-- jumbotron -->
-<div class="menulist">
-  <div class="restaurant-jumbotron">
-    <img src="https://media.istockphoto.com/id/1409236261/fi/valokuva/terveellinen-ruoka-terveellisen-ruokavalion-tausta-hedelm%C3%A4t-vihannekset-marja-kasvissy%C3%B6j%C3%A4.jpg?s=1024x1024&w=is&k=20&c=fLKNOcz6qMH4Su67AJeJPlXm_q1Sill24zBP33BR3mI=" class="restaurant-jumbo" />
-  </div>
+  <div class="menulist">
+    <div class="restaurant-jumbotron">
+      <img src="../../images/jumbo-menuList1.jpg" class="restaurant-jumbo" />
+    </div>
 
-  <!-- r image -->
-  <div class="restaurant-details">
-    <div class="restaurant-image">
-      <img :src="restaurant.image" alt="" class="img-fluid">
-    </div>
-    <!-- r info -->
-    <div class="restaurant-info">
-      <h2>{{ restaurant.restaurant_name }}</h2>
-      <span v-for="typeEl in restaurant.types" :key="typeEl.id">
-        <small class="text-body-secondary"> &bull; {{ typeEl.name }}</small>
-      </span>
-      <p> <font-awesome-icon icon="fa-solid fa-map-pin"></font-awesome-icon> {{ restaurant.address }}</p>
-      <p>Descrizione: {{ restaurant.description }}</p>
-      <div class="restaurant-types">
+    <!-- r image -->
+    <div class="restaurant-details">
+      <div class="restaurant-image">
+        <img :src="restaurant.image || '../../images/color-no-bg.png'" alt="" class="img-fluid" />
       </div>
+      <!-- r info -->
+      <div class="restaurant-info">
+        <h2>{{ restaurant.restaurant_name }}</h2>
+        <span v-for="typeEl in restaurant.types" :key="typeEl.id">
+          <small class="text-body-secondary"> &bull; {{ typeEl.name }}</small>
+        </span>
+        <p><font-awesome-icon icon="fa-solid fa-map-pin"></font-awesome-icon> {{ restaurant.address }}</p>
+        <p>Descrizione: {{ restaurant.description }}</p>
       </div>
     </div>
-<br>
+
     <!-- Dishes -->
     <div class="dishes">
       <h3>Menu</h3>
-        <ul class="dish-list">
-          
-            <li v-for="dish in dishes" :key="dish.id">
-                <DishCard :dish="dish"></DishCard>
-                
-                
-            </li>
-        </ul>
+      <ul class="dish-list">
+        <li v-for="dish in dishes" :key="dish.id">
+          <DishCard :dish="dish"></DishCard>
+        </li>
+      </ul>
     </div>
-</div>
-
+  </div>
 </template>
 
 <style lang="scss" scoped>
+@use '../../scss/partials/variables' as *;
 .menulist {
+  width: 100vw;
+
   .restaurant-jumbotron {
     position: relative;
-    width: 100wh;
-    
+
     .restaurant-jumbo {
       width: 100%;
-      height: 500px;
-      object-fit: 1;
+      max-width: 100%;
+      height: auto;
+      object-fit: cover;
     }
   }
-  
+
   .restaurant-details {
     position: absolute;
-    top: 90%;
+    top: 80%;
     left: 50%;
-    
     transform: translate(-50%, -50%);
-    background-color: rgba(245, 245, 245);
-    border: 1px solid rgb(0, 0, 0);
-    padding: 1rem;
-    border-radius: 15px;
+    background-color: $bg-color;
+    border: 2px solid $bg2-color;
+    padding: 1.5rem;
+    border-radius: 25px;
     width: 80%;
 
     text-align: center;
+  }
 
+  .dishes {
+    padding: 6rem 1rem;
   }
 }
-.dishes {
-  margin: 4rem 0 1rem;
-
-  h3 {
-    margin: 2rem 0;
-  }
-  .dish-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-}
-
-
 </style>

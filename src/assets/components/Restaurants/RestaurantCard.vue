@@ -19,7 +19,10 @@ export default {
 <template>
   <router-link :to="{ name: 'menupage', params: { id: element.id } }">
     <div class="card mb-3">
-      <img :src="element.image" class="card-img-top" />
+      <div v-if="element.image" class="card-image">
+        <img :src="element.image" class="card-img-top" />
+      </div>
+
       <div class="card-body">
         <h5 class="card-title">
           {{ element.restaurant_name }}

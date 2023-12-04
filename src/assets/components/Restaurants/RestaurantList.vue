@@ -6,7 +6,24 @@ import RestaurantCard from './RestaurantCard.vue';
 
 export default {
   data() {
-    return {};
+    return {
+      restaurants: [],
+      scrollAmount: 300,
+    };
+  },
+  methods: {
+    scrollLeft() {
+      this.$refs.restaurantList.scrollBy({
+        left: -this.scrollAmount,
+        behavior: 'smooth',
+      });
+    },
+    scrollRight() {
+      this.$refs.restaurantList.scrollBy({
+        left: this.scrollAmount,
+        behavior: 'smooth',
+      });
+    },
   },
 
   components: {
@@ -27,7 +44,18 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-ul {
-  list-style-type: none;
+.restaurant-list {
+  white-space: nowrap;
+  width: 100%;
+  padding: 2rem 1.5rem 1rem 0;
+
+  .restaurant-card {
+    display: inline-block;
+    width: 300px;
+    margin-right: 20px;
+  }
+  ul {
+    list-style-type: none;
+  }
 }
 </style>
