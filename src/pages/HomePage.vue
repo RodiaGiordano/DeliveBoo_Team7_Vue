@@ -9,6 +9,7 @@ import { store } from '../assets/data/store';
 import axios from 'axios';
 import AppAside from '../assets/components/AppAside.vue';
 import RestaurantList from '../assets/components/Restaurants/restaurantlist.vue';
+import { RouterLink } from 'vue-router';
 
 export default {
   data() {
@@ -79,12 +80,14 @@ export default {
   components: {
     RestaurantList,
     AppAside,
+    RouterLink,
   },
 };
 </script>
 
 <template>
   <div class="container">
+    <RouterLink :to="{ name: 'test' }">Pagaaaaa</RouterLink>
     <div class="row">
       <div class="col-3">
         <div class="debug">
