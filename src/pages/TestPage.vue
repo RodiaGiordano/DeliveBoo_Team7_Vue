@@ -13,15 +13,15 @@ export default {
         dishes: [
           {
             id: 9,
-            quantity: 2,
-          },
-          {
-            id: 11,
             quantity: 3,
           },
           {
+            id: 11,
+            quantity: 11,
+          },
+          {
             id: 10,
-            quantity: 5,
+            quantity: 1,
           },
         ],
       },
@@ -35,10 +35,8 @@ export default {
     },
 
     sendOrder() {
-      console.log(this.validatedForm);
-
-      axios.post(store.baseUri + 'order/send', { orderCar: this.orderCar, form: this.validatedForm }).then((response) => {
-        console.log(response);
+      axios.post(store.baseUri + 'order/send', { order: this.orderCar, form: this.validatedForm }).then((response) => {
+        console.log(response.data);
       });
     },
 
