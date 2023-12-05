@@ -11,10 +11,10 @@ export default {
   },
 
   methods: {
-    fetchRestaurantDetail(endpoint = store.baseUri + 'restaurant/' + localStorage.getItem('restaurantId')) {
-      axios.get(endpoint).then((response) => {
+    async fetchRestaurantDetail(endpoint = store.baseUri + 'restaurant/' + localStorage.getItem('restaurantId')) {
+      return axios.get(endpoint).then((response) => {
         this.axiosDishes = response.data.dishes;
-        console.log(this.axiosDishes);
+        //console.log(this.axiosDishes);
       });
     },
 
@@ -78,26 +78,48 @@ export default {
     },
 
     //RETRIVE what is saved in local storage : parse dish id string to array
-    fetchFromLocal() {
+    async fetchFromLocal() {
       const dishIdsString = localStorage.getItem('orderedDishIds');
-      this.fetchRestaurantDetail();
+
       if (dishIdsString) {
         const dishIdsArray = JSON.parse(dishIdsString);
-        console.log(dishIdsArray);
+        await this.fetchRestaurantDetail();
+
+        //rebuild cartStorage from API call data
+
+        //create array that clearly lists quantities for each single dish, where key is the dish id, value is the quantity - e.g: [{id: qty}]
+        const cartLookup = dishIdsArray.reduce((lookup, obj) => {
+          lookup[obj.dish] = obj.qty;
+          return lookup;
+        }, {});
+
+        //then build a fully fleshed out array, with name, price, etc
+        this.cartStorage = this.axiosDishes.map((e) => {
+          if (cartLookup.hasOwnProperty(e.id)) {
+            return {
+              dish: e,
+              qty: cartLookup[e.id],
+            };
+          }
+
+          return null;
+        });
+
+        console.log(this.cartStorage);
       }
     },
   },
 
-  mounted() {
+  async mounted() {
     if (this.cartStorage.length > 0) {
       return;
     } else {
-      this.fetchFromLocal();
+      await this.fetchFromLocal();
     }
 
-    const dishIds = this.cartStorage.map((dish) => {
-      this.totalPrice += parseFloat(dish.price);
-      return dish.id;
+    //calculate total price
+    this.cartStorage.forEach((e) => {
+      this.totalPrice += e.dish.price * e.qty;
     });
   },
 };
@@ -109,9 +131,9 @@ export default {
       <h2>Carrello</h2>
       <ul>
         <div class="dish-menu" v-for="dish in cartStorage">
-          {{ dish.name }}
+          {{ dish.dish.name }} - {{ dish.qty }}
           <br />
-          {{ dish.price }}&euro;
+          {{ dish.dish.price }}&euro;
           <br />
 
           <!-- aumenta qty -->

@@ -11,47 +11,49 @@ export default {
   methods: {
     addToStorages(dish) {
       const restaurantId = localStorage.getItem('restaurantId');
+      const localCart = localStorage.getItem('orderedDishIds');
 
       //checks if restaurantIdd exists and if it's different from dish's restaurant_id; if yes, don't add item to cart.
       if (restaurantId != dish.restaurant_id && restaurantId != null) {
         return "restaurant id is different; you can't order from two different restaurants at once stupid bitch";
       }
 
-      //if restaurantId is currently null or empty, assign dish's restaurantId as value
+      //if restaurantId is currently null or empty, assign dish's restaurant_id as value to restaurantId
       if (restaurantId == '' || restaurantId == null) {
         localStorage.setItem('restaurantId', dish.restaurant_id);
       }
 
-      //adds to cartStorage (temp storage)
+      //localStorage logic
+      let currentCart = [];
 
-      //create flag to determine if a dish was already present in cartStorage; some() will end when the callback returns true
-      let dishFound = this.cartStorage.some((dishObj) => {
-        if (dishObj.dish == dish) {
-          dishObj.qty += 1;
-          return true;
-        }
-      });
-
-      //if not present, it'll create a dishObj with the dish and quantity of 1, which will be added in cartStorage
-      if (dishFound == false) {
-        const dishObj = {
-          dish: dish,
-          qty: 1,
-        };
-
-        this.cartStorage.push(dishObj);
+      //if localStorage is not empty, then create temporary array
+      if (localCart != null && localCart != '') {
+        currentCart = JSON.parse(localCart);
+        console.log(currentCart);
       }
 
-      //adds to localStorage; map the cartStorage array, extracting the dish id and quantity, stripping away unnecessary data
-      const dishIds = this.cartStorage.map((dishObj) => {
-        return {
-          dish: dishObj.dish.id,
-          qty: dishObj.qty,
-        };
-      });
+      //check if dish already exists; if yes, add 1 to quantity
+      let dishFound = false;
+      if (currentCart !== null) {
+        dishFound = currentCart.some((element) => {
+          if (element.dish == dish.id) {
+            element.qty += 1;
+            return true;
+          }
+        });
+      }
 
-      const dishIdsString = JSON.stringify(dishIds);
-      localStorage.setItem('orderedDishIds', dishIdsString);
+      //if it doesn't exist, create new low-level dish object
+      if (dishFound == false) {
+        const newObj = {
+          dish: dish.id,
+          qty: 1,
+        };
+        currentCart.push(newObj);
+      }
+
+      const cartString = JSON.stringify(currentCart);
+      localStorage.setItem('orderedDishIds', cartString);
     },
   },
 
