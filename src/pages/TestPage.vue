@@ -31,7 +31,7 @@ export default {
 
   methods: {
     isValid(formData) {
-      return formData.name !== '' && formData.lastName !== '' && formData.tel.match(/^\d+$/) && formData.tel !== '' && formData.address !== '';
+      return formData.name !== '' && formData.lastName !== '' && formData.tel.match(/^\d+$/) && formData.tel !== '' && formData.address !== '' && formData.email !== '';
     },
 
     sendOrder() {
@@ -80,6 +80,7 @@ export default {
         lastName: this.$refs.inputLastName.value,
         tel: this.$refs.inputTell.value.replace(/\s+/g, ''),
         address: this.$refs.inputAddress.value,
+        email: this.$refs.inputEmail.value,
         note: this.$refs.inputNote.value,
       };
 
@@ -105,29 +106,33 @@ export default {
       <strong role="status">Loading...</strong>
       <div class="spinner-border ms-auto" aria-hidden="true"></div>
     </div>
-
+    <div v-if="dataForm" class="alert alert-warning m-3" role="alert">* Campi obbligatori</div>
     <form v-if="dataForm" @submit.prevent="submitForm" class="row g-3" id="ciao">
       <div class="col-md-6">
-        <label for="inputName" class="form-label">Nome</label>
+        <label for="inputName" class="form-label">Nome *</label>
         <input type="text" class="form-control" id="inputname" ref="inputName" placeholder="Inserisci il tuo nome" pattern="[A-Za-z ']+" title="Inserisci un nome valido (solo lettere e spazi)" required />
       </div>
       <div class="col-md-6">
-        <label for="inputLastName" class="form-label">Cognome</label>
+        <label for="inputLastName" class="form-label">Cognome *</label>
         <input type="text" class="form-control" id="inputLastName" ref="inputLastName" placeholder="Inserisci il tuo cognome" pattern="[A-Za-z ']+" title="Inserisci un cognome valido (solo lettere e spazi)" required />
       </div>
       <div class="col-6">
-        <label for="inputTell" class="form-label">Telefono</label>
+        <label for="inputTell" class="form-label">Telefono *</label>
         <input type="text" class="form-control" id="inputTell" ref="inputTell" placeholder="Inserisci il tuo numero di telefono" pattern="[0-9]{9,15}" title="Inserisci un numero di telefono valido" maxlength="15" minlength="9" required />
       </div>
       <div class="col-6">
-        <label for="inputAddress" class="form-label">Indirizzo</label>
+        <label for="inputAddress" class="form-label">Indirizzo *</label>
         <input type="text" class="form-control" id="inputAddress" ref="inputAddress" placeholder="Inserisci il tuo indirizzo di consegna" title="Inserisci un indirizzo di consegna valido" required />
+      </div>
+      <div class="col-6">
+        <label for="inputEmail" class="form-label">Email *</label>
+        <input type="email" class="form-control" id="inputEmail" ref="inputEmail" placeholder="Inserisci la tua email" title="Inserisci un'email valida" required />
       </div>
       <div class="col-md-6">
         <label for="inputNote" class="form-label">Note</label>
         <textarea class="form-control" ref="inputNote" id="inputNote" rows="3" placeholder="es. citofono guasto, scala etc.."></textarea>
       </div>
-      <button type="submit" @click="submitDataCheck()">Continua con il pagamento</button>
+      <button class="btn btn-success" style="max-width: 260px" type="submit" @click="submitDataCheck()">Continua con il pagamento</button>
     </form>
 
     <div v-if="paymentForm" class="payment mt-2">
