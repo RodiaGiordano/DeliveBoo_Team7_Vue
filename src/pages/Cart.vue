@@ -1,6 +1,6 @@
 <script>
-import { store } from ".././assets/data/store";
-import axios from "axios";
+import { store } from '.././assets/data/store';
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -11,9 +11,7 @@ export default {
   },
 
   methods: {
-    fetchRestaurantDetail(
-      endpoint = store.baseUri + "restaurant/" + this.$route.params.id
-    ) {
+    fetchRestaurantDetail(endpoint = store.baseUri + 'restaurant/' + this.$route.params.id) {
       axios.get(endpoint).then((response) => {
         this.axiosDishes = response.data.dishes;
         console.log(this.axiosDishes);
@@ -26,10 +24,10 @@ export default {
       let dishExists = this.cartStorage.map((dish) => dish.id == dishInArray);
 
       if (dish && dishExists) {
-        if (mode === "inc") {
+        if (mode === 'inc') {
           this.cartStorage.push(dish);
           this.totalPrice += parseFloat(dish.price);
-        } else if (mode === "dec") {
+        } else if (mode === 'dec') {
           const index = this.cartStorage.indexOf(dish);
           this.cartStorage.splice(index, 1);
           this.totalPrice -= parseFloat(dish.price);
@@ -58,14 +56,15 @@ export default {
     emptyCart() {
       this.cartStorage = [];
       this.totalPrice = 0;
-      localStorage.removeItem("orderedDishIds");
+      localStorage.removeItem('orderedDishIds');
+      localStorage.removeItem('restaurantId');
     },
 
     // STORAGE LOGIC
     //SAVE dish id array as string in local storage
     saveInLocal() {
       if (this.cartStorage.length === 0) {
-        localStorage.removeItem("orderedDishIds");
+        localStorage.removeItem('orderedDishIds');
         return;
       }
 
@@ -75,12 +74,12 @@ export default {
 
       const dishIdsString = JSON.stringify(dishIds);
 
-      localStorage.setItem("orderedDishIds", dishIdsString);
+      localStorage.setItem('orderedDishIds', dishIdsString);
     },
 
     //RETRIVE what is saved in local storage : parse dish id string to array
     fetchFromLocal() {
-      const dishIdsString = localStorage.getItem("orderedDishIds");
+      const dishIdsString = localStorage.getItem('orderedDishIds');
 
       if (dishIdsString) {
         const dishIdsArray = JSON.parse(dishIdsString);
@@ -115,31 +114,13 @@ export default {
           <br />
 
           <!-- aumenta qty -->
-          <button
-            type="button"
-            class="btn btn-primary"
-            @click="setAmount(dish, 'inc')"
-          >
-            +
-          </button>
+          <button type="button" class="btn btn-primary" @click="setAmount(dish, 'inc')">+</button>
 
           <!-- riduci qty -->
-          <button
-            type="button"
-            class="btn btn-danger"
-            @click="setAmount(dish, 'dec')"
-          >
-            -
-          </button>
+          <button type="button" class="btn btn-danger" @click="setAmount(dish, 'dec')">-</button>
 
           <!-- rimuovi piatto -->
-          <button
-            type="button"
-            class="btn btn-danger"
-            @click="removeItem(dish)"
-          >
-            Rimuovi
-          </button>
+          <button type="button" class="btn btn-danger" @click="removeItem(dish)">Rimuovi</button>
         </div>
       </ul>
     </div>

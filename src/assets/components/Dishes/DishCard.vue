@@ -11,16 +11,14 @@ export default {
   methods: {
     addToStorages(dish) {
       const restaurantId = localStorage.getItem('restaurantId');
-      console.log(restaurantId);
 
       //check if restaurantIdd exists and if it's different from dish's restaurant_id; if yes, don't add item to cart.
-      if ((restaurantId !== null || restaurantId !== '') && restaurantId !== dish.restaurant_id) {
-        console.log(restaurantId !== null || restaurantId !== '', dish.restaurant_id, restaurantId !== dish.restaurant_id);
+      if (restaurantId != dish.restaurant_id && restaurantId != null) {
         return "restaurant id is different; you can't order from two different restaurants at once stupid bitch";
       }
 
       //if restaurantId is currently null or empty, assign dish's restaurantId as value
-      if (restaurantId == '' || restaurantId === null) {
+      if (restaurantId == '' || restaurantId == null) {
         localStorage.setItem('restaurantId', dish.restaurant_id);
       }
 
