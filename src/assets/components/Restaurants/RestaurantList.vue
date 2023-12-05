@@ -78,8 +78,6 @@ export default {
 
   .arrow {
     position: absolute;
-    top: 65%;
-    transform: translateY(-50%);
     background: $primary-color;
     padding: 8px;
     border-radius: 50%;
@@ -92,10 +90,14 @@ export default {
 
   .arrow-left {
     left: 0;
+    top: 100%;
+    transform: translateY(-50%);
   }
 
   .arrow-right {
     right: 0;
+    top: 100%;
+    transform: translateY(-50%);
   }
 }
 .restaurant-1 {
@@ -103,19 +105,19 @@ export default {
 }
 
 @media screen and (min-width: 768px) {
-  .arrow {
-    top: 60% !important;
-    padding: 10px;
-  }
 }
 
 @media screen and (min-width: 992px) {
-  .arrow {
-    top: 45% !important;
-    padding: 12px;
-  }
   .arrow-left {
-    left: 28% !important;
+    left: 27% !important;
+    top: 80% !important;
   }
+
+  .arrow-right {
+    top: 80% !important;
+  }
+}
+
+@media screen and (min-width: 1024px) {
 }
 </style>

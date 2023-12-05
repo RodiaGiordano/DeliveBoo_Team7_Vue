@@ -17,9 +17,11 @@ export default {
     <div class="restaurant-jumbotron"></div>
     <!-- r image -->
     <div class="restaurant-details">
-      <div class="restaurant-image">
-        <img :src="restaurant.image || '../../images/color-no-bg.png'" alt="" class="img-fluid" />
+      <div v-if="restaurant.image" class="restaurant-image">
+        <img :src="restaurant.image" alt="" class="img-fluid" />
       </div>
+      <div v-else-if="restaurant.image === 'http://127.0.0.1:8000/storage/'"></div>
+      <!-- {{ restaurant.image }} -->
       <!-- r info -->
       <div class="restaurant-info">
         <div data-v-f24f87aa class="restaurant-details"></div>
@@ -64,13 +66,11 @@ export default {
   }
 
   .restaurant-details {
-    border: 1px solid $bg-color;
     position: relative;
     .restaurant-image {
       width: 120px;
       border-radius: 15px;
       overflow: hidden;
-      border: 1px solid $bg-color;
 
       position: absolute;
       left: 1.8rem;
@@ -117,5 +117,9 @@ export default {
 }
 
 @media screen and (min-width: 992px) {
+  .restaurant-image {
+    width: 150px !important;
+    object-fit: 1 !important;
+  }
 }
 </style>
