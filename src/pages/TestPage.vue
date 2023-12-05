@@ -31,7 +31,7 @@ export default {
 
   methods: {
     isValid(formData) {
-      return formData.name !== '' && formData.lastName !== '' && formData.tel.match(/^\d+$/) && formData.tel !== '' && formData.address !== '' && formData.email !== '';
+      return formData.name !== '' && /^[A-Za-z]+$/.test(formData.name) && formData.lastName !== '' && /^[A-Za-z]+$/.test(formData.lastName) && formData.tel.match(/^\d+$/) && formData.tel !== '' && formData.address !== '' && formData.email !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
     },
 
     sendOrder() {
