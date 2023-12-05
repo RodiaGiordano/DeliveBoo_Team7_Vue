@@ -12,6 +12,7 @@ export default {
       if (!this.selectedCourse) {
         return this.dishes;
       }
+      console.log(this.dishes);
       return this.dishes.filter((dish) => dish.course.name === this.selectedCourse);
     },
   },
@@ -58,9 +59,10 @@ export default {
 
     <!-- Filtered corses -->
     <div class="row">
-      <div class="col-4">
+      <div class="col-3 courses-filter">
         <ul v-for="course in courses">
-          <li @click="selectCourse(course.name)">{{ course.name }}</li>
+          <li @click="selectCourse(course.name)" class="course-name">{{ course.name }}</li>
+          <!-- <hr class="course-hr" /> -->
         </ul>
       </div>
 
@@ -123,13 +125,27 @@ export default {
   }
 
   .dishes {
-    padding: 1rem 1.8rem;
+    padding: 1rem 0;
 
     p {
       color: $primary-color;
       font-style: oblique;
       font-weight: 700;
       font-size: 2rem;
+    }
+  }
+  .courses-filter {
+    margin: 1rem 0.5rem 0 1.8rem;
+    :hover > * {
+      background-color: rgbA(58, 151, 15, 0.1);
+    }
+    :active > * {
+      background-color: rgbA(58, 151, 15, 0.2);
+    }
+
+    .course-name {
+      padding: 5%;
+      font-weight: 600;
     }
   }
 }
