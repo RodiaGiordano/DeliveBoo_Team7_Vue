@@ -3,11 +3,27 @@ import DishCard from './DishCard.vue';
 
 export default {
   data() {
-    return {};
+    return {
+      selectedCourse: null,
+    };
   },
+  computed: {
+    filteredDishes() {
+      if (!this.selectedCourse) {
+        return this.dishes;
+      }
+      return this.dishes.filter((dish) => dish.course.name === this.selectedCourse);
+    },
+  },
+  methods: {
+    selectCourse(courseName) {
+      this.selectedCourse = courseName;
+    },
+  },
+
   components: { DishCard },
 
-  props: { restaurant: Object, dishes: Array },
+  props: { restaurant: Object, dishes: Array, courses: Array },
 };
 </script>
 
@@ -39,14 +55,24 @@ export default {
       </div>
     </div>
     <hr />
-    <!-- Dishes -->
-    <div class="dishes">
-      <p>Menu</p>
-      <!-- <div class="dish-list"> -->
-      <div v-for="dish in dishes" :key="dish.id">
-        <DishCard :dish="dish"></DishCard>
+
+    <!-- Filtered corses -->
+    <div class="row">
+      <div class="col-4">
+        <ul v-for="course in courses">
+          <li @click="selectCourse(course.name)">{{ course.name }}</li>
+        </ul>
       </div>
-      <!-- </div> -->
+
+      <!-- Dishes -->
+      <div class="dishes col-8">
+        <p>Menu</p>
+        <!-- <div class="dish-list"> -->
+        <div v-for="dish in filteredDishes" :key="dish.id">
+          <DishCard :dish="dish"></DishCard>
+        </div>
+        <!-- </div> -->
+      </div>
     </div>
   </div>
 </template>
