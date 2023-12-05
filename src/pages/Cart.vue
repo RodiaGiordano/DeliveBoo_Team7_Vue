@@ -11,14 +11,14 @@ export default {
   },
 
   methods: {
-    fetchRestaurantDetail(endpoint = store.baseUri + 'restaurant/' + this.$route.params.id) {
+    fetchRestaurantDetail(endpoint = store.baseUri + 'restaurant/' + localStorage.getItem('restaurantId')) {
       axios.get(endpoint).then((response) => {
         this.axiosDishes = response.data.dishes;
         console.log(this.axiosDishes);
       });
     },
 
-    //Add dish and save it in local storage
+    //add dish and save it in local storage
     setAmount(dish, mode) {
       let dishInArray = dish.id;
       let dishExists = this.cartStorage.map((dish) => dish.id == dishInArray);
@@ -80,9 +80,10 @@ export default {
     //RETRIVE what is saved in local storage : parse dish id string to array
     fetchFromLocal() {
       const dishIdsString = localStorage.getItem('orderedDishIds');
-
+      this.fetchRestaurantDetail();
       if (dishIdsString) {
         const dishIdsArray = JSON.parse(dishIdsString);
+        console.log(dishIdsArray);
       }
     },
   },
