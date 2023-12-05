@@ -83,6 +83,7 @@ export default {
     background: $primary-color;
     padding: 8px;
     border-radius: 50%;
+    aspect-ratio: 1;
     cursor: pointer;
     border: 1px solid $primary-color;
     color: $secondary-font-color;
@@ -110,11 +111,11 @@ export default {
 
 @media screen and (min-width: 992px) {
   .arrow {
-    top: 28% !important;
+    top: 70% !important;
     padding: 12px;
   }
   .arrow-left {
-    left: 275px !important;
+    left: 280px !important;
   }
 }
 </style>
