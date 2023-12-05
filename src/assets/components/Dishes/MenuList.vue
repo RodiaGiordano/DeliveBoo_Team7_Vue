@@ -96,7 +96,7 @@ export default {
     position: relative;
     border: 1px solid $bg-color;
     .restaurant-image {
-      width: 150px;
+      width: 100px;
       height: 100px;
 
       position: absolute;
@@ -152,7 +152,7 @@ export default {
     background-repeat: no-repeat;
     background-size: cover;
     .restaurant-image {
-      width: 250px !important;
+      width: 200px !important;
       height: 150px !important;
     }
     .restaurant-details-full {

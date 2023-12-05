@@ -70,12 +70,14 @@ export default {
   .input-group {
     width: 90%;
 
-    .search-button {
-      background-color: $bg-color;
-      border-bottom-left-radius: 15px 15px;
+    .search-input {
       border-top-right-radius: 15px 15px;
       border-bottom-right-radius: 15px 15px;
+    }
+    .search-button {
+      background-color: $bg-color;
       border-top-left-radius: 15px 15px;
+      border-bottom-left-radius: 15px 15px;
 
       .search-icon {
         color: $primary-color;
@@ -119,16 +121,15 @@ export default {
 
       .input-group {
         width: 100%;
-
         .search-button {
           border: 1px solid $bg2-color;
           border-bottom-left-radius: 15px 15px;
           border-top-left-radius: 15px 15px;
-        }
-        .search-input {
-          border: 1px solid $bg2-color;
-          border-top-right-radius: 15px 15px;
-          border-bottom-right-radius: 15px 15px;
+          .search-input {
+            border: 1px solid $bg2-color;
+            border-top-right-radius: 15px 15px !important;
+            border-bottom-right-radius: 15px 15px !important;
+          }
         }
       }
     }
