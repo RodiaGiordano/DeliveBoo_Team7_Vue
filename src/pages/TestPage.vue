@@ -98,11 +98,9 @@ export default {
       }
     },
   },
-
   mounted() {},
 };
 </script>
-
 <template>
   <div class="container">
     <div v-if="loading" class="d-flex align-items-center">
@@ -113,23 +111,23 @@ export default {
     <form v-if="dataForm" @submit.prevent="submitForm" class="row g-3" id="ciao">
       <div class="col-md-6">
         <label for="inputName" class="form-label">Nome</label>
-        <input type="text" class="form-control" ref="inputName" required />
+        <input type="text" class="form-control" id="inputname" ref="inputName" placeholder="Inserisci il tuo nome" pattern="[A-Za-z ']+" title="Inserisci un nome valido (solo lettere e spazi)" required />
       </div>
       <div class="col-md-6">
         <label for="inputLastName" class="form-label">Cognome</label>
-        <input type="text" class="form-control" ref="inputLastName" value="" required />
+        <input type="text" class="form-control" id="inputLastName" ref="inputLastName" placeholder="Inserisci il tuo cognome" pattern="[A-Za-z ']+" title="Inserisci un cognome valido (solo lettere e spazi)" required />
       </div>
       <div class="col-6">
         <label for="inputTell" class="form-label">Telefono</label>
-        <input type="tel" pattern="[0-9\s]+" class="form-control" ref="inputTell" required />
+        <input type="text" class="form-control" id="inputTell" ref="inputTell" placeholder="Inserisci il tuo numero di telefono" pattern="[0-9]{9,15}" title="Inserisci un numero di telefono valido" maxlength="15" minlength="9" required />
       </div>
       <div class="col-6">
         <label for="inputAddress" class="form-label">Indirizzo</label>
-        <input type="text" class="form-control" ref="inputAddress" required />
+        <input type="text" class="form-control" id="inputAddress" ref="inputAddress" placeholder="Inserisci il tuo indirizzo di consegna" pattern="[a-zA-Z0-9]+" title="Inserisci un indirizzo di consegna valido" required />
       </div>
       <div class="col-md-6">
         <label for="inputNote" class="form-label">Note</label>
-        <textarea class="form-control" ref="inputNote" rows="3"></textarea>
+        <textarea class="form-control" ref="inputNote" id="inputNote" rows="3"></textarea>
       </div>
       <button type="submit" @click="submitDataCheck()">Continua con il pagamento</button>
     </form>
