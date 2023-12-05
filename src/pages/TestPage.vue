@@ -59,22 +59,22 @@ export default {
     <form class="row g-3" id="ciao">
       <div class="col-md-6">
         <label for="inputName" class="form-label">Nome</label>
-        <input type="text" class="form-control" id="inputname" required />
+        <input type="text" class="form-control" id="inputname" placeholder="Inserisci il tuo nome" pattern="[A-Za-z ']+" title="Inserisci un nome valido (solo lettere e spazi)" required />
       </div>
       <div class="col-md-6">
         <label for="inputLastName" class="form-label">Cognome</label>
-        <input type="text" class="form-control" id="inputLastName" required />
+        <input type="text" class="form-control" id="inputLastName" placeholder="Inserisci il tuo cognome" pattern="[A-Za-z ']+" title="Inserisci un cognome valido (solo lettere e spazi)" required />
       </div>
       <div class="col-6">
         <label for="inputTell" class="form-label">Telefono</label>
-        <input type="text" class="form-control" id="inputTell" pattern="[0-9]{9,15}" title="porco dio" required />
+        <input type="text" class="form-control" id="inputTell" placeholder="Inserisci il tuo numero di telefono" pattern="[0-9]{9,15}" title="Inserisci un numero di telefono valido" maxlength="15" minlength="9" required />
       </div>
       <div class="col-6">
         <label for="inputAddress" class="form-label">Indirizzo</label>
-        <input type="text" class="form-control" id="inputAddress" required />
+        <input type="text" class="form-control" id="inputAddress" placeholder="Inserisci il tuo indirizzo di consegna" pattern="[a-zA-Z0-9]+" title="Inserisci un indirizzo di consegna valido" required />
       </div>
       <div class="col-md-6">
-        <label for="inputNote" class="form-label">Example textarea</label>
+        <label for="inputNote" class="form-label">Note</label>
         <textarea class="form-control" id="inputNote" rows="3"></textarea>
       </div>
     </form>
