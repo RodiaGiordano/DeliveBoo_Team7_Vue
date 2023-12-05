@@ -37,11 +37,10 @@ export default {
       <div v-if="restaurant.image" class="restaurant-image">
         <img :src="restaurant.image" alt="" class="img-fluid" />
       </div>
-      <div v-else-if="restaurant.image === 'http://127.0.0.1:8000/storage/'"></div>
-      <!-- {{ restaurant.image }} -->
+
       <!-- r info -->
       <div class="restaurant-info">
-        <div data-v-f24f87aa class="restaurant-details"></div>
+        <div class="restaurant-details"></div>
         <h2>{{ restaurant.restaurant_name }}</h2>
         <p class="mb-2">
           <span v-for="typeEl in restaurant.types" :key="typeEl.id">
@@ -110,7 +109,7 @@ export default {
     }
   }
   .restaurant-info {
-    padding: 4rem 1.8rem 1rem;
+    padding: 5rem 1.8rem 1rem;
 
     .des {
       span {
