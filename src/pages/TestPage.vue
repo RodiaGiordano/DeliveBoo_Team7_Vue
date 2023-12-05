@@ -127,7 +127,7 @@ export default {
       </div>
       <div class="col-md-6">
         <label for="inputNote" class="form-label">Note</label>
-        <textarea class="form-control" ref="inputNote" id="inputNote" rows="3"></textarea>
+        <textarea class="form-control" ref="inputNote" id="inputNote" rows="3" placeholder="es. citofono guasto, scala etc.."></textarea>
       </div>
       <button type="submit" @click="submitDataCheck()">Continua con il pagamento</button>
     </form>
