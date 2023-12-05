@@ -46,7 +46,7 @@ export default {
 <style lang="scss" scoped>
 .res.card {
   width: 70vw;
-  height: 330px;
+  height: 350px;
   border-radius: 25px;
   overflow: hidden;
   .res-img-top {

@@ -42,12 +42,12 @@ export default {
 <template>
   <div class="restaurant wrapper">
     <h2><span>Nuove</span> aperture</h2>
-    <div ref="restaurantList" class="restaurant-list">
+    <div ref="restaurantList" class="restaurant-list" @keyup.left="scrollLeft" @keyup.right="scrollRight">
       <button class="arrow arrow-right" @click="scrollRight"><font-awesome-icon icon="fa-solid fa-arrow-right"></font-awesome-icon></button>
       <div v-for="(restaurant, index) in restaurants" :key="index" class="restaurant-card">
-        <RestaurantCard :element="restaurant" class="restaurant-card1"></RestaurantCard>
-        <button class="arrow arrow-left" @click="scrollLeft"><font-awesome-icon icon="fa-solid fa-arrow-left"></font-awesome-icon></button>
+        <RestaurantCard :element="restaurant"></RestaurantCard>
       </div>
+      <button class="arrow arrow-left" @click="scrollLeft"><font-awesome-icon icon="fa-solid fa-arrow-left"></font-awesome-icon></button>
     </div>
   </div>
 </template>
@@ -81,7 +81,7 @@ export default {
     background: $primary-color;
     padding: 8px;
     border-radius: 50%;
-    aspect-ratio: 1;
+    aspect-ratio: 2;
     cursor: pointer;
     border: 1px solid $primary-color;
     color: $secondary-font-color;
