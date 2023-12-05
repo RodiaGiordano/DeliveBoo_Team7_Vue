@@ -123,7 +123,7 @@ export default {
       </div>
       <div class="col-6">
         <label for="inputAddress" class="form-label">Indirizzo</label>
-        <input type="text" class="form-control" id="inputAddress" ref="inputAddress" placeholder="Inserisci il tuo indirizzo di consegna" pattern="[a-zA-Z0-9]+" title="Inserisci un indirizzo di consegna valido" required />
+        <input type="text" class="form-control" id="inputAddress" ref="inputAddress" placeholder="Inserisci il tuo indirizzo di consegna" title="Inserisci un indirizzo di consegna valido" required />
       </div>
       <div class="col-md-6">
         <label for="inputNote" class="form-label">Note</label>
