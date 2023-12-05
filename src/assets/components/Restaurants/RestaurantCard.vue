@@ -60,7 +60,7 @@ export default {
 
 @media screen and (min-width: 768px) {
   .res.card {
-    width: 60vw;
+    width: 30vw;
     height: 400px;
     border-radius: 25px;
     overflow: hidden;
