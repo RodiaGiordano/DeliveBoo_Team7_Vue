@@ -3,26 +3,44 @@ import DishCard from './DishCard.vue';
 
 export default {
   data() {
-    return {};
+    return {
+      selectedCourse: null,
+    };
   },
+  computed: {
+    filteredDishes() {
+      if (!this.selectedCourse) {
+        return this.dishes;
+      }
+      console.log(this.dishes);
+      return this.dishes.filter((dish) => dish.course.name === this.selectedCourse);
+    },
+  },
+  methods: {
+    selectCourse(courseName) {
+      this.selectedCourse = courseName;
+    },
+  },
+
   components: { DishCard },
 
-  props: { restaurant: Object, dishes: Array },
+  props: { restaurant: Object, dishes: Array, courses: Array },
 };
 </script>
 
 <template>
   <!-- jumbotron -->
   <div class="menulist">
-    <!-- MOBILE -->
-    <div class="restaurant-jumbotron-mobile"></div>
+    <div class="restaurant-jumbotron"></div>
     <!-- r image -->
-    <div class="restaurant-details-mobile">
-      <div class="restaurant-image">
-        <img :src="restaurant.image || '../../images/color-no-bg.png'" alt="" class="img-fluid" />
+    <div class="restaurant-details">
+      <div v-if="restaurant.image" class="restaurant-image">
+        <img :src="restaurant.image" alt="" class="img-fluid" />
       </div>
+
       <!-- r info -->
       <div class="restaurant-info">
+        <div class="restaurant-details"></div>
         <h2>{{ restaurant.restaurant_name }}</h2>
         <p class="mb-2">
           <span v-for="typeEl in restaurant.types" :key="typeEl.id">
@@ -36,39 +54,26 @@ export default {
         <p class="des"><span> Su di noi: </span> <br />{{ restaurant.description }}</p>
       </div>
     </div>
+    <hr />
 
-    <!-- FULL SCREEN -->
-    <div class="restaurant-jumbotron-full">
-      <!-- r image -->
-      <div class="restaurant-details-full">
-        <div class="restaurant-image">
-          <img v-if="restaurant.image" :src="restaurant.image" alt="" class="img-fluid" />
-          <div v-else></div>
-        </div>
-        <!-- r info -->
-        <div class="restaurant-info">
-          <h2>{{ restaurant.restaurant_name }}</h2>
-          <p class="mb-2">
-            <span v-for="typeEl in restaurant.types" :key="typeEl.id">
-              <small class="text-body-secondary"> &bull; {{ typeEl.name }}</small>
-            </span>
-          </p>
-          <p class="mb-2"><span> &bull; Ordine min. 10€ &bull; Consegna 1€ </span></p>
-          <p class="address mb-1"><font-awesome-icon class="pin" icon="fa-solid fa-map-pin"></font-awesome-icon> {{ restaurant.address }}</p>
-          <p><font-awesome-icon icon="fa-regular fa-clock" class="clock"></font-awesome-icon> <span>Consegna in 20 min.</span></p>
+    <!-- Filtered corses -->
+    <div class="row">
+      <div class="col-3 courses-filter">
+        <ul v-for="course in courses">
+          <li @click="selectCourse(course.name)" class="course-name">{{ course.name }}</li>
+          <!-- <hr class="course-hr" /> -->
+        </ul>
+      </div>
 
-          <p class="des"><span> Su di noi: </span> <br />{{ restaurant.description }}</p>
+      <!-- Dishes -->
+      <div class="dishes col-8">
+        <p>Menu</p>
+        <!-- <div class="dish-list"> -->
+        <div v-for="dish in filteredDishes" :key="dish.id">
+          <DishCard :dish="dish"></DishCard>
         </div>
+        <!-- </div> -->
       </div>
-    </div>
-    <!-- Dishes -->
-    <div class="dishes">
-      <p>Menu</p>
-      <!-- <div class="dish-list"> -->
-      <div v-for="dish in dishes" :key="dish.id">
-        <DishCard :dish="dish"></DishCard>
-      </div>
-      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -78,12 +83,7 @@ export default {
 .menulist {
   width: 100%;
 
-  .restaurant-jumbotron-full {
-    display: none;
-  }
-
-  .restaurant-jumbotron-mobile {
-    display: block;
+  .restaurant-jumbotron {
     background-image: url('../../images/jumbo-menuList2.jpg');
     height: 150px;
     background-attachment: fixed;
@@ -92,22 +92,24 @@ export default {
     background-size: cover;
   }
 
-  .restaurant-details-mobile {
+  .restaurant-details {
     position: relative;
-    border: 1px solid $bg-color;
     .restaurant-image {
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      border-radius: 15px;
+      overflow: hidden;
 
       position: absolute;
+      left: 1.8rem;
       top: -10%;
-      // right: 0;
-      left: 8%;
-      margin: auto;
+    }
+
+    image {
+      width: 100%;
     }
   }
   .restaurant-info {
-    padding: 4rem 1.8rem 1rem;
+    padding: 5rem 1.8rem 1rem;
 
     .des {
       span {
@@ -122,7 +124,7 @@ export default {
   }
 
   .dishes {
-    padding: 1rem 1.8rem 1rem;
+    padding: 1rem 0;
 
     p {
       color: $primary-color;
@@ -131,57 +133,34 @@ export default {
       font-size: 2rem;
     }
   }
+  .courses-filter {
+    margin: 1rem 0.5rem 0 1.8rem;
+    :hover > * {
+      background-color: rgbA(58, 151, 15, 0.1);
+    }
+    :active > * {
+      background-color: rgbA(58, 151, 15, 0.2);
+    }
+
+    .course-name {
+      padding: 5%;
+      font-weight: 600;
+    }
+  }
 }
 
 @media screen and (min-width: 768px) {
+  .restaurant-details {
+    .restaurant-image {
+      width: 140px !important;
+    }
+  }
 }
 
 @media screen and (min-width: 992px) {
-  .restaurant-jumbotron-mobile {
-    display: none !important;
-  }
-  .restaurant-details-mobile {
-    display: none !important;
-  }
-
-  .restaurant-jumbotron-full {
-    display: block !important;
-    background-image: url('../../images/jumbo-menuList1.jpg');
-    height: 500px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    .restaurant-image {
-      width: 200px !important;
-      height: 150px !important;
-    }
-    .restaurant-details-full {
-      position: relative;
-
-      background-color: $bg-color;
-      border: 1px solid $bg2-color;
-      border-radius: 50px;
-      width: 65%;
-
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -30%;
-      margin: auto;
-      .restaurant-info {
-        padding: 8rem 1.8rem 1rem;
-      }
-      .restaurant-image {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: -10%;
-        margin: auto;
-      }
-    }
-  }
-  .dishes {
-    padding-top: 9rem !important;
+  .restaurant-image {
+    width: 150px !important;
+    object-fit: 1 !important;
   }
 }
 </style>

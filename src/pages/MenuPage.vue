@@ -8,6 +8,7 @@ export default {
     return {
       restaurant: {},
       dishes: [],
+      courses: [],
     };
   },
   components: {
@@ -18,6 +19,7 @@ export default {
       axios.get(endpoint).then((response) => {
         this.restaurant = response.data.restaurant;
         this.dishes = response.data.dishes;
+        this.courses = response.data.courses;
       });
     },
   },
@@ -29,7 +31,7 @@ export default {
 </script>
 
 <template>
-  <MenuList :restaurant="restaurant" :dishes="dishes"></MenuList>
+  <MenuList :restaurant="restaurant" :dishes="dishes" :courses="courses"></MenuList>
 </template>
 
 <style lang="scss" scoped></style>

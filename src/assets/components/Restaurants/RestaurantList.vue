@@ -42,12 +42,12 @@ export default {
 <template>
   <div class="restaurant wrapper">
     <h2><span>Nuove</span> aperture</h2>
-    <div ref="restaurantList" class="restaurant-list">
+    <div ref="restaurantList" class="restaurant-list" @keyup.left="scrollLeft" @keyup.right="scrollRight">
       <button class="arrow arrow-right" @click="scrollRight"><font-awesome-icon icon="fa-solid fa-arrow-right"></font-awesome-icon></button>
       <div v-for="(restaurant, index) in restaurants" :key="index" class="restaurant-card">
-        <RestaurantCard :element="restaurant" class="restaurant-card1"></RestaurantCard>
-        <button class="arrow arrow-left" @click="scrollLeft"><font-awesome-icon icon="fa-solid fa-arrow-left"></font-awesome-icon></button>
+        <RestaurantCard :element="restaurant"></RestaurantCard>
       </div>
+      <button class="arrow arrow-left" @click="scrollLeft"><font-awesome-icon icon="fa-solid fa-arrow-left"></font-awesome-icon></button>
     </div>
   </div>
 </template>
@@ -78,12 +78,10 @@ export default {
 
   .arrow {
     position: absolute;
-    top: 65%;
-    transform: translateY(-50%);
     background: $primary-color;
     padding: 8px;
     border-radius: 50%;
-    aspect-ratio: 1;
+    aspect-ratio: 2;
     cursor: pointer;
     border: 1px solid $primary-color;
     color: $secondary-font-color;
@@ -91,11 +89,15 @@ export default {
   }
 
   .arrow-left {
-    left: 10px;
+    left: 0;
+    top: 100%;
+    transform: translateY(-50%);
   }
 
   .arrow-right {
-    right: 10px;
+    right: 0;
+    top: 100%;
+    transform: translateY(-50%);
   }
 }
 .restaurant-1 {
@@ -103,19 +105,19 @@ export default {
 }
 
 @media screen and (min-width: 768px) {
-  .arrow {
-    top: 55% !important;
-    padding: 10px;
-  }
 }
 
 @media screen and (min-width: 992px) {
-  .arrow {
-    top: 70% !important;
-    padding: 12px;
-  }
   .arrow-left {
-    left: 280px !important;
+    left: 27% !important;
+    top: 80% !important;
   }
+
+  .arrow-right {
+    top: 80% !important;
+  }
+}
+
+@media screen and (min-width: 1024px) {
 }
 </style>

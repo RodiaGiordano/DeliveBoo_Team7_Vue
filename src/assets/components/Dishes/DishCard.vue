@@ -45,9 +45,7 @@ export default {
       <p class="title">{{ dish.name }}</p>
       <p class="des">{{ dish.description }}</p>
       <p>{{ dish.price }} €</p>
-      <p v-for="typeEl in dish.courses" class="card-text">
-        <small class="text-body-secondary">{{ typeEl.name }}</small>
-      </p>
+      <p>{{ dish.course.name }}</p>
     </div>
     <div class="dish-image col-3 col-sm-4 col-md-4">
       <img v-if="dish.image" :src="dish.image" class="dish-image" />
