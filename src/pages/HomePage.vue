@@ -1,9 +1,3 @@
-<!-- fare il check sul response.config della chiamata axios per vedere se la trasmissione di dati gfunziona
-
-attualmente all'interimento di un valore nell'input tutte le checkbox perdono il checked e vengono rimosse dall'array
-l'input della barra di ricerca diventa un array in cui non è mai possibile avere spazi e quindi valori null
-inoltre è possibile cancellare anche lettere alternate o aggiungerne e l'array rispetterà l'ordine-->
-
 <script>
 import { store } from '../assets/data/store';
 import axios from 'axios';

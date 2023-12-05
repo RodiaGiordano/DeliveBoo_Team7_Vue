@@ -8,7 +8,24 @@ export default {
       loading: false,
       paymentForm: false,
       dataForm: true,
-      validatedForm: {},
+      orderCar: {
+        restaurant_id: 1,
+        dishes: [
+          {
+            id: 9,
+            quantity: 2,
+          },
+          {
+            id: 11,
+            quantity: 3,
+          },
+          {
+            id: 10,
+            quantity: 5,
+          },
+        ],
+      },
+      validatedForm: '',
     };
   },
 
@@ -20,7 +37,7 @@ export default {
     sendOrder() {
       console.log(this.validatedForm);
 
-      axios.post(store.baseUri + 'order/send', this.validatedForm).then((response) => {
+      axios.post(store.baseUri + 'order/send', { orderCar: this.orderCar, form: this.validatedForm }).then((response) => {
         console.log(response);
       });
     },
@@ -59,7 +76,7 @@ export default {
         });
     },
 
-    submitFormCheck() {
+    submitDataCheck() {
       const formData = {
         name: this.$refs.inputName.value,
         lastName: this.$refs.inputLastName.value,
@@ -69,8 +86,9 @@ export default {
       };
 
       if (this.isValid(formData)) {
-        axios.post(store.baseUri + 'order', formData).then((response) => {
-          this.validatedForm = response.data;
+        axios.post(store.baseUri + 'order', { order: this.orderCar, form: formData }).then((response) => {
+          this.orderCar = response.data.order;
+          this.validatedForm = response.data.form;
 
           this.dataForm = false;
           this.paymentForm = true;
@@ -113,7 +131,7 @@ export default {
         <label for="inputNote" class="form-label">Note</label>
         <textarea class="form-control" ref="inputNote" rows="3"></textarea>
       </div>
-      <button type="submit" @click="submitFormCheck()">Continua con il pagamento</button>
+      <button type="submit" @click="submitDataCheck()">Continua con il pagamento</button>
     </form>
 
     <div v-if="paymentForm" class="payment mt-2">
