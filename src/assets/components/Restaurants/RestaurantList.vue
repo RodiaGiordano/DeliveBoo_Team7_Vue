@@ -91,11 +91,11 @@ export default {
   }
 
   .arrow-left {
-    left: 10px;
+    left: 0;
   }
 
   .arrow-right {
-    right: 10px;
+    right: 0;
   }
 }
 .restaurant-1 {
@@ -104,18 +104,18 @@ export default {
 
 @media screen and (min-width: 768px) {
   .arrow {
-    top: 55% !important;
+    top: 60% !important;
     padding: 10px;
   }
 }
 
 @media screen and (min-width: 992px) {
   .arrow {
-    top: 70% !important;
+    top: 45% !important;
     padding: 12px;
   }
   .arrow-left {
-    left: 280px !important;
+    left: 28% !important;
   }
 }
 </style>

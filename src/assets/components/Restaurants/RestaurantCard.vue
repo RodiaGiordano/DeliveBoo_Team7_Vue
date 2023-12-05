@@ -37,7 +37,7 @@ export default {
         <p class="res-text">
           <!-- {{ element.description }} -->
         </p>
-        <ButtonEmit :elementId="element.id"></ButtonEmit>
+        <!-- <ButtonEmit :elementId="element.id"></ButtonEmit> -->
       </div>
     </div>
   </router-link>
@@ -45,12 +45,12 @@ export default {
 
 <style lang="scss" scoped>
 .res.card {
-  width: 80vw;
+  width: 70vw;
   height: 330px;
   border-radius: 25px;
   overflow: hidden;
   .res-img-top {
-    height: 150px;
+    height: 200px;
   }
 
   .res-body {
