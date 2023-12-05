@@ -12,7 +12,7 @@ export default {
     addToStorages(dish) {
       const restaurantId = localStorage.getItem('restaurantId');
 
-      //check if restaurantIdd exists and if it's different from dish's restaurant_id; if yes, don't add item to cart.
+      //checks if restaurantIdd exists and if it's different from dish's restaurant_id; if yes, don't add item to cart.
       if (restaurantId != dish.restaurant_id && restaurantId != null) {
         return "restaurant id is different; you can't order from two different restaurants at once stupid bitch";
       }
@@ -22,12 +22,32 @@ export default {
         localStorage.setItem('restaurantId', dish.restaurant_id);
       }
 
-      //adds to cartStorage
-      this.cartStorage.push(dish);
+      //adds to cartStorage (temp storage)
 
-      //adds to localStorage
-      const dishIds = this.cartStorage.map((dish) => {
-        return dish.id;
+      //create flag to determine if a dish was already present in cartStorage; some() will end when the callback returns true
+      let dishFound = this.cartStorage.some((dishObj) => {
+        if (dishObj.dish == dish) {
+          dishObj.qty += 1;
+          return true;
+        }
+      });
+
+      //if not present, it'll create a dishObj with the dish and quantity of 1, which will be added in cartStorage
+      if (dishFound == false) {
+        const dishObj = {
+          dish: dish,
+          qty: 1,
+        };
+
+        this.cartStorage.push(dishObj);
+      }
+
+      //adds to localStorage; map the cartStorage array, extracting the dish id and quantity, stripping away unnecessary data
+      const dishIds = this.cartStorage.map((dishObj) => {
+        return {
+          dish: dishObj.dish.id,
+          qty: dishObj.qty,
+        };
       });
 
       const dishIdsString = JSON.stringify(dishIds);
