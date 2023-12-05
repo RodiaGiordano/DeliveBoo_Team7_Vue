@@ -1,0 +1,19 @@
+@use './partials/variables' as *;
+
+body > div {
+  background-color: $bg-color;
+  color: $main-font-color;
+
+  a {
+    text-decoration: none;
+    color: $secondary-color;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  img {
+    width: 100%;
+  }
+}

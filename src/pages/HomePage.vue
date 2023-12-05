@@ -86,25 +86,15 @@ export default {
 </script>
 
 <template>
-  <div class="container">
-    <RouterLink :to="{ name: 'test' }">Pagaaaaa</RouterLink>
-    <div class="row">
-      <div class="col-3">
-        <div class="debug">
-          <AppAside @checked="filterRestaurants" :boxChecked="boxChecked"></AppAside>
-        </div>
-      </div>
-      <div class="col-9">
-        <div class="debug">
-          <RestaurantList :restaurants="restaurants"></RestaurantList>
-        </div>
-      </div>
+  <RouterLink :to="{ name: 'test' }">Pagaaaaa</RouterLink>
+  <div class="row">
+    <div class="app-aside col-lg-3">
+      <AppAside @checked="filterRestaurants" :boxChecked="boxChecked"></AppAside>
+    </div>
+    <div class="restaurant-list col-lg-9">
+      <RestaurantList :restaurants="restaurants"></RestaurantList>
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-.debug {
-  border: 1px dashed red;
-}
-</style>
+<style lang="scss" scoped></style>

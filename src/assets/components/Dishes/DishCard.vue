@@ -42,41 +42,72 @@ export default {
 </script>
 
 <template>
-  <div class="dish-card row">
-    <div class="dish-image col-4">
-      <img :src="dish.image" class="card-img" />
-    </div>
-    <div class="dish-body col-7">
-      <h5 class="card-title">{{ dish.name }}</h5>
-      <p class="card-text">{{ dish.description }}</p>
+  <div class="dish row-cols">
+    <div class="dish-body col-7 col-sm-8 col-md-8">
+      <p class="title">{{ dish.name }}</p>
+      <p class="des">{{ dish.description }}</p>
       <p>{{ dish.price }} €</p>
       <p v-for="typeEl in dish.courses" class="card-text">
         <small class="text-body-secondary">{{ typeEl.name }}</small>
       </p>
     </div>
-
-    <div class="div col-1">
-      <button @click="addToStorages(dish)" class="add-to-cart btn btn-danger">
-        <font-awesome-icon icon="fa-solid fa-cart-plus"></font-awesome-icon>
+    <div class="dish-image col-3 col-sm-4 col-md-4">
+      <img v-if="dish.image" :src="dish.image" class="dish-image" />
+      <img v-else src="../../images/placeholder.png" class="d-none" />
+      <!-- {{ dish.image }} -->
+      <button @click="addToStorages(dish)" class="add-to-cart">
+        <font-awesome-icon icon="fa-solid fa-plus"></font-awesome-icon>
       </button>
     </div>
   </div>
+  <hr />
 </template>
 
 <style lang="scss" scoped>
-.dish-card {
+@use '../../scss/partials/variables' as *;
+.dish {
   display: flex;
-  width: 100%;
-  height: 250px;
-  margin: 1rem;
+  gap: 1rem;
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
 
   .dish-image {
-    width: 250px;
-    height: 250px;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    border-radius: 18px;
+
+    display: flex;
+    .add-to-cart {
+      position: absolute;
+      bottom: 0;
+      left: 88%;
+
+      align-self: flex-end;
+
+      background-color: $primary-color;
+      color: $secondary-font-color;
+
+      border-radius: 50%;
+      border: 1px $secondary-color;
+    }
   }
 }
 
-.add-to-cart {
-  align-self: center;
+@media screen and (min-width: 768px) {
+  .dish-image {
+    width: 130px !important;
+    height: 130px !important;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .dish-image {
+    width: 150px !important ;
+    height: 150px !important;
+  }
 }
 </style>
