@@ -11,27 +11,49 @@ export default {
   methods: {
     addToStorages(dish) {
       const restaurantId = localStorage.getItem('restaurantId');
+      const localCart = localStorage.getItem('orderedDishIds');
 
-      //check if restaurantIdd exists and if it's different from dish's restaurant_id; if yes, don't add item to cart.
+      //checks if restaurantIdd exists and if it's different from dish's restaurant_id; if yes, don't add item to cart.
       if (restaurantId != dish.restaurant_id && restaurantId != null) {
         return "restaurant id is different; you can't order from two different restaurants at once stupid bitch";
       }
 
-      //if restaurantId is currently null or empty, assign dish's restaurantId as value
+      //if restaurantId is currently null or empty, assign dish's restaurant_id as value to restaurantId
       if (restaurantId == '' || restaurantId == null) {
         localStorage.setItem('restaurantId', dish.restaurant_id);
       }
 
-      //adds to cartStorage
-      this.cartStorage.push(dish);
+      //localStorage logic
+      let currentCart = [];
 
-      //adds to localStorage
-      const dishIds = this.cartStorage.map((dish) => {
-        return dish.id;
-      });
+      //if localStorage is not empty, then create temporary array
+      if (localCart != null && localCart != '') {
+        currentCart = JSON.parse(localCart);
+        console.log(currentCart);
+      }
 
-      const dishIdsString = JSON.stringify(dishIds);
-      localStorage.setItem('orderedDishIds', dishIdsString);
+      //check if dish already exists; if yes, add 1 to quantity
+      let dishFound = false;
+      if (currentCart !== null) {
+        dishFound = currentCart.some((element) => {
+          if (element.dish == dish.id) {
+            element.qty += 1;
+            return true;
+          }
+        });
+      }
+
+      //if it doesn't exist, create new low-level dish object
+      if (dishFound == false) {
+        const newObj = {
+          dish: dish.id,
+          qty: 1,
+        };
+        currentCart.push(newObj);
+      }
+
+      const cartString = JSON.stringify(currentCart);
+      localStorage.setItem('orderedDishIds', cartString);
     },
   },
 

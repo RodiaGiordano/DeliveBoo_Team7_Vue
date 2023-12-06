@@ -11,14 +11,14 @@ export default {
   },
 
   methods: {
-    fetchRestaurantDetail(endpoint = store.baseUri + 'restaurant/' + this.$route.params.id) {
-      axios.get(endpoint).then((response) => {
+    async fetchRestaurantDetail(endpoint = store.baseUri + 'restaurant/' + localStorage.getItem('restaurantId')) {
+      return axios.get(endpoint).then((response) => {
         this.axiosDishes = response.data.dishes;
-        console.log(this.axiosDishes);
+        //console.log(this.axiosDishes);
       });
     },
 
-    //Add dish and save it in local storage
+    //add dish and save it in local storage
     setAmount(dish, mode) {
       let dishInArray = dish.id;
       let dishExists = this.cartStorage.map((dish) => dish.id == dishInArray);
@@ -39,17 +39,32 @@ export default {
 
     //Remove dish
     removeItem(dish) {
-      let dishInArray = dish.id;
-      let dishExists = this.cartStorage.find((dish) => dish.id == dishInArray);
+      //remove from temp storage
+      this.cartStorage = this.cartStorage.filter((dishObj) => {
+        //handle total price while you are at it lol
+        if (dishObj.dish.id == dish.id) {
+          this.totalPrice -= dishObj.dish.price * dishObj.qty;
+        }
+        return dishObj.dish.id !== dish.id;
+      });
 
-      if (dish && dishExists) {
-        const index = this.cartStorage.indexOf(dish);
-        this.cartStorage.splice(index, 1);
-        this.totalPrice -= parseFloat(dish.price);
+      //remove from local storage
+      let dishIdsString = localStorage.getItem('orderedDishIds');
+      if (dishIdsString) {
+        let dishIdsArray = JSON.parse(dishIdsString);
+
+        dishIdsArray = dishIdsArray.filter((dishObj) => {
+          return dishObj.dish !== dish.id;
+        });
+
+        if (dishIdsArray.length > 0) {
+          dishIdsString = JSON.stringify(dishIdsArray);
+          localStorage.setItem('orderedDishIds', dishIdsString);
+        } else {
+          localStorage.removeItem('orderedDishIds');
+          localStorage.removeItem('restaurantId');
+        }
       }
-
-      //remove from local Storage
-      this.saveInLocal();
     },
 
     //Svuota carrello
@@ -78,25 +93,46 @@ export default {
     },
 
     //RETRIVE what is saved in local storage : parse dish id string to array
-    fetchFromLocal() {
+    async fetchFromLocal() {
       const dishIdsString = localStorage.getItem('orderedDishIds');
 
       if (dishIdsString) {
         const dishIdsArray = JSON.parse(dishIdsString);
+        await this.fetchRestaurantDetail();
+
+        //rebuild cartStorage from API call data
+
+        //create array that clearly lists quantities for each single dish, where key is the dish id, value is the quantity - e.g: [{id: qty}]
+        const cartLookup = dishIdsArray.reduce((lookup, obj) => {
+          lookup[obj.dish] = obj.qty;
+          return lookup;
+        }, {});
+
+        //then build a fully fleshed out array, with name, price, etc
+        this.cartStorage = this.axiosDishes.map((dishObj) => {
+          if (cartLookup.hasOwnProperty(dishObj.id)) {
+            return {
+              dish: dishObj,
+              qty: cartLookup[dishObj.id],
+            };
+          }
+
+          return null;
+        });
       }
     },
   },
 
-  mounted() {
+  async mounted() {
     if (this.cartStorage.length > 0) {
       return;
     } else {
-      this.fetchFromLocal();
+      await this.fetchFromLocal();
     }
 
-    const dishIds = this.cartStorage.map((dish) => {
-      this.totalPrice += parseFloat(dish.price);
-      return dish.id;
+    //calculate total price
+    this.cartStorage.forEach((e) => {
+      this.totalPrice += e.dish.price * e.qty;
     });
   },
 };
@@ -108,9 +144,9 @@ export default {
       <h2>Carrello</h2>
       <ul>
         <div class="dish-menu" v-for="dish in cartStorage">
-          {{ dish.name }}
+          {{ dish.dish.name }} x{{ dish.qty }}
           <br />
-          {{ dish.price }}&euro;
+          {{ (dish.dish.price * dish.qty).toFixed(2) }}&euro; ({{ dish.dish.price }}&euro;)
           <br />
 
           <!-- aumenta qty -->
@@ -120,7 +156,7 @@ export default {
           <button type="button" class="btn btn-danger" @click="setAmount(dish, 'dec')">-</button>
 
           <!-- rimuovi piatto -->
-          <button type="button" class="btn btn-danger" @click="removeItem(dish)">Rimuovi</button>
+          <button type="button" class="btn btn-danger" @click="removeItem(dish.dish)">Rimuovi</button>
         </div>
       </ul>
     </div>
