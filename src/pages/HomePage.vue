@@ -26,7 +26,6 @@ export default {
       }
     },
   },
-  // dd
 
   methods: {
     fetchRestaurants(endpoint = store.baseUri + 'restaurant/') {
