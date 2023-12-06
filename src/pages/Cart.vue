@@ -18,23 +18,59 @@ export default {
       });
     },
 
-    //add dish and save it in local storage
     setAmount(dish, mode) {
-      let dishInArray = dish.id;
-      let dishExists = this.cartStorage.map((dish) => dish.id == dishInArray);
+      //local storage part
+      let dishIdsString = localStorage.getItem('orderedDishIds');
+      let dishIdsArray = null;
+      if (dishIdsString) {
+        dishIdsArray = JSON.parse(dishIdsString);
 
-      if (dish && dishExists) {
-        if (mode === 'inc') {
-          this.cartStorage.push(dish);
-          this.totalPrice += parseFloat(dish.price);
-        } else if (mode === 'dec') {
-          const index = this.cartStorage.indexOf(dish);
-          this.cartStorage.splice(index, 1);
-          this.totalPrice -= parseFloat(dish.price);
-        }
+        dishIdsArray = dishIdsArray.map((dishObj) => {
+          if (dishObj.dish === dish.id) {
+            console.log(mode);
+
+            if (mode === 'inc') {
+              dishObj.qty++;
+            } else if (mode === 'dec' && dishObj.qty > 0) {
+              dishObj.qty--;
+            }
+          }
+
+          let result = dishObj.qty > 0 ? dishObj : null;
+          return result;
+        });
+
+        //remove null values from array
+        dishIdsArray = dishIdsArray.filter(function (el) {
+          return el != null;
+        });
+
+        dishIdsString = JSON.stringify(dishIdsArray);
+        localStorage.setItem('orderedDishIds', dishIdsString);
       }
 
-      this.saveInLocal();
+      //cart storage part
+      this.cartStorage = this.cartStorage.map((dishObj) => {
+        if (dishObj.dish.id === dish.id) {
+          if (mode === 'inc') {
+            dishObj.qty++;
+            this.totalPrice += parseFloat(dishObj.dish.price);
+          } else if (mode === 'dec') {
+            dishObj.qty--;
+            this.totalPrice -= parseFloat(dishObj.dish.price);
+            // dish.qty <= 0 ? this.removeItem(dish) : (this.totalPrice -= dishObj.dish.price * dishObj.qty);
+          }
+        }
+
+        let result = dishObj.qty > 0 ? dishObj : null;
+        return result;
+      });
+
+      this.cartStorage = this.cartStorage.filter(function (el) {
+        return el != null;
+      });
+
+      console.log(this.cartStorage);
     },
 
     //Remove dish
@@ -61,8 +97,7 @@ export default {
           dishIdsString = JSON.stringify(dishIdsArray);
           localStorage.setItem('orderedDishIds', dishIdsString);
         } else {
-          localStorage.removeItem('orderedDishIds');
-          localStorage.removeItem('restaurantId');
+          this.emptyCart();
         }
       }
     },
@@ -76,22 +111,6 @@ export default {
     },
 
     // STORAGE LOGIC
-    //SAVE dish id array as string in local storage
-    saveInLocal() {
-      if (this.cartStorage.length === 0) {
-        localStorage.removeItem('orderedDishIds');
-        return;
-      }
-
-      const dishIds = this.cartStorage.map((dish) => {
-        return dish.id;
-      });
-
-      const dishIdsString = JSON.stringify(dishIds);
-
-      localStorage.setItem('orderedDishIds', dishIdsString);
-    },
-
     //RETRIVE what is saved in local storage : parse dish id string to array
     async fetchFromLocal() {
       const dishIdsString = localStorage.getItem('orderedDishIds');
@@ -150,10 +169,10 @@ export default {
           <br />
 
           <!-- aumenta qty -->
-          <button type="button" class="btn btn-primary" @click="setAmount(dish, 'inc')">+</button>
+          <button type="button" class="btn btn-primary" @click="setAmount(dish.dish, 'inc')">+</button>
 
           <!-- riduci qty -->
-          <button type="button" class="btn btn-danger" @click="setAmount(dish, 'dec')">-</button>
+          <button type="button" class="btn btn-danger" @click="setAmount(dish.dish, 'dec')">-</button>
 
           <!-- rimuovi piatto -->
           <button type="button" class="btn btn-danger" @click="removeItem(dish.dish)">Rimuovi</button>
