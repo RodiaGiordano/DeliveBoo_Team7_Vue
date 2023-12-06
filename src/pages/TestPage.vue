@@ -5,6 +5,8 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      idFake: 2,
+
       errors: {
         nameErr: '',
         lastNameErr: '',
@@ -16,18 +18,18 @@ export default {
       paymentForm: false,
       dataForm: true,
       orderCar: {
-        restaurant_id: 2,
+        restaurant_id: 1,
         dishes: [
           {
-            id: 6,
+            id: 9,
             quantity: 3,
           },
           {
-            id: 7,
+            id: 10,
             quantity: 11,
           },
           {
-            id: 8,
+            id: 11,
             quantity: 1,
           },
         ],
@@ -37,6 +39,10 @@ export default {
   },
 
   methods: {
+    changeId() {
+      if ((this.idFake = 2)) this.idFake = 25;
+    },
+
     isValid(formData) {
       this.errors = {
         nameErr: '',
@@ -98,10 +104,19 @@ export default {
             function (error, instance) {
               button.addEventListener('click', function () {
                 instance.requestPaymentMethod((err, payload) => {
-                  axios.post(store.baseUri + 'order/make/payment', { payment_method_nonce: payload.nonce, id: 6 }).then((response) => {
-                    console.log(response.data);
-                    if (response.data.succes) self.sendOrder();
-                  });
+                  axios
+                    .post(store.baseUri + 'order/make/payment', { payment_method_nonce: payload.nonce, id: self.idFake })
+                    .then((response) => {
+                      console.log(response.data);
+                      if (response.data.succes) {
+                        console.log('ciao');
+                        alert('pagamento effettuato');
+                        self.sendOrder();
+                      }
+                    })
+                    .catch((error) => {
+                      alert('pagamento non riuscito');
+                    });
                 });
               });
               if (error) {
@@ -143,6 +158,7 @@ export default {
 </script>
 <template>
   <div class="container">
+    <button @click="changeId()">importo troppo alto</button>
     <div v-if="loading" class="d-flex align-items-center">
       <strong role="status">Loading...</strong>
       <div class="spinner-border ms-auto" aria-hidden="true"></div>
