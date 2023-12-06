@@ -39,17 +39,32 @@ export default {
 
     //Remove dish
     removeItem(dish) {
-      let dishInArray = dish.id;
-      let dishExists = this.cartStorage.find((dish) => dish.id == dishInArray);
+      //remove from temp storage
+      this.cartStorage = this.cartStorage.filter((dishObj) => {
+        //handle total price while you are at it lol
+        if (dishObj.dish.id == dish.id) {
+          this.totalPrice -= dishObj.dish.price * dishObj.qty;
+        }
+        return dishObj.dish.id !== dish.id;
+      });
 
-      if (dish && dishExists) {
-        const index = this.cartStorage.indexOf(dish);
-        this.cartStorage.splice(index, 1);
-        this.totalPrice -= parseFloat(dish.price);
+      //remove from local storage
+      let dishIdsString = localStorage.getItem('orderedDishIds');
+      if (dishIdsString) {
+        let dishIdsArray = JSON.parse(dishIdsString);
+
+        dishIdsArray = dishIdsArray.filter((dishObj) => {
+          return dishObj.dish !== dish.id;
+        });
+
+        if (dishIdsArray.length > 0) {
+          dishIdsString = JSON.stringify(dishIdsArray);
+          localStorage.setItem('orderedDishIds', dishIdsString);
+        } else {
+          localStorage.removeItem('orderedDishIds');
+          localStorage.removeItem('restaurantId');
+        }
       }
-
-      //remove from local Storage
-      this.saveInLocal();
     },
 
     //Svuota carrello
@@ -94,18 +109,16 @@ export default {
         }, {});
 
         //then build a fully fleshed out array, with name, price, etc
-        this.cartStorage = this.axiosDishes.map((e) => {
-          if (cartLookup.hasOwnProperty(e.id)) {
+        this.cartStorage = this.axiosDishes.map((dishObj) => {
+          if (cartLookup.hasOwnProperty(dishObj.id)) {
             return {
-              dish: e,
-              qty: cartLookup[e.id],
+              dish: dishObj,
+              qty: cartLookup[dishObj.id],
             };
           }
 
           return null;
         });
-
-        console.log(this.cartStorage);
       }
     },
   },
@@ -131,9 +144,9 @@ export default {
       <h2>Carrello</h2>
       <ul>
         <div class="dish-menu" v-for="dish in cartStorage">
-          {{ dish.dish.name }} - {{ dish.qty }}
+          {{ dish.dish.name }} x{{ dish.qty }}
           <br />
-          {{ dish.dish.price }}&euro;
+          {{ (dish.dish.price * dish.qty).toFixed(2) }}&euro; ({{ dish.dish.price }}&euro;)
           <br />
 
           <!-- aumenta qty -->
@@ -143,7 +156,7 @@ export default {
           <button type="button" class="btn btn-danger" @click="setAmount(dish, 'dec')">-</button>
 
           <!-- rimuovi piatto -->
-          <button type="button" class="btn btn-danger" @click="removeItem(dish)">Rimuovi</button>
+          <button type="button" class="btn btn-danger" @click="removeItem(dish.dish)">Rimuovi</button>
         </div>
       </ul>
     </div>
