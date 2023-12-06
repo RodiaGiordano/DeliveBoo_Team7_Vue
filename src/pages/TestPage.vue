@@ -58,7 +58,7 @@ export default {
             function (error, instance) {
               button.addEventListener('click', function () {
                 instance.requestPaymentMethod((err, payload) => {
-                  axios.post(store.baseUri + 'order/make/payment', { payment_method_nonce: payload.nonce, id: 4 }).then((response) => {
+                  axios.post(store.baseUri + 'order/make/payment', { payment_method_nonce: payload.nonce, id: 11 }).then((response) => {
                     console.log(response.data);
                     if (response.data.succes) self.sendOrder();
                   });
