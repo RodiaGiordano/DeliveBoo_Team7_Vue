@@ -28,6 +28,7 @@ export default {
   },
   // dd
 
+  // dddd
   methods: {
     fetchRestaurants(endpoint = store.baseUri + 'restaurant/') {
       axios.get(endpoint, { params: this.paramsFactory }).then((response) => {
