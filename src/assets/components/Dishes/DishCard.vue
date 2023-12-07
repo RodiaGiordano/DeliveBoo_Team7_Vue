@@ -36,7 +36,7 @@ export default {
       let dishFound = false;
       if (currentCart !== null) {
         dishFound = currentCart.some((element) => {
-          if (element.dish == dish.id) {
+          if (element.id == dish.id) {
             element.qty += 1;
             return true;
           }
@@ -46,7 +46,7 @@ export default {
       //if it doesn't exist, create new low-level dish object
       if (dishFound == false) {
         const newObj = {
-          dish: dish.id,
+          id: dish.id,
           qty: 1,
         };
         currentCart.push(newObj);

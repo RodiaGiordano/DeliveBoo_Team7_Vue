@@ -22,10 +22,11 @@ export default {
       //local storage part
       let dishIdsString = localStorage.getItem('orderedDishIds');
       let dishIdsArray = null;
+
       if (dishIdsString) {
         dishIdsArray = JSON.parse(dishIdsString);
 
-        let index = dishIdsArray.findIndex((dishObj) => dishObj.dish === dish.id);
+        let index = dishIdsArray.findIndex((item) => item.id === dish.id);
 
         if (index !== -1) {
           if (mode === 'inc') {
@@ -48,22 +49,22 @@ export default {
       }
 
       //cart storage part
-      this.cartStorage = this.cartStorage.map((dishObj) => {
-        if (dishObj.dish.id === dish.id) {
+      this.cartStorage = this.cartStorage.map((item) => {
+        if (item.dish.id === dish.id) {
           if (mode === 'inc') {
-            dishObj.qty++;
-            this.totalPrice += parseFloat(dishObj.dish.price);
+            item.qty++;
+            this.totalPrice += parseFloat(item.dish.price);
           } else if (mode === 'dec') {
-            dishObj.qty--;
-            this.totalPrice -= parseFloat(dishObj.dish.price);
+            item.qty--;
+            this.totalPrice -= parseFloat(item.dish.price);
           }
 
-          if (dishObj.qty === 0) {
+          if (item.qty === 0) {
             return null;
           }
         }
 
-        return dishObj;
+        return item;
       });
 
       this.cartStorage = this.cartStorage.filter(function (el) {
@@ -74,12 +75,12 @@ export default {
     //Remove dish
     removeItem(dish) {
       //remove from temp storage
-      this.cartStorage = this.cartStorage.filter((dishObj) => {
+      this.cartStorage = this.cartStorage.filter((item) => {
         //handle total price while you are at it lol
-        if (dishObj.dish.id == dish.id) {
-          this.totalPrice -= dishObj.dish.price * dishObj.qty;
+        if (item.dish.id == dish.id) {
+          this.totalPrice -= item.dish.price * item.qty;
         }
-        return dishObj.dish.id !== dish.id;
+        return item.dish.id !== dish.id;
       });
 
       //remove from local storage
@@ -87,8 +88,8 @@ export default {
       if (dishIdsString) {
         let dishIdsArray = JSON.parse(dishIdsString);
 
-        dishIdsArray = dishIdsArray.filter((dishObj) => {
-          return dishObj.dish !== dish.id;
+        dishIdsArray = dishIdsArray.filter((item) => {
+          return item.dish !== dish.id;
         });
 
         if (dishIdsArray.length > 0) {
@@ -121,7 +122,7 @@ export default {
 
         //create array that clearly lists quantities for each single dish, where key is the dish id, value is the quantity - e.g: [{id: qty}]
         const cartLookup = dishIdsArray.reduce((lookup, obj) => {
-          lookup[obj.dish] = obj.qty;
+          lookup[obj.id] = obj.qty;
           return lookup;
         }, {});
 
@@ -164,18 +165,18 @@ export default {
     <div class="col-6">
       <h2>Carrello</h2>
       <ul>
-        <div class="dish-menu" v-for="dish in cartStorage">
-          <div v-if="dish != null">
-            {{ dish.dish.name }} - x{{ dish.qty }}
+        <div class="dish-menu" v-for="item in cartStorage">
+          <div v-if="item != null">
+            {{ item.dish.name }} - x{{ item.qty }}
             <br />
-            {{ (dish.dish.price * dish.qty).toFixed(2) }}&euro; ({{ dish.dish.price }}&euro;)
+            {{ (item.dish.price * item.qty).toFixed(2) }}&euro; ({{ item.dish.price }}&euro;)
             <br />
             <!-- aumenta qty -->
-            <button type="button" class="btn btn-primary" @click="setAmount(dish.dish, 'inc')">+</button>
+            <button type="button" class="btn btn-primary" @click="setAmount(item.dish, 'inc')">+</button>
             <!-- riduci qty -->
-            <button type="button" class="btn btn-danger" @click="setAmount(dish.dish, 'dec')">-</button>
+            <button type="button" class="btn btn-danger" @click="setAmount(item.dish, 'dec')">-</button>
             <!-- rimuovi piatto -->
-            <button type="button" class="btn btn-danger" @click="removeItem(dish.dish)">Rimuovi</button>
+            <button type="button" class="btn btn-danger" @click="removeItem(item.dish)">Rimuovi</button>
           </div>
         </div>
       </ul>
