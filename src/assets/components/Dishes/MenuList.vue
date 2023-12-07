@@ -9,16 +9,20 @@ export default {
   },
   computed: {
     filteredDishes() {
-      if (!this.selectedCourse) {
+      if (!this.selectedCourse || this.selectedCourse === 'ALL') {
         return this.dishes;
+      } else {
+        return this.dishes.filter((dish) => dish.course.name === this.selectedCourse);
       }
-      console.log(this.dishes);
-      return this.dishes.filter((dish) => dish.course.name === this.selectedCourse);
     },
   },
   methods: {
     selectCourse(courseName) {
-      this.selectedCourse = courseName;
+      if (courseName === 'Menù') {
+        this.selectedCourse = 'ALL';
+      } else {
+        this.selectedCourse = courseName;
+      }
     },
   },
 
@@ -59,6 +63,9 @@ export default {
     <!-- Filtered corses -->
     <div class="row">
       <div class="col-3 courses-filter">
+        <ul>
+          <li @click="selectCourse('Menù')" class="course-name">Menù</li>
+        </ul>
         <ul v-for="course in courses">
           <li @click="selectCourse(course.name)" class="course-name">{{ course.name }}</li>
           <!-- <hr class="course-hr" /> -->
