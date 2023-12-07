@@ -54,6 +54,7 @@ export default {
 
       const cartString = JSON.stringify(currentCart);
       localStorage.setItem('orderedDishIds', cartString);
+      console.log(this.cartStorage);
     },
   },
 
