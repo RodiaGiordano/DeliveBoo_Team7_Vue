@@ -191,7 +191,7 @@ export default {
         <div v-if="errors.emailErr" class="error-message alert alert-danger mt-2">{{ errors.emailErr }}</div>
       </div>
       <div class="col-md-6">
-        <label for="inputNote" class="form-label">Note *</label>
+        <label for="inputNote" class="form-label">Note</label>
         <textarea class="form-control" ref="inputNote" id="inputNote" rows="3" placeholder="es. citofono guasto, scala etc.."></textarea>
       </div>
       <button type="submit" @click="submitDataCheck()">Continua con il pagamento</button>
