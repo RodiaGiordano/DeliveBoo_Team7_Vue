@@ -5,7 +5,7 @@ export default {
   data() {
     return {
       totalPrice: 0,
-      cartStorage: store.cartStorage,
+      cartStorage: store.cartStorage || [],
       axiosDishes: [],
     };
   },
@@ -25,28 +25,26 @@ export default {
       if (dishIdsString) {
         dishIdsArray = JSON.parse(dishIdsString);
 
-        dishIdsArray = dishIdsArray.map((dishObj) => {
-          if (dishObj.dish === dish.id) {
-            console.log(mode);
+        let index = dishIdsArray.findIndex((dishObj) => dishObj.dish === dish.id);
 
-            if (mode === 'inc') {
-              dishObj.qty++;
-            } else if (mode === 'dec' && dishObj.qty > 0) {
-              dishObj.qty--;
-            }
+        if (index !== -1) {
+          if (mode === 'inc') {
+            dishIdsArray[index].qty++;
+          } else if (mode === 'dec' && dishIdsArray[index].qty > 0) {
+            dishIdsArray[index].qty--;
           }
 
-          let result = dishObj.qty > 0 ? dishObj : null;
-          return result;
-        });
+          if (dishIdsArray[index].qty === 0) {
+            dishIdsArray.splice(index, 1);
+          }
+        }
 
-        //remove null values from array
-        dishIdsArray = dishIdsArray.filter(function (el) {
-          return el != null;
-        });
-
-        dishIdsString = JSON.stringify(dishIdsArray);
-        localStorage.setItem('orderedDishIds', dishIdsString);
+        if (dishIdsArray.length > 0) {
+          dishIdsString = JSON.stringify(dishIdsArray);
+          localStorage.setItem('orderedDishIds', dishIdsString);
+        } else {
+          this.emptyCart();
+        }
       }
 
       //cart storage part
@@ -58,19 +56,19 @@ export default {
           } else if (mode === 'dec') {
             dishObj.qty--;
             this.totalPrice -= parseFloat(dishObj.dish.price);
-            // dish.qty <= 0 ? this.removeItem(dish) : (this.totalPrice -= dishObj.dish.price * dishObj.qty);
+          }
+
+          if (dishObj.qty === 0) {
+            return null;
           }
         }
 
-        let result = dishObj.qty > 0 ? dishObj : null;
-        return result;
+        return dishObj;
       });
 
       this.cartStorage = this.cartStorage.filter(function (el) {
         return el != null;
       });
-
-      console.log(this.cartStorage);
     },
 
     //Remove dish
@@ -104,7 +102,7 @@ export default {
 
     //Svuota carrello
     emptyCart() {
-      this.cartStorage = [];
+      this.cartStorage.splice(0);
       this.totalPrice = 0;
       localStorage.removeItem('orderedDishIds');
       localStorage.removeItem('restaurantId');
@@ -136,14 +134,18 @@ export default {
             };
           }
 
-          return null;
+          //return null;
+        });
+
+        this.cartStorage = this.cartStorage.filter(function (el) {
+          return el != null;
         });
       }
     },
   },
 
-  async mounted() {
-    if (this.cartStorage.length > 0) {
+  async created() {
+    if (this.cartStorage && this.cartStorage.length > 0) {
       return;
     } else {
       await this.fetchFromLocal();
@@ -163,19 +165,18 @@ export default {
       <h2>Carrello</h2>
       <ul>
         <div class="dish-menu" v-for="dish in cartStorage">
-          {{ dish.dish.name }} x{{ dish.qty }}
-          <br />
-          {{ (dish.dish.price * dish.qty).toFixed(2) }}&euro; ({{ dish.dish.price }}&euro;)
-          <br />
-
-          <!-- aumenta qty -->
-          <button type="button" class="btn btn-primary" @click="setAmount(dish.dish, 'inc')">+</button>
-
-          <!-- riduci qty -->
-          <button type="button" class="btn btn-danger" @click="setAmount(dish.dish, 'dec')">-</button>
-
-          <!-- rimuovi piatto -->
-          <button type="button" class="btn btn-danger" @click="removeItem(dish.dish)">Rimuovi</button>
+          <div v-if="dish != null">
+            {{ dish.dish.name }} - x{{ dish.qty }}
+            <br />
+            {{ (dish.dish.price * dish.qty).toFixed(2) }}&euro; ({{ dish.dish.price }}&euro;)
+            <br />
+            <!-- aumenta qty -->
+            <button type="button" class="btn btn-primary" @click="setAmount(dish.dish, 'inc')">+</button>
+            <!-- riduci qty -->
+            <button type="button" class="btn btn-danger" @click="setAmount(dish.dish, 'dec')">-</button>
+            <!-- rimuovi piatto -->
+            <button type="button" class="btn btn-danger" @click="removeItem(dish.dish)">Rimuovi</button>
+          </div>
         </div>
       </ul>
     </div>
