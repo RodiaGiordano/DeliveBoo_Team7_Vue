@@ -21,19 +21,20 @@ export default {
         restaurant_id: 1,
         dishes: [
           {
-            id: 9,
+            id: 1,
             quantity: 3,
           },
           {
-            id: 10,
+            id: 2,
             quantity: 11,
           },
           {
-            id: 11,
+            id: 3,
             quantity: 1,
           },
         ],
       },
+      fake: {},
       validatedForm: '',
     };
   },
@@ -153,7 +154,21 @@ export default {
       }
     },
   },
-  mounted() {},
+  mounted() {
+    const restId = localStorage.getItem('restaurantId');
+    let orders = localStorage.getItem('orderedDishIds');
+
+    if (restId && orders) {
+      orders = JSON.parse(orders);
+
+      this.orderCar = {
+        restaurant_id: parseInt(restId),
+        dishes: orders,
+      };
+    }
+
+    console.log(this.orderCar);
+  },
 };
 </script>
 <template>
