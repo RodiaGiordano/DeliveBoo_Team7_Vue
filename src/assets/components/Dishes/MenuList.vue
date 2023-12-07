@@ -141,7 +141,7 @@ export default {
     }
   }
   .courses-filter {
-    margin: 1rem 0.5rem 0 1.8rem;
+    margin: 1rem 0.5rem 0 0;
     :hover > * {
       background-color: rgbA(58, 151, 15, 0.1);
     }
