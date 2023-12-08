@@ -89,7 +89,7 @@ export default {
         let dishIdsArray = JSON.parse(dishIdsString);
 
         dishIdsArray = dishIdsArray.filter((item) => {
-          return item.dish !== dish.id;
+          return item.id !== dish.id;
         });
 
         if (dishIdsArray.length > 0) {
@@ -192,7 +192,7 @@ export default {
             </div>
 
             <!-- rimuovi piatto -->
-            <button type="button" class="btn delete_item" @click="removeItem(item.dish)"><font-awesome-icon :icon="['fas', 'trash-can']" /></button>
+            <button type="button" class="btn delete_item" @click="removeItem(item.dish)">X</button>
           </div>
         </ul>
       </div>
