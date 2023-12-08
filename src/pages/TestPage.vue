@@ -17,24 +17,7 @@ export default {
       loading: false,
       paymentForm: false,
       dataForm: true,
-      orderCar: {
-        restaurant_id: 1,
-        dishes: [
-          {
-            id: 1,
-            quantity: 3,
-          },
-          {
-            id: 2,
-            quantity: 11,
-          },
-          {
-            id: 3,
-            quantity: 1,
-          },
-        ],
-      },
-      fake: {},
+      orderCar: {},
       validatedForm: '',
     };
   },
@@ -166,8 +149,6 @@ export default {
         dishes: orders,
       };
     }
-
-    console.log(this.orderCar);
   },
 };
 </script>
