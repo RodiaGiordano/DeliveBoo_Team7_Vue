@@ -93,9 +93,12 @@ export default {
                     .then((response) => {
                       console.log(response.data);
                       if (response.data.succes) {
-                        console.log('ciao');
                         alert('pagamento effettuato');
                         self.sendOrder();
+
+                        store.cartStorage.splice(0);
+                        localStorage.removeItem('orderedDishIds');
+                        localStorage.removeItem('restaurantId');
                       }
                     })
                     .catch((error) => {
