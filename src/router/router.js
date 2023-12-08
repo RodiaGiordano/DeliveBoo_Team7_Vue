@@ -5,6 +5,7 @@ import HomePage from '../pages/HomePage.vue';
 import MenuPage from '../pages/MenuPage.vue';
 import Cart from '../pages/Cart.vue';
 import TestPage from '../pages/TestPage.vue';
+import PaymentPage from '../pages/PaymentPage.vue';
 
 const router = createRouter({
   //Aggiugno history
@@ -33,6 +34,12 @@ const router = createRouter({
       path: '/test/',
       name: 'test',
       component: TestPage,
+    },
+
+    {
+      path: '/risultato-pagamento',
+      name: 'risultato-pagamento',
+      component: PaymentPage,
     },
   ],
 });
