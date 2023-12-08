@@ -30,8 +30,8 @@ const router = createRouter({
     },
     // braintree test
     {
-      path: '/test/',
-      name: 'test',
+      path: '/checkout/',
+      name: 'checkout',
       component: TestPage,
     },
   ],
