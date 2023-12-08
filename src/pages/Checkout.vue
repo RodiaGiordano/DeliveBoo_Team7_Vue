@@ -173,7 +173,6 @@ export default {
                     .then((response) => {
                       console.log(response.data);
                       if (response.data.succes) {
-                        alert('pagamento effettuato');
                         self.clearSessionStorage();
                         self.sendOrder();
 
