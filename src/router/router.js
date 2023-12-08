@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../pages/HomePage.vue';
 import MenuPage from '../pages/MenuPage.vue';
 import Cart from '../pages/Cart.vue';
-import TestPage from '../pages/TestPage.vue';
+import Checkout from '../pages/Checkout.vue';
 import PaymentPage from '../pages/PaymentPage.vue';
 
 const router = createRouter({
@@ -31,9 +31,9 @@ const router = createRouter({
     },
     // braintree test
     {
-      path: '/test/',
-      name: 'test',
-      component: TestPage,
+      path: '/checkout/',
+      name: 'checkout',
+      component: Checkout,
     },
 
     {

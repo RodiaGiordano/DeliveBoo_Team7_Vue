@@ -80,7 +80,6 @@ export default {
 </script>
 
 <template>
-  <RouterLink :to="{ name: 'test' }">Pagaaaaa</RouterLink>
   <div class="row">
     <div class="app-aside col-lg-3">
       <AppAside @checked="filterRestaurants" :boxChecked="boxChecked"></AppAside>

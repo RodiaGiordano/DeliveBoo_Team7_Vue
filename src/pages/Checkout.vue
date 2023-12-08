@@ -17,24 +17,7 @@ export default {
       loading: false,
       paymentForm: false,
       dataForm: true,
-      orderCar: {
-        restaurant_id: 2,
-        dishes: [
-          {
-            id: 1,
-            quantity: 3,
-          },
-          {
-            id: 2,
-            quantity: 11,
-          },
-          {
-            id: 3,
-            quantity: 1,
-          },
-        ],
-      },
-      fake: {},
+      orderCar: {},
       validatedForm: '',
     };
   },
@@ -190,7 +173,13 @@ export default {
                     .then((response) => {
                       console.log(response.data);
                       if (response.data.succes) {
+                        alert('pagamento effettuato');
                         self.clearSessionStorage();
+                        self.sendOrder();
+
+                        store.cartStorage.splice(0);
+                        localStorage.removeItem('orderedDishIds');
+                        localStorage.removeItem('restaurantId');
                       }
                       // if (response.data.succes) {
                       //   console.log('ciao');
