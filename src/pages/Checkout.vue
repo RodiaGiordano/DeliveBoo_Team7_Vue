@@ -5,7 +5,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      idFake: 2,
+      idFake: 6,
 
       errors: {
         nameErr: '',
@@ -22,9 +22,89 @@ export default {
     };
   },
 
+  mounted() {
+    const restId = localStorage.getItem('restaurantId');
+    let orders = localStorage.getItem('orderedDishIds');
+
+    if (restId && orders) {
+      orders = JSON.parse(orders);
+
+      this.orderCar = {
+        restaurant_id: parseInt(restId),
+        dishes: orders,
+      };
+    }
+
+    console.log(this.orderCar);
+
+    this.$refs.inputName.value = this.inputName;
+    this.$refs.inputLastName.value = this.inputLastName;
+    this.$refs.inputTell.value = this.inputTell;
+    this.$refs.inputAddress.value = this.inputAddress;
+    this.$refs.inputEmail.value = this.inputEmail;
+    this.$refs.inputNote.value = this.inputNote;
+  },
+
+  computed: {
+    inputName: {
+      get() {
+        return sessionStorage.getItem('inputName') || '';
+      },
+      set(value) {
+        sessionStorage.setItem('inputName', value);
+      },
+    },
+
+    inputLastName: {
+      get() {
+        return sessionStorage.getItem('inputLastName') || '';
+      },
+      set(value) {
+        sessionStorage.setItem('inputLastName', value);
+      },
+    },
+
+    inputTell: {
+      get() {
+        return sessionStorage.getItem('inputTell') || '';
+      },
+      set(value) {
+        sessionStorage.setItem('inputTell', value);
+      },
+    },
+
+    inputAddress: {
+      get() {
+        return sessionStorage.getItem('inputAddress') || '';
+      },
+      set(value) {
+        sessionStorage.setItem('inputAddress', value);
+      },
+    },
+
+    inputEmail: {
+      get() {
+        return sessionStorage.getItem('inputEmail') || '';
+      },
+      set(value) {
+        sessionStorage.setItem('inputEmail', value);
+      },
+    },
+
+    inputNote: {
+      get() {
+        return sessionStorage.getItem('inputNote') || '';
+      },
+      set(value) {
+        sessionStorage.setItem('inputNote', value);
+      },
+    },
+  },
+
   methods: {
     changeId() {
-      if ((this.idFake = 2)) this.idFake = 25;
+      if ((this.idFake = 6)) this.idFake = 9;
+      console.log(this.idFake);
     },
 
     isValid(formData) {
@@ -89,20 +169,30 @@ export default {
               button.addEventListener('click', function () {
                 instance.requestPaymentMethod((err, payload) => {
                   axios
-                    .post(store.baseUri + 'order/make/payment', { payment_method_nonce: payload.nonce, id: self.idFake })
+                    .post(store.baseUri + 'order/make/payment', { payment_method_nonce: payload.nonce, id: 6 })
                     .then((response) => {
                       console.log(response.data);
                       if (response.data.succes) {
-                        alert('pagamento effettuato');
+                        self.clearSessionStorage();
                         self.sendOrder();
 
                         store.cartStorage.splice(0);
                         localStorage.removeItem('orderedDishIds');
                         localStorage.removeItem('restaurantId');
                       }
+                      // if (response.data.succes) {
+                      //   console.log('ciao');
+                      //   alert('pagamento effettuato');
+                      //   self.sendOrder();
+                      // }
+                      this.paymentStatus = response.data.succes ? 'Pagamento effettuato' : 'Pagamento fallito';
+                      self.$router.push({ name: 'risultato-pagamento', query: { status: this.paymentStatus } });
                     })
                     .catch((error) => {
-                      alert('pagamento non riuscito');
+                      console.error("Errore nell'invio dell'ordine", error);
+                      this.paymentStatus = 'Pagamento fallito';
+                      self.$router.push({ name: 'risultato-pagamento', query: { status: this.paymentStatus } });
+                      // alert('pagamento non riuscito');
                     });
                 });
               });
@@ -117,6 +207,15 @@ export default {
         });
     },
 
+    clearSessionStorage() {
+      sessionStorage.removeItem('inputName');
+      sessionStorage.removeItem('inputLastName');
+      sessionStorage.removeItem('inputTell');
+      sessionStorage.removeItem('inputAddress');
+      sessionStorage.removeItem('inputEmail');
+      sessionStorage.removeItem('inputNote');
+    },
+
     submitDataCheck() {
       const formData = {
         name: this.$refs.inputName.value,
@@ -128,6 +227,13 @@ export default {
       };
 
       if (this.isValid(formData)) {
+        this.inputName = formData.name;
+        this.inputLastName = formData.lastName;
+        this.inputTell = formData.tel;
+        this.inputAddress = formData.address;
+        this.inputEmail = formData.email;
+        this.inputNote = formData.note;
+
         axios.post(store.baseUri + 'order', { order: this.orderCar, form: formData }).then((response) => {
           this.orderCar = response.data.order;
           this.validatedForm = response.data.form;
@@ -139,19 +245,6 @@ export default {
         });
       }
     },
-  },
-  mounted() {
-    const restId = localStorage.getItem('restaurantId');
-    let orders = localStorage.getItem('orderedDishIds');
-
-    if (restId && orders) {
-      orders = JSON.parse(orders);
-
-      this.orderCar = {
-        restaurant_id: parseInt(restId),
-        dishes: orders,
-      };
-    }
   },
 };
 </script>
@@ -166,7 +259,7 @@ export default {
     <form v-if="dataForm" @submit.prevent="submitForm" class="row g-3" id="ciao">
       <div class="col-md-6">
         <label for="inputName" class="form-label">Nome *</label>
-        <input type="text" class="form-control" id="inputname" ref="inputName" placeholder="Inserisci il tuo nome" pattern="[A-Za-z ']+" title="Inserisci un nome valido (solo lettere e spazi)" required />
+        <input type="text" class="form-control" id="inputName" ref="inputName" placeholder="Inserisci il tuo nome" pattern="[A-Za-z ']+" title="Inserisci un nome valido (solo lettere e spazi)" required />
         <div v-if="errors.nameErr" class="error-message alert alert-danger mt-2">{{ errors.nameErr }}</div>
       </div>
       <div class="col-md-6">

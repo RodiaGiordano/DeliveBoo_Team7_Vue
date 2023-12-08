@@ -10,10 +10,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 //import fontawsome
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faMagnifyingGlass, faUtensils, faMapPin, faPlus, faCartShopping, faArrowRight, faArrowLeft, faTrashCan, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { faHeart, faClock } from '@fortawesome/free-regular-svg-icons';
+import { faMagnifyingGlass, faUtensils, faMapPin, faPlus, faCartShopping, faArrowRight, faArrowLeft, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faClock, faCircleCheck, faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 
-library.add(faMagnifyingGlass, faUtensils, faMapPin, faPlus, faCartShopping, faHeart, faClock, faArrowRight, faArrowLeft, faTrashCan, faMinus, faPlus);
+library.add(faMagnifyingGlass, faUtensils, faMapPin, faPlus, faCartShopping, faHeart, faClock, faArrowRight, faArrowLeft, faCircleCheck, faCircleXmark, faMinus);
 import App from './App.vue';
 
 const app = createApp(App);
