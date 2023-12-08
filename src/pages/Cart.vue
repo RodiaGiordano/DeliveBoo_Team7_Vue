@@ -164,7 +164,7 @@ export default {
   <div class="container mt-3">
     <!-- items list -->
     <div class="row gx-5">
-      <div class="col-6">
+      <div class="col-md-6">
         <h2>Il <span>tuo</span> ordine</h2>
 
         <ul class="p-0">
@@ -199,7 +199,7 @@ export default {
 
       <!-- order recap -->
 
-      <div class="col-6">
+      <div class="col-md-6">
         <h2>Il <span>tuo</span> riepilogo</h2>
         <div class="container recap_div">
           <ul>
