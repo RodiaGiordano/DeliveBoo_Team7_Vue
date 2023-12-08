@@ -161,39 +161,140 @@ export default {
 </script>
 
 <template>
-  <div class="row">
-    <div class="col-6">
-      <h2>Carrello</h2>
-      <ul>
-        <div class="dish-menu" v-for="item in cartStorage">
-          <div v-if="item != null">
-            {{ item.dish.name }} - x{{ item.qty }}
-            <br />
-            {{ (item.dish.price * item.qty).toFixed(2) }}&euro; ({{ item.dish.price }}&euro;)
-            <br />
-            <!-- aumenta qty -->
-            <button type="button" class="btn btn-primary" @click="setAmount(item.dish, 'inc')">+</button>
-            <!-- riduci qty -->
-            <button type="button" class="btn btn-danger" @click="setAmount(item.dish, 'dec')">-</button>
-            <!-- rimuovi piatto -->
-            <button type="button" class="btn btn-danger" @click="removeItem(item.dish)">Rimuovi</button>
-          </div>
-        </div>
-      </ul>
-    </div>
+  <div class="container mt-3">
+    <!-- items list -->
+    <div class="row gx-5">
+      <div class="col-6">
+        <h2>Il <span>tuo</span> ordine</h2>
 
-    <h3><b>TOTALE: </b> {{ this.totalPrice.toFixed(2) }}&euro;</h3>
-    <button class="btn btn-danger" @click="emptyCart()">Svuota carrello</button>
-    <RouterLink :to="{ name: 'checkout' }">Vai al checkout</RouterLink>
+        <ul class="p-0">
+          <div class="item card flex flex-row" v-for="item in cartStorage">
+            <!-- item image -->
+            <div class="item-preview">
+              <img :src="item.dish.image" :alt="item.dish.name" />
+            </div>
+
+            <!-- item name, price, quantity -->
+            <div class="item-info">
+              <div v-if="item != null">
+                <h4>{{ item.dish.name }}</h4>
+                <i
+                  ><p>{{ item.qty }} <span v-if="item.qty > 1">pezzi</span> <span v-else>pezzo</span></p></i
+                >
+
+                {{ (item.dish.price * item.qty).toFixed(2) }}&euro; <span v-show="item.qty > 1">({{ item.dish.price }}&euro;)</span>
+
+                <!-- aumenta qty -->
+                <button type="button" class="btn add_button" @click="setAmount(item.dish, 'inc')"><font-awesome-icon icon="fa-solid fa-plus" /></button>
+                <!-- riduci qty -->
+                <button type="button" class="btn btn-danger" @click="setAmount(item.dish, 'dec')"><font-awesome-icon :icon="['fas', 'minus']" /></button>
+              </div>
+            </div>
+
+            <!-- rimuovi piatto -->
+            <button type="button" class="btn delete_item" @click="removeItem(item.dish)"><font-awesome-icon :icon="['fas', 'trash-can']" /></button>
+          </div>
+        </ul>
+      </div>
+
+      <!-- order recap -->
+
+      <div class="col-6">
+        <h2>Il <span>tuo</span> riepilogo</h2>
+        <div class="container recap_div">
+          <ul>
+            <li v-for="item in cartStorage">
+              <b>{{ item.dish.name }}</b> x{{ item.qty }} - {{ (item.dish.price * item.qty).toFixed(2) }}&euro;
+            </li>
+            <hr />
+          </ul>
+
+          <h3><b>TOTALE: </b> {{ this.totalPrice.toFixed(2) }}&euro;</h3>
+          <button class="btn btn-danger" @click="emptyCart()">Svuota carrello</button>
+          <RouterLink :to="{ name: 'checkout' }" v-show="this.cartStorage.length > 0"><button class="btn add_button">Vai al checkout</button></RouterLink>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+@use '../assets/scss/partials/variables' as *;
+
+h2 {
+  font-weight: 700;
+  span {
+    font-style: oblique;
+    color: $primary-color;
+  }
+}
+
+.item.card {
+  width: 100%;
+  height: 125px;
+  border-radius: 25px;
+  padding: 5px;
+  gap: 1em;
+  margin-bottom: 0.5em;
+
+  img {
+    aspect-ratio: 1;
+    border-radius: 20px;
+  }
+
+  .item-preview {
+    aspect-ratio: 1;
+  }
+
+  .res-body {
+    padding: 1rem;
+  }
+}
+
+.item-info {
+  position: relative;
+
+  p,
+  span {
+    margin: 0;
+    padding: 0;
+  }
+
+  h4 {
+    color: $primary-color;
+    margin: 0;
+  }
+}
+
+.delete_item {
+  background-color: $typology-color;
+  color: #ada7a2;
+  aspect-ratio: 1;
+  border-radius: 100%;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+}
+
+.add_button {
+  background-color: $secondary-color;
+  color: white;
+}
+
 .dish-menu,
 .cart-item {
   background-color: #b8b8b8;
   border-radius: 5px;
   margin-bottom: 5px;
-  padding: 5px;
+}
+
+.recap_div {
+  background-color: $secondary-font-color;
+  border-radius: 25px;
+  padding: 10px;
+
+  ul > li:nth-child(2n) {
+    background-color: rgba($color: $bg2-color, $alpha: 0.08);
+  }
 }
 </style>
