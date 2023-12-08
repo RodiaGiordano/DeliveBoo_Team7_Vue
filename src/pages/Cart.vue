@@ -184,6 +184,7 @@ export default {
 
     <h3><b>TOTALE: </b> {{ this.totalPrice.toFixed(2) }}&euro;</h3>
     <button class="btn btn-danger" @click="emptyCart()">Svuota carrello</button>
+    <RouterLink :to="{ name: 'test' }">Vai al checkout</RouterLink>
   </div>
 </template>
 
