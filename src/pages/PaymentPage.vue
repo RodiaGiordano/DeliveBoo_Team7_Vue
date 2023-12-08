@@ -14,7 +14,7 @@ export default {
     let intervalId;
     if (this.paymentStatus === 'Pagamento fallito') {
       setTimeout(() => {
-        this.$router.push({ name: 'test' });
+        this.$router.push({ name: 'checkout' });
         clearInterval(intervalId);
       }, 4000);
     } else if (this.paymentStatus === 'Pagamento effettuato') {
