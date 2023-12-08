@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../pages/HomePage.vue';
 import MenuPage from '../pages/MenuPage.vue';
 import Cart from '../pages/Cart.vue';
-import TestPage from '../pages/TestPage.vue';
+import Checkout from '../pages/Checkout.vue';
 
 const router = createRouter({
   //Aggiugno history
@@ -32,7 +32,7 @@ const router = createRouter({
     {
       path: '/checkout/',
       name: 'checkout',
-      component: TestPage,
+      component: Checkout,
     },
   ],
 });
