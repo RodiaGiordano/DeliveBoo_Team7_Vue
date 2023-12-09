@@ -6,6 +6,7 @@ import { router } from './router/router.js';
 
 //import bootstrap
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap';
 
 //import fontawsome
 import { library } from '@fortawesome/fontawesome-svg-core';
