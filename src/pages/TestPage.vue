@@ -17,23 +17,7 @@ export default {
       loading: false,
       paymentForm: false,
       dataForm: true,
-      orderCar: {
-        restaurant_id: 1,
-        dishes: [
-          {
-            id: 1,
-            quantity: 3,
-          },
-          {
-            id: 2,
-            quantity: 11,
-          },
-          {
-            id: 3,
-            quantity: 1,
-          },
-        ],
-      },
+      orderCar: {},
       fake: {},
       validatedForm: '',
     };
@@ -106,9 +90,10 @@ export default {
               button.addEventListener('click', function () {
                 instance.requestPaymentMethod((err, payload) => {
                   axios
-                    .post(store.baseUri + 'order/make/payment', { payment_method_nonce: payload.nonce, id: self.idFake })
+                    .post(store.baseUri + 'order/make/payment', { payment_method_nonce: payload.nonce, order: self.orderCar })
                     .then((response) => {
                       console.log(response.data);
+
                       if (response.data.succes) {
                         console.log('ciao');
                         alert('pagamento effettuato');
@@ -167,7 +152,7 @@ export default {
       };
     }
 
-    console.log(this.orderCar);
+    // console.log(this.orderCar);
   },
 };
 </script>
