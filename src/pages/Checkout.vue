@@ -308,4 +308,9 @@ export default {
   background-color: #8bdda8;
   color: white;
 }
+
+#dropin-container {
+  min-height: 279px;
+  margin-bottom: 10px;
+}
 </style>

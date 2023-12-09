@@ -56,7 +56,7 @@ export default {
       ],
       information: [
         {
-          text: 'informazioni su Deliveboo',
+          text: 'Informazioni su Deliveboo',
           url: '#',
         },
         {
