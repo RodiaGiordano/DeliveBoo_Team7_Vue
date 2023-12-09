@@ -21,9 +21,7 @@ export default {
   </head>
   <Navbar></Navbar>
   <router-view></router-view>
-  <footer>
-    <AppFooter />
-  </footer>
+  <AppFooter />
 </template>
 
 <style lang="scss" scoped></style>
