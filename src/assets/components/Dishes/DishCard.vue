@@ -1,5 +1,6 @@
 <script>
 import { store } from '../../data/store';
+import Alert from '../../components/partials/Alert.vue';
 
 export default {
   data() {
@@ -7,6 +8,8 @@ export default {
       cartStorage: store.cartStorage,
     };
   },
+
+  components: { Alert },
 
   methods: {
     addToStorages(dish) {
@@ -55,6 +58,8 @@ export default {
       const cartString = JSON.stringify(currentCart);
       localStorage.setItem('orderedDishIds', cartString);
       console.log(this.cartStorage);
+
+      this.$refs.alertComponent.showAlert('Aggiunto al carrello.');
     },
   },
 
@@ -79,7 +84,9 @@ export default {
       </button>
     </div>
   </div>
-  <hr />
+
+  <!-- item added to cart alert -->
+  <Alert ref="alertComponent"></Alert>
 </template>
 
 <style lang="scss" scoped>
