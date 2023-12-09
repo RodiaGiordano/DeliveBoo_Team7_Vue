@@ -1,5 +1,6 @@
 <script>
 import Navbar from '../src/assets/components/partials/Navbar.vue';
+import AppFooter from '../src/assets/components/AppFooter.vue';
 
 export default {
   data() {
@@ -8,6 +9,7 @@ export default {
 
   components: {
     Navbar,
+    AppFooter,
   },
 };
 </script>
@@ -19,6 +21,9 @@ export default {
   </head>
   <Navbar></Navbar>
   <router-view></router-view>
+  <footer>
+    <AppFooter />
+  </footer>
 </template>
 
 <style lang="scss" scoped></style>
