@@ -5,8 +5,6 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      idFake: 6,
-
       errors: {
         nameErr: '',
         lastNameErr: '',
@@ -34,8 +32,6 @@ export default {
         dishes: orders,
       };
     }
-
-    console.log(this.orderCar);
 
     this.$refs.inputName.value = this.inputName;
     this.$refs.inputLastName.value = this.inputLastName;
@@ -102,11 +98,6 @@ export default {
   },
 
   methods: {
-    changeId() {
-      if ((this.idFake = 6)) this.idFake = 9;
-      console.log(this.idFake);
-    },
-
     isValid(formData) {
       this.errors = {
         nameErr: '',
@@ -141,13 +132,10 @@ export default {
       }
 
       return true;
-      // return formData.name !== '' && formData.lastName !== '' && formData.tel.match(/^\d+$/) && formData.tel !== '' && formData.address !== '';
     },
 
     sendOrder() {
-      axios.post(store.baseUri + 'order/send', { order: this.orderCar, form: this.validatedForm }).then((response) => {
-        console.log(response.data);
-      });
+      axios.post(store.baseUri + 'order/send', { order: this.orderCar, form: this.validatedForm }).then((response) => {});
     },
 
     tokenCall() {
@@ -171,7 +159,6 @@ export default {
                   axios
                     .post(store.baseUri + 'order/make/payment', { payment_method_nonce: payload.nonce, order: self.orderCar })
                     .then((response) => {
-                      console.log(response.data);
                       if (response.data.succes) {
                         self.clearSessionStorage();
                         self.sendOrder();
@@ -180,19 +167,13 @@ export default {
                         localStorage.removeItem('orderedDishIds');
                         localStorage.removeItem('restaurantId');
                       }
-                      // if (response.data.succes) {
-                      //   console.log('ciao');
-                      //   alert('pagamento effettuato');
-                      //   self.sendOrder();
-                      // }
+
                       this.paymentStatus = response.data.succes ? 'Pagamento effettuato' : 'Pagamento fallito';
                       self.$router.push({ name: 'risultato-pagamento', query: { status: this.paymentStatus } });
                     })
                     .catch((error) => {
-                      console.error("Errore nell'invio dell'ordine", error);
                       this.paymentStatus = 'Pagamento fallito';
                       self.$router.push({ name: 'risultato-pagamento', query: { status: this.paymentStatus } });
-                      // alert('pagamento non riuscito');
                     });
                 });
               });
@@ -250,7 +231,6 @@ export default {
 </script>
 <template>
   <div class="container">
-    <button @click="changeId()">importo troppo alto</button>
     <div v-if="loading" class="d-flex align-items-center">
       <strong role="status">Loading...</strong>
       <div class="spinner-border ms-auto" aria-hidden="true"></div>
@@ -308,8 +288,6 @@ export default {
   border-style: solid;
   border-width: 1px;
   border-radius: 3px;
-  // -webkit-appearance: none;
-  // -moz-appearance: none;
   display: inline-block;
 }
 
