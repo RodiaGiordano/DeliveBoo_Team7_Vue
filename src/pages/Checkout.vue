@@ -236,7 +236,7 @@ export default {
       <div class="spinner-border ms-auto" aria-hidden="true"></div>
     </div>
     <div v-if="dataForm" class="alert alert-warning m-3" role="alert">* Campi obbligatori</div>
-    <form v-if="dataForm" @submit.prevent="submitForm" class="row g-3" id="ciao">
+    <form v-if="dataForm" @submit.prevent="submitForm" class="row justify-content-center g-3" id="formUser">
       <div class="col-md-6">
         <label for="inputName" class="form-label">Nome *</label>
         <input type="text" class="form-control" id="inputName" ref="inputName" placeholder="Inserisci il tuo nome" pattern="[A-Za-z ']+" title="Inserisci un nome valido (solo lettere e spazi)" required />
@@ -266,12 +266,12 @@ export default {
         <label for="inputNote" class="form-label">Note</label>
         <textarea class="form-control" ref="inputNote" id="inputNote" rows="3" placeholder="es. citofono guasto, scala etc.."></textarea>
       </div>
-      <button type="submit" @click="submitDataCheck()">Continua con il pagamento</button>
+      <button class="btn btn-success w-25" type="submit" @click="submitDataCheck()">Continua con il pagamento</button>
     </form>
 
     <div v-if="paymentForm" class="payment mt-2">
       <div id="dropin-container"></div>
-      <button form="ciao" id="submit-button" class="button button--small button--green">Purchase</button>
+      <button form="formUser" id="submit-button" class="button button--small button--green">Purchase</button>
     </div>
   </div>
 </template>
