@@ -32,7 +32,6 @@ export default {
       //if localStorage is not empty, then create temporary array
       if (localCart != null && localCart != '') {
         currentCart = JSON.parse(localCart);
-        console.log(currentCart);
       }
 
       //check if dish already exists; if yes, add 1 to quantity
@@ -57,8 +56,6 @@ export default {
 
       const cartString = JSON.stringify(currentCart);
       localStorage.setItem('orderedDishIds', cartString);
-      console.log(this.cartStorage);
-
       this.$refs.alertComponent.showAlert('Aggiunto al carrello.');
     },
   },
