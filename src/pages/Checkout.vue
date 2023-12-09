@@ -169,7 +169,7 @@ export default {
               button.addEventListener('click', function () {
                 instance.requestPaymentMethod((err, payload) => {
                   axios
-                    .post(store.baseUri + 'order/make/payment', { payment_method_nonce: payload.nonce, id: 6 })
+                    .post(store.baseUri + 'order/make/payment', { payment_method_nonce: payload.nonce, order: self.orderCar })
                     .then((response) => {
                       console.log(response.data);
                       if (response.data.succes) {
