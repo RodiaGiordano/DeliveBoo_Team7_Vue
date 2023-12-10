@@ -271,7 +271,7 @@ export default {
 
     <div v-if="paymentForm" class="payment mt-2">
       <div id="dropin-container"></div>
-      <button form="formUser" id="submit-button" class="button button--small button--green">Purchase</button>
+      <button form="formUser" id="submit-button" class="button button--small button--green">Invia Pagamento</button>
     </div>
   </div>
 </template>
