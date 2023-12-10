@@ -161,7 +161,7 @@ export default {
 </script>
 
 <template>
-  <div class="container mt-3">
+  <div class="container cart mt-3">
     <!-- items list -->
     <div class="row gx-5">
       <div class="col-md-6">
@@ -221,6 +221,9 @@ export default {
 <style lang="scss" scoped>
 @use '../assets/scss/partials/variables' as *;
 
+.cart {
+  margin-bottom: 250px;
+}
 h2 {
   font-weight: 700;
   span {

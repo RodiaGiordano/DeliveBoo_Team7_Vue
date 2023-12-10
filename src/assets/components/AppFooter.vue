@@ -136,7 +136,6 @@ export default {
 footer {
   background-color: $bg2-color;
   .custom-container {
-    margin-top: 250px;
     h5 {
       margin-top: 1.2rem;
       font-weight: 700;

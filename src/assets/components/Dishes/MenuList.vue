@@ -89,6 +89,7 @@ export default {
 @use '../../scss/partials/variables' as *;
 .menulist {
   width: 100%;
+  margin-bottom: 250px;
 
   .restaurant-jumbotron {
     background-image: url('../../images/jumbo-menuList2.jpg');

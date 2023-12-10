@@ -230,7 +230,7 @@ export default {
 };
 </script>
 <template>
-  <div class="container">
+  <div class="container checkout">
     <div v-if="loading" class="d-flex align-items-center">
       <strong role="status">Loading...</strong>
       <div class="spinner-border ms-auto" aria-hidden="true"></div>
@@ -277,6 +277,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.checkout {
+  margin-bottom: 250px;
+}
 .button {
   cursor: pointer;
   font-weight: 500;

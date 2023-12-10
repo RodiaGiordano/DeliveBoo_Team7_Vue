@@ -56,6 +56,7 @@ export default {
 @use '../../scss/partials/variables' as *;
 .wrapper {
   padding: 1.5rem 0rem 1rem 1.2rem;
+  margin-bottom: 250px;
   h2 {
     font-weight: 700;
   }
